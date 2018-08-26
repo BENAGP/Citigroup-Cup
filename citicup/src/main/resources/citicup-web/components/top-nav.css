@@ -1,0 +1,16 @@
+.tab, .logo {
+    height: 40px;
+    display: inline;
+    cursor: pointer;
+}
+.tab {
+    /*color: white;*/
+    color: rgba(244, 244, 244, 0.9);
+    padding: 12px 4px;
+    float: right;
+    margin-left: 40px;
+}
+.tab:hover,.active {
+    border-bottom: 2px solid white;
+    color:  white;
+}
