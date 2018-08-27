@@ -2,9 +2,9 @@
  * Created by shea on 2018/8/9.
  */
 const nav =
-    "<div style='height: 64px;padding: 8px 240px 16px 240px;border-bottom: 1px solid rgba(244,244,244,0.2)'>" +
+    "<div>" +
     "<div class='logo'>" +
-    "<img src='../imgs/logo4.png' style='height: 40px;width: auto;margin-top: 4px'> " +
+    "<img src='../imgs/logo4.png'> " +
     "</div>" +
     "<div class='tab'>个人中心</div> "+
     "<div class='tab'>我的购物车</div> "+
@@ -15,3 +15,9 @@ const nav =
 
 
 $(".top-nav").append(nav);
+
+const footer = "<div>Copy Right ©2018 Machine Insight </div>";
+$(".footer").append(footer);
+
+
+

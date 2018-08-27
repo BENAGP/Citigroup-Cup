@@ -1,0 +1,99 @@
+body {
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    width: 100%;
+}
+.gallery-wrapper {
+    position: relative;
+    height:560px;
+}
+.gallery-letters {
+    color: white;
+    font-size: 36px;
+}
+.gallery-btn {
+    margin-top:70px;
+    border: 1px solid white;
+    color: white;
+    padding: 8px 50px;
+    cursor: pointer;
+}
+.gallery-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.gallery-img {
+    width: 100%;
+    height: auto;
+}
+
+.announcement-container {
+    padding: 60px 0 40px 0;
+    background-color: white;
+}
+.announcement .title,.hot-comments .title {
+    color: #333;
+    border-bottom: 2px solid #2A6AAA;
+    padding-bottom:10px;
+    display: inline;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.announcement .header,.hot-comments .header {
+    padding-bottom:7px;
+    border-bottom: 2px solid #f4f4f4;
+}
+
+.announcement .more,.hot-comments .more {
+    float: right;
+    display: inline;
+    margin-top: 12px;
+    color: #3791e7;
+    cursor: pointer;
+}
+
+.announcement-item,.hot-comments-item {
+    color: #333;
+    font-weight: 400;
+    padding: 10px 0;
+}
+.announcement-item .date,.hot-comments-item .date {
+    text-align: right;
+}
+
+.brief-container {
+    padding: 60px 0 40px 0;
+}
+.brief-header {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 2px;
+}
+.brief-wrapper {
+    text-align: center;
+    padding: 60px 90px;
+}
+.brief-wrapper img {
+    width: auto;
+    height: 132px;
+}
+.brief-name {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    letter-spacing: 2px;
+}
+.brief-des {
+    text-align: justify;
+    color: #959595;
+    font-size: 20px;
+    margin-top: 12px;
+    letter-spacing: 2px;
+}
