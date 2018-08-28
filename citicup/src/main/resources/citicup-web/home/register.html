@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../components/top-nav.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
+    <script src="../lib/jquery-3.3.1.js"></script>
+    <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script src="../lib/layui/layui.js"></script>
+</head>
+<style>
+	.registerpad{
+		left: 670px;
+		top: 170px;
+		width: 450px;
+		height: 500px;
+		position: absolute;
+		text-align: center;
+		border: 1px solid rgba(187, 187, 187, 1);
+	}
+	.login{
+		left: 200px;
+		top: 50px;
+		position: relative;
+		width: 49px;
+		height: 35px;
+		color: rgba(94, 94, 94, 1);
+		font-size: 24px;
+		text-align: center;
+		font-family: Roboto;
+	}
+	.usrname{
+		left: 5px;
+		top: 80px;
+		position: relative;
+		width: 300px;
+		height: 50px;
+		color: rgba(136, 136, 136, 1);
+		font-size: 18px;
+		text-align: left;
+		font-family: Microsoft Yahei;
+		border: 1px solid rgba(187, 187, 187, 1);
+	}
+	.password{
+		left: 5px;
+		top: 115px;
+		position: relative;
+		width: 300px;
+		height: 50px;
+		color: rgba(136, 136, 136, 1);
+		font-size: 18px;
+		text-align: left;
+		font-family: Microsoft Yahei;
+		border: 1px solid rgba(187, 187, 187, 1);
+	}
+	.submit{
+		left: 5px;
+		top: 150px;
+		position: relative;
+		width: 300px;
+		height: 50px;
+		border-radius: 5px;
+		background-color: rgba(70, 172, 227, 1);
+		color: rgba(255, 255, 255, 1);
+		font-size: 20px;
+		border:none;
+	}
+	.text01{
+		left: 80px;
+		top: 160px;
+		position: relative;
+		width: 78px;
+		height: 23px;
+		color: black;
+		font-size: 15px;
+		text-align: center;
+		font-family: Roboto;
+	}
+	.text02{
+		left: 150px;
+		top: 401px;
+		position: absolute;
+		width: 78px;
+		height: 23px;
+		color: rgba(70, 172, 227, 1);
+		font-size: 16px;
+		text-align: center;
+		font-family: Roboto;
+	}
+</style>
+<body>
+<div class="top-nav"></div>
+<div class="content-wrapper">
+    <div class="content">
+
+        <!--write your code here-->
+		<div class = "registerpad" >
+				<form action="" method="">
+					<h1 class="login">注册</h1>
+					<label>
+						<input class="usrname" type="text"  onfocus="if (value =='  邮箱'){value =''}" onblur="if (value ==''){value='  邮箱'}" value="  邮箱">
+					</label>
+					<label>
+						<input class="password" type="text" onfocus="if (value =='  密码'){value =''} if (type == 'text'){type='password'} " onblur="if(value ==''){type='text';value='  密码'} "   onblur="if (value ==''){value='  密码'}" value="  密码">
+					</label>
+					<label>
+						<input class="submit" type="submit" value="提交">
+					</label>
+					<label>
+						<p class="text01">已有账号？</p>	
+						<a class="text02" href="login.html">立即登陆</a>
+					</label>
+				</form>	
+		   </div>	
+    </div>
+</div>
+<div class="footer"></div>
+</body>
+<script src="../components/top-nav.js"></script>
+</html>
