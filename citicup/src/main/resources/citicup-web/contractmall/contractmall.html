@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contract Mall</title>
+    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../components/top-nav.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <script src="../lib/jquery-3.3.1.js"></script>
+    <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script src="layui/layui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="mall.css">
+</head>
+
+</head>
+<body>
+<div class="top-nav"></div>
+<div class="content-wrapper">
+    <div class="content" style="height: 1000px;">
+
+        <!-- 期货种类选项卡 -->
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this col-2">网站设置</li>
+                <li class="col-3">用户管理</li>
+                <li class="col-2">权限分配</li>
+                <li class="col-3">商品管理</li>
+                <li class="col-2">订单管理</li>
+            </ul>
+            <div class="layui-tab-content"></div>
+        </div>
+
+        <!-- 筛选条件 -->
+        <div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary" id="mobility">流动性</button></div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary">总收益率</button></div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary" id="retracement">最大回撤</button></div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary">市场最大承载资金</button></div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary">胜率</button></div>
+        <div class="sameline"><button class="layui-btn layui-btn-primary">盈亏比</button></div>
+        </div>
+
+
+        <div class="retracementboard">
+
+        </div>
+    </div>
+</div>
+<div class="footer"></div>
+
+</body>
+
+
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+
+</script>
+
+
+<script src="mall-top-nav.js"></script>
+</html>

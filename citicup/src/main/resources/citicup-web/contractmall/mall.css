@@ -1,0 +1,114 @@
+.backboard{
+    left: 0px;
+    top: 0px;
+    width: 1440px;
+    height: 1024px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.allfuture{
+    left: 23px;
+    top: 34px;
+    width: 113px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(253, 104, 87, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+.financialfuture{
+    left: 248px;
+    top: 34px;
+    width: 113px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+.agriculturalfuture{
+    left: 480px;
+    top: 34px;
+    width: 141px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+.metalfuture{
+    left: 763px;
+    top: 34px;
+    width: 113px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+.energyfuture{
+    left: 1035px;
+    top: 34px;
+    width: 113px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+.chemicalfuture{
+    left: 1299px;
+    top: 34px;
+    width: 113px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.bottom{
+    left: 24px;
+    top: 74px;
+    width: 101px;
+    height: 12px;
+    background-color: rgba(253, 104, 87, 1);
+}
+
+
+.sameline{
+    float: left;
+    margin-left: 50px;
+    margin-right: 33px;
+}
+
+
+
+.retracementboard{
+    left: 499px;
+    top: 199px;
+    width: 403px;
+    height: 191px;
+    line-height: 20px;
+    opacity: 0.9;
+    text-align: center;
+    box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
+
+}
+
+
+
+
+
