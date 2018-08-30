@@ -33,18 +33,242 @@
 
         <!-- 筛选条件 -->
         <div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary" id="mobility">流动性</button></div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary">总收益率</button></div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary" id="retracement">最大回撤</button></div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary">市场最大承载资金</button></div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary">胜率</button></div>
-        <div class="sameline"><button class="layui-btn layui-btn-primary">盈亏比</button></div>
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="mobility">流动性</button>
+            <div class="tipboard">
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -17px;">元/分钟</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex" value="女" title="女">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="gross">总收益率</button>
+            <div class="tipboard">
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex" value="女" title="女">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="retracement">最大回撤</button>
+            <div class="tipboard" id="retracement-tip">
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" id="retracementmininput" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" id="retracementmaxinput"  autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" id="retracementradio0" name="retracementradio">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="retracementradio1" name="retracementradio">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button" id="retracementcancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="retracementreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="retracementconfirm"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="carringfunds">市场最大承载资金</button>
+            <div class="tipboard" >
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -37px;">元</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex" value="女" title="女">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="winning">胜率</button>
+            <div class="tipboard" >
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex" value="女" title="女">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sameline">
+            <button class="layui-btn layui-btn-primary" id="profitloss">盈亏比</button>
+            <div class="tipboard" style="visibility: visible;">
+                <!-- 范围 -->
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="margin-left: 10px;">
+
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 64px;">
+                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        </div>
+                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                    </div>
+
+                    <!-- 提示 -->
+                    <div class="number-tip">只可以输入0-100的数字</div>
+                </div>
+
+                <!-- 单选框 -->
+                <div style="margin-left: -20px;margin-top: 30px;">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <label class="radio-text">由高到低</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="sex" value="女" title="女">
+                    <label class="radio-text">由低到高</label>
+                </div>
+
+                <!-- 按钮 -->
+                <div style="margin-left: 40px;margin-top:10px;">
+                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+                </div>
+            </div>
+        </div>
         </div>
 
 
-        <div class="retracementboard">
-
-        </div>
     </div>
 </div>
 <div class="footer"></div>
@@ -53,6 +277,29 @@
 
 
 <script>
+
+
+    var mobilitymin = 0;
+    var mobilitymax = 100;
+    var mobilityradio = 0;
+    var grossmin = 0;
+    var grossmax = 100;
+    var grossradio = 0;
+    var retracementmin = 0;
+    var retracementmax = 100;
+    var retraceradio = 0;
+    var carringmin = 0;
+    var carringmax = 100;
+    var carringradio = 0;
+    var winningmin =0;
+    var winningmax = 100;
+    var winningradio = 0;
+    var profitlossmin = 0;
+    var profitlossmax = 100;
+    var profitlossradio = 0;
+
+    $("button").css("outline","none");
+
     layui.use('element', function(){
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
@@ -63,8 +310,68 @@
         });
     });
 
+    $("#retracement").click(function() {
+
+        $("#retracement-tip").css("visibility","visible");
+        $("#retracementmininput").val(retracementmin);
+        $("#retracementmaxinput").val(retracementmax);
+
+        if(retraceradio==0){
+            $("#retracementradio1").removeAttr("checked");
+            $("#retracementradio0").attr("checked","checked");
+        }else{
+            $("#retracementradio0").removeAttr("checked");
+            $("#retracementradio1").attr("checked","checked");
+        }
+
+    });
+
+    $("#retracementcancel").click(function () {
+        $("#retracement-tip").css("visibility","hidden");
+    });
+
+    $("#retracementreset").click(function (){
+        retracementmin = 0;
+        retracementmax = 100;
+        retraceradio = 0;
+        $("#retracement").css("background-color","rgba(229, 229, 229, 1)");
+        $("#retracement").css("color","rgba(94, 94, 94, 1)");
+
+        $("#retracementmininput").val(retracementmin);
+        $("#retracementmaxinput").val(retracementmax);
+
+        if(retraceradio==0){
+            $("#retracementradio0").attr("checked","checked");
+        }else{
+            $("#retracementradio1").attr("checked","checked");
+        }
+
+        $("#retracement").css("background-color","white");
+        $("#retracement").css("color","black");
+    });
+
+    $("#retracementconfirm").click(function (){
+        retracementmin = $("#retracementmininput").val();
+        retracementmax = $("#retracementmaxinput").val();
+
+        if($("#retracementradio0").checked){
+            retraceradio = 0;
+        }else{
+            retraceradio = 1;
+        }
+
+        $("#retracement-tip").css("visibility","hidden");
+
+        $("#retracement").css("background-color","rgba(253, 104, 87, 1)");
+        $("#retracement").css("color","rgba(255, 255, 255, 1)");
+    });
+
+
+
+
 </script>
 
 
 <script src="mall-top-nav.js"></script>
 </html>
+
