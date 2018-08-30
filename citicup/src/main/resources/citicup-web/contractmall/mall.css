@@ -1,3 +1,4 @@
+
 .backboard{
     left: 0px;
     top: 0px;
@@ -94,21 +95,93 @@
     margin-right: 33px;
 }
 
-
-
-.retracementboard{
-    left: 499px;
-    top: 199px;
-    width: 403px;
-    height: 191px;
+.tipboard{
+    margin-top: 20px;
+    width: 240px;
+    height: 160px;
     line-height: 20px;
     opacity: 0.9;
     text-align: center;
     box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
+    position: absolute;
+    visibility: hidden;
+}
 
+.number-tip{
+    left: 41px;
+    top: 260px;
+    width: 176px;
+    height: 23px;
+    line-height: 20px;
+    color: rgba(245, 93, 84, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+
+.self-input{
+    margin-top: 5px;
 }
 
 
 
+.radio-text{
+    left: 76px;
+    top: 292px;
+    width: 65px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.tip-button{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    margin-right: 15px;
+}
 
 
+.tip-button-cancel{
+    left: 260px;
+    top: 347px;
+    width: 37px;
+    height: 26px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.tip-button-reset{
+    left: 333px;
+    top: 347px;
+    width: 37px;
+    height: 26px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.tip-button-confirm{
+    left: 398px;
+    top: 347px;
+    width: 37px;
+    height: 26px;
+    line-height: 26px;
+    color: rgba(0, 150, 136, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+
+}
