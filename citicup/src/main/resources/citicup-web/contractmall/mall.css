@@ -1,4 +1,10 @@
 
+button{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+}
+
 .backboard{
     left: 0px;
     top: 0px;
@@ -92,12 +98,24 @@
 .sameline{
     float: left;
     margin-left: 50px;
-    margin-right: 33px;
 }
+
+/* 修饰选择框，扁平的效果 */
+.conditionbutton{
+    height: 30px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+.conditiontext{
+    margin-top: -5px;
+}
+
 
 .tipboard{
     margin-top: 20px;
-    width: 240px;
+    width: 340px;
     height: 160px;
     line-height: 20px;
     opacity: 0.9;
@@ -105,11 +123,13 @@
     box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
     position: absolute;
     visibility: hidden;
+    z-index: 3;
+    background-color: white;
 }
 
 .number-tip{
-    left: 41px;
-    top: 260px;
+    margin-left: 8px;
+    margin-top: -75px;
     width: 176px;
     height: 23px;
     line-height: 20px;
@@ -121,7 +141,10 @@
 
 
 .self-input{
+    width: 85px;
     margin-top: 5px;
+    height: 25px;
+    text-align: center;
 }
 
 
@@ -143,7 +166,9 @@
     margin: 0;
     padding: 0;
     border: 1px solid transparent;
-    margin-right: 15px;
+    margin-left: 25px;
+    background-color: transparent;
+    font-weight: bold;
 }
 
 
@@ -185,3 +210,407 @@
     font-family: Roboto;
 
 }
+
+
+
+/* future type bottom行*/
+
+.ft_board{
+    margin-top:30px;
+}
+
+.ft_button{
+    width: 98px;
+    height: 40px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: left;
+    font-family: Roboto;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    margin-left: 89px;
+    background-color: transparent;
+}
+
+/* future type button行 */
+
+.ftb_board{
+    margin-top: -10px;
+
+}
+
+.ftb_bottom{
+    width: 98px;
+    height: 2px;
+    background-color: #FD6857;
+    display: inline-block;
+    margin-left: 89px;
+    visibility: hidden;
+}
+
+/* 分割线 */
+.divisionline{
+    left: 24px;
+    top: 102px;
+    width: 1394px;
+    height: 10px;
+
+}
+
+
+
+
+.futures{
+    margin-bottom: 30px;
+    width: 100%;
+    z-index: 4;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.futureboard{
+    width: 49%;
+    height: 545px;
+    float: left;
+    line-height: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
+    border: 1px solid rgba(255, 255, 255, 0);
+
+}
+
+.future_name{
+    margin-left: 15px;
+    margin-top: 20px;
+    width: 77%;
+    line-height: 35px;
+    color: rgba(143, 167, 255, 1);
+    font-size: 18px;
+    text-align: left;
+    font-family: Roboto;
+}
+
+.staricon{
+    position: relative;
+    width: 33px;
+    height: 33px;
+    top: -37px;
+    left: 197px;
+}
+
+
+.collectbutton{
+    position: relative;
+    top: -33px;
+    left: 195px;
+    line-height: 29px;
+    color: rgba(255, 152, 0, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.legend{
+    float: left;
+    margin-left: 0px;
+    position: relative;
+    width: 200px;
+    height: 30px;
+    top: -30px;
+    left: 15px;
+    display: inline-block;
+
+}
+
+
+
+.lengend_red
+{
+    width: 8px;
+    height: 12px;
+    line-height: 20px;
+    background-color: rgba(204, 8, 14, 1);
+    text-align: center;
+    border: 1px solid rgba(204, 8, 14, 1);
+}
+
+.lengend_red_text{
+
+    float: left;
+    width: 60px;
+    height: 17px;
+    line-height: 20px;
+    color: rgba(204, 8, 14, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+
+    position: relative;
+    top: -15px;
+    left: 10px;
+}
+
+.lengend_blue
+{
+    width: 8px;
+    height: 12px;
+    line-height: 20px;
+    background-color: #3F51B5;
+    text-align: center;
+    border: 1px solid #3F51B5;
+    position: relative;
+    left: 100px;
+    top:-12px;
+}
+
+.lengend_blue_text{
+
+    float: left;
+    width: 60px;
+    height: 17px;
+    line-height: 20px;
+    color: #3F51B5;
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+
+    position: relative;
+    top: -27px;
+    left: 50px;
+}
+
+.mobilityvalue{
+    position: relative;
+    left: 365px;
+    top: -61px;
+    width: 133px;
+    height: 20px;
+    line-height: 20px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+
+.graphdiv{
+    width: 96%;
+    height: 240px;
+    position: relative;
+    left: 10px;
+    top: -20px;
+}
+
+.info{
+    width: 90%;
+    height: 200px;
+    position: relative;
+    left: 30px;
+    top:30px;
+    display: inline-block;
+}
+
+
+.profit{
+    position: relative;
+    left: 0px;
+    width: 70px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.retracement{
+    position: relative;
+    left: 180px;
+    top: -100px;
+    width: 70px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.carry{
+    position: relative;
+    left: 320px;
+    top: -200px;
+    width: 137px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.profittext{
+    position: relative;
+
+    width: 100px;
+    height: 27px;
+    line-height: 35px;
+    color: rgba(245, 93, 84, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+    left: -10px;
+    font-weight: bold;
+}
+
+.retracementtext{
+    position: relative;
+    top: -100px;
+    left: 155px;
+    width: 130px;
+    height: 27px;
+    line-height: 35px;
+    color: rgba(16, 16, 16, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+    font-weight: bold;
+
+}
+
+.carrytext{
+    position: relative;
+    top: -200px;
+    left: 330px;
+
+    width: 100px;
+    height: 27px;
+    line-height: 35px;
+    color: rgba(245, 93, 84, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+
+    font-weight: bold;
+}
+
+
+
+
+.divisioner1{
+    position: relative;
+    left: 130px;
+    top: -48px;
+    width: 1px;
+    height: 50px;
+    background-color: #96979E;
+}
+
+
+.divisioner2{
+    position: relative;
+    left: 300px;
+    top: -148px;
+    width: 1px;
+    height: 50px;
+    background-color: #96979E;
+}
+
+
+
+
+
+.win{
+    position: relative;
+    left: -20px;
+    top: -170px;
+    width: 60px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+
+
+}
+
+.wintext{
+    position: relative;
+
+    left: 50px;
+    top: -193px;
+    width: 45px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(16, 16, 16, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+    font-weight: bold;
+
+}
+
+
+.loss{
+    position: relative;
+    left: -22px;
+    top: -190px;
+    width: 80px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+
+}
+
+.losstext{
+    position: relative;
+
+    left: 50px;
+    top: -212px;
+    width: 45px;
+    height: 23px;
+    line-height: 23px;
+    color: rgba(16, 16, 16, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+
+    font-weight: bold;
+}
+
+
+
+
+.buybutton{
+    position: relative;
+    left: 140px;
+    top: -225px;
+    width: 189px;
+    height: 45px;
+    line-height: 32px;
+    border-radius: 5px;
+    background-color: rgba(245, 93, 84, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 22px;
+    text-align: center;
+    box-shadow: 0px 0px 0px 0px rgba(229, 229, 229, 1);
+    font-family: Roboto;
+    border: 1px solid rgba(255, 255, 255, 0);
+
+}
+
