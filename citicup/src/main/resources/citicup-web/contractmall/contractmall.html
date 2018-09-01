@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script src="../lib/echarts.min.js"></script>
     <script src="layui/layui.js"></script>
 
     <link rel="stylesheet" type="text/css" href="mall.css">
@@ -17,132 +18,155 @@
 <body>
 <div class="top-nav"></div>
 <div class="content-wrapper">
-    <div class="content" style="height: 1000px;">
+    <div class="content" style="">
 
-        <!-- 期货种类选项卡 -->
-        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-            <ul class="layui-tab-title">
-                <li class="layui-this col-2">网站设置</li>
-                <li class="col-3">用户管理</li>
-                <li class="col-2">权限分配</li>
-                <li class="col-3">商品管理</li>
-                <li class="col-2">订单管理</li>
-            </ul>
-            <div class="layui-tab-content"></div>
+        <div class="ft_board">
+            <button class="ft_button" id="all" onclick="ftclicked(this.id)" style="margin-left: 0px; color:#FD6857 ">全部期货 </button>
+            <button class="ft_button" id="financial" onclick="ftclicked(this.id)" >金融期货</button>
+            <button class="ft_button" id="agriculture"  onclick="ftclicked(this.id)"  style="width: 122px;">农产品期货</button>
+            <button class="ft_button" id="metal" onclick="ftclicked(this.id)" >金属期货</button>
+            <button class="ft_button" id="energy" onclick="ftclicked(this.id)" >能源期货</button>
+            <button class="ft_button" id="chemical" onclick="ftclicked(this.id)" >化工期货</button>
         </div>
+
+        <div class="ftb_board">
+            <div class="ftb_bottom" id="all_bottom" style="margin-left: 0px; visibility: visible"></div>
+            <div class="ftb_bottom" id="financial_bottom"></div>
+            <div class="ftb_bottom" id="agriculture_bottom" style="width: 122px;"></div>
+            <div class="ftb_bottom" id="metal_bottom"></div>
+            <div class="ftb_bottom" id="energy_bottom"></div>
+            <div class="ftb_bottom" id="chemical_bottom"></div>
+        </div>
+
+        <hr style="margin-top: 10px;margin-bottom: 15px;">
 
         <!-- 筛选条件 -->
         <div>
-        <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="mobility">流动性</button>
-            <div class="tipboard">
+        <div class="sameline" style="margin-left: 0px;">
+            <button class="layui-btn layui-btn-primary conditionbutton" id="mobility"><p class="conditiontext">流动性</p></button>
+            <div class="tipboard" id="mobility-tip">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 500px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-input-inline">
+                            <input type="number" id="mobilitymininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="mobilitymaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -17px;">元/分钟</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: 10px;color: #5E5E5E">元/分钟</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="mobilityradio" id="mobilityradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="mobilityradio" id="mobilityradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
-                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
-                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
-                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+
+                <div style="margin-right: -90px;margin-top: 5px;">
+                    <button class="tip-button" id="mobilitycancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="mobilityreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="mobilityconfirm"><div class="tip-button-confirm">确认</div></button>
                 </div>
             </div>
         </div>
 
         <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="gross">总收益率</button>
-            <div class="tipboard">
+            <button class="layui-btn layui-btn-primary conditionbutton" id="gross"><p class="conditiontext">总收益率</p></button>
+            <div class="tipboard" id="gross-tip">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 500px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-input-inline">
+                            <input type="number" id="grossmininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="grossmaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: -20px;color: #5E5E5E">%</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="grossradio" id="grossradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="grossradio" id="grossradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
-                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
-                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
-                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+
+                <div style="margin-right: -90px;margin-top: 5px;">
+                    <button class="tip-button" id="grosscancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="grossreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="grossconfirm"><div class="tip-button-confirm">确认</div></button>
                 </div>
             </div>
         </div>
 
         <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="retracement">最大回撤</button>
+            <button class="layui-btn layui-btn-primary conditionbutton" id="retracement"><p class="conditiontext">最大回撤</p></button>
             <div class="tipboard" id="retracement-tip">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 500px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
+                        <div class="layui-input-inline">
                             <input type="number" id="retracementmininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" id="retracementmaxinput"  autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="retracementmaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: -20px;color: #5E5E5E">%</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" id="retracementradio0" name="retracementradio">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="retraceradio" id="retracementradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" id="retracementradio1" name="retracementradio">
+                    <input type="radio" name="retraceradio" id="retracementradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
+
+                <div style="margin-right: -90px;margin-top: 5px;">
                     <button class="tip-button" id="retracementcancel"><div class="tip-button-cancel">取消</div></button>
                     <button class="tip-button" id="retracementreset"><div class="tip-button-reset">重置</div></button>
                     <button class="tip-button" id="retracementconfirm"><div class="tip-button-confirm">确认</div></button>
@@ -151,132 +175,332 @@
         </div>
 
         <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="carringfunds">市场最大承载资金</button>
-            <div class="tipboard" >
+            <button class="layui-btn layui-btn-primary conditionbutton" id="carry"><p class="conditiontext">市场最大承载资金</p></button>
+            <div class="tipboard" id="carry-tip">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 500px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-input-inline">
+                            <input type="number" id="carrymininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="carrymaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -37px;">元</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: 10px;color: #5E5E5E">元/分钟</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="carryradio" id="carryradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="carryradio" id="carryradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
-                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
-                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
-                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+
+                <div style="margin-right: -90px;margin-top: 5px;">
+                    <button class="tip-button" id="carrycancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="carryreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="carryconfirm"><div class="tip-button-confirm">确认</div></button>
                 </div>
             </div>
         </div>
 
         <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="winning">胜率</button>
-            <div class="tipboard" >
+            <button class="layui-btn layui-btn-primary conditionbutton" id="win"><p class="conditiontext">胜率</p></button>
+            <div class="tipboard" id="win-tip" style="right: 278px;">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 500px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-input-inline">
+                            <input type="number" id="winmininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="winmaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: -20px;color: #5E5E5E">%</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="winradio" id="winradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="winradio" id="winradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
-                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
-                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
-                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+
+                <div style="margin-right: -90px;margin-top: 5px;">
+                    <button class="tip-button" id="wincancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="winreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="winconfirm"><div class="tip-button-confirm">确认</div></button>
                 </div>
             </div>
         </div>
 
-        <div class="sameline">
-            <button class="layui-btn layui-btn-primary" id="profitloss">盈亏比</button>
-            <div class="tipboard" style="visibility: visible;">
+        <div class="sameline" style="">
+            <button class="layui-btn layui-btn-primary conditionbutton" id="profit"><p class="conditiontext">盈亏比</p></button>
+            <div class="tipboard" id="profit-tip" style="right: 110px;">
                 <!-- 范围 -->
-                <div class="layui-form-item">
-                    <div class="layui-inline" style="margin-left: 10px;">
+                <div class="layui-form-item" style="width: 450px;">
+                    <div class="layui-inline" style="margin-left: 20px;margin-top: 10px;">
 
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number"  name="price_min" placeholder="0" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-input-inline">
+                            <input type="number" id="profitmininput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 64px;">
-                            <input type="number" name="price_max" placeholder="100" autocomplete="off" class="layui-input self-input">
+                        <div class="layui-form-mid" style="left: -90px;">~</div>
+                        <div class="layui-input-inline" style="left:-75px; ">
+                            <input type="number" id="profitmaxinput" autocomplete="off" class="layui-input self-input">
                         </div>
-                        <label class="layui-form-label" style="margin-left: -37px;">%</label>
+                        <label class="layui-form-label" style="margin-top: -30px;left: -20px;color: #5E5E5E">%</label>
                     </div>
 
-                    <!-- 提示 -->
-                    <div class="number-tip">只可以输入0-100的数字</div>
                 </div>
 
+                <br/>
+
+                <!-- 提示 -->
+                <p class="number-tip">只可以输入0-100的数字</p>
+
+                <br/>
+
                 <!-- 单选框 -->
-                <div style="margin-left: -20px;margin-top: 30px;">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
+                <div style="margin-left: -100px;margin-top: 35px;">
+                    <input type="radio" name="profitradio" id="profitradio0">
                     <label class="radio-text">由高到低</label>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="profitradio" id="profitradio1">
                     <label class="radio-text">由低到高</label>
                 </div>
 
-                <!-- 按钮 -->
-                <div style="margin-left: 40px;margin-top:10px;">
-                    <button class="tip-button"><div class="tip-button-cancel">取消</div></button>
-                    <button class="tip-button"><div class="tip-button-reset">重置</div></button>
-                    <button class="tip-button"><div class="tip-button-confirm">确认</div></button>
+
+                <div style="margin-right: -90px;margin-top: 5px;">
+                    <button class="tip-button" id="profitcancel"><div class="tip-button-cancel">取消</div></button>
+                    <button class="tip-button" id="profitreset"><div class="tip-button-reset">重置</div></button>
+                    <button class="tip-button" id="profitconfirm"><div class="tip-button-confirm">确认</div></button>
                 </div>
             </div>
         </div>
         </div>
+
+
+        <hr style="margin-top: 60px;margin-bottom: 25px;">
+
+        <div class="futures">
+            <!-- 期货列表 -->
+            <div class="futureboard">
+
+                <div class="future_name">沪深A股，港股（AH股）</div>
+                <div><img class="staricon" src="../lib/images/star.png" />
+                    <button class="collectbutton">收藏</button></div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_red"></div>
+                    <div class="lengend_red_text">基准利率</div>
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="mobilityvalue" id="mobilityvalue">流动性：300元/分钟</div>
+
+                <div class="graphdiv" id="graphdiv">
+                </div>
+
+
+                <div class="info">
+                    <div class="profit">总收益率</div>
+                    <div class="profittext">50.22%</div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext">50.22%</div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext">￥10000</div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext">30.99%</div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext">47.52%</div>
+
+                </div>
+
+
+                <button class="buybutton">购买</button>
+
+            </div>
+
+            <div class="futureboard" >
+
+                <div class="future_name">沪深A股，港股（AH股）</div>
+                <div><img class="staricon" src="../lib/images/star.png" />
+                    <button class="collectbutton">收藏</button></div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_red"></div>
+                    <div class="lengend_red_text">基准利率</div>
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="mobilityvalue" id="mobilityvalue0">流动性：300元/分钟</div>
+
+                <div class="graphdiv" id="graphdiv0">
+                </div>
+
+
+                <div class="info">
+                    <div class="profit">总收益率</div>
+                    <div class="profittext">50.22%</div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext">50.22%</div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext">￥10000</div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext">30.99%</div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext">47.52%</div>
+
+                </div>
+
+
+                <button class="buybutton">购买</button>
+
+            </div>
+
+            <div class="futureboard" >
+
+                <div class="future_name">沪深A股，港股（AH股）</div>
+                <div><img class="staricon" src="../lib/images/star.png" />
+                    <button class="collectbutton">收藏</button></div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_red"></div>
+                    <div class="lengend_red_text">基准利率</div>
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="mobilityvalue" id="mobilityvalue1">流动性：300元/分钟</div>
+
+                <div class="graphdiv" id="graphdiv1">
+                </div>
+
+
+                <div class="info">
+                    <div class="profit">总收益率</div>
+                    <div class="profittext">50.22%</div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext">50.22%</div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext">￥10000</div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext">30.99%</div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext">47.52%</div>
+
+                </div>
+
+
+                <button class="buybutton">购买</button>
+
+            </div>
+
+            <div class="futureboard" >
+
+            </div>
+
+            <div class="futureboard" >
+
+            </div>
+
+        </div>
+
+
 
 
     </div>
 </div>
+
 <div class="footer"></div>
 
 </body>
 
 
 <script>
+    var futuretype = "all";
+
+    function ftclicked(id){
+        closeftbottom();
+        futuretype = id+"";
+        var name = id+"_bottom";
+        $("#"+id).css("color","#FD6857");
+        $("#"+name).css("visibility","visible");
+    }
+
+    function closeftbottom(){
+        $("#all_bottom").css("visibility","hidden");
+        $("#financial_bottom").css("visibility","hidden");
+        $("#agriculture_bottom").css("visibility","hidden");
+        $("#metal_bottom").css("visibility","hidden");
+        $("#energy_bottom").css("visibility","hidden");
+        $("#chemical_bottom").css("visibility","hidden");
+
+        $("#all").css("color","rgba(94, 94, 94, 1)");
+        $("#financial").css("color","rgba(94, 94, 94, 1)");
+        $("#agriculture").css("color","rgba(94, 94, 94, 1)");
+        $("#metal").css("color","rgba(94, 94, 94, 1)");
+        $("#energy").css("color","rgba(94, 94, 94, 1)");
+        $("#chemical").css("color","rgba(94, 94, 94, 1)");
+    }
+
 
 
     var mobilitymin = 0;
@@ -288,15 +512,15 @@
     var retracementmin = 0;
     var retracementmax = 100;
     var retraceradio = 0;
-    var carringmin = 0;
-    var carringmax = 100;
-    var carringradio = 0;
-    var winningmin =0;
-    var winningmax = 100;
-    var winningradio = 0;
-    var profitlossmin = 0;
-    var profitlossmax = 100;
-    var profitlossradio = 0;
+    var carrymin = 0;
+    var carrymax = 100;
+    var carryradio = 0;
+    var winmin =0;
+    var winmax = 100;
+    var winradio = 0;
+    var profitmin = 0;
+    var profitmax = 100;
+    var profitradio = 0;
 
     $("button").css("outline","none");
 
@@ -310,20 +534,137 @@
         });
     });
 
-    $("#retracement").click(function() {
 
+    function closetip(){
+        $("#mobility-tip").css("visibility","hidden");
+        $("#gross-tip").css("visibility","hidden");
+        $("#retracement-tip").css("visibility","hidden");
+        $("#carry-tip").css("visibility","hidden");
+        $("#win-tip").css("visibility","hidden");
+        $("#profit-tip").css("visibility","hidden");
+
+    }
+
+    // mobility的弹框
+    $("#mobility").click(function() {
+        closetip();
+        $("#mobility-tip").css("visibility","visible");
+        $("#mobilitymininput").val(mobilitymin);
+        $("#mobilitymaxinput").val(mobilitymax);
+
+        if(mobilityradio==0){
+            document.getElementById("mobilityradio1").checked=false;
+            document.getElementById("mobilityradio0").checked=true;
+        }else{
+            document.getElementById("mobilityradio0").checked=false;
+            document.getElementById("mobilityradio1").checked=true;
+        }
+    });
+
+    $("#mobilitycancel").click(function () {
+        $("#mobility-tip").css("visibility","hidden");
+    });
+
+    $("#mobilityreset").click(function (){
+        mobilitymin = 0;
+        mobilitymax = 100;
+        mobilityradio = 0;
+
+        $("#mobilitymininput").val(mobilitymin);
+        $("#mobilitymaxinput").val(mobilitymax);
+        document.getElementById("mobilityradio1").checked=false;
+        document.getElementById("mobilityradio0").checked=true;
+
+        $("#mobility").css("background-color","white");
+        $("#mobility").css("color","black");
+    });
+
+    $("#mobilityconfirm").click(function (){
+        mobilitymin = $("#mobilitymininput").val();
+        mobilitymax = $("#mobilitymaxinput").val();
+
+        if(document.getElementById("mobilityradio0").checked){
+            mobilityradio = 0;
+        }else{
+            mobilityradio = 1;
+        }
+
+        $("#mobility-tip").css("visibility","hidden");
+
+        $("#mobility").css("background-color","rgba(253, 104, 87, 1)");
+        $("#mobility").css("color","rgba(255, 255, 255, 1)");
+    });
+
+
+
+    // gross的弹框
+    $("#gross").click(function() {
+        closetip();
+        $("#gross-tip").css("visibility","visible");
+        $("#grossmininput").val(grossmin);
+        $("#grossmaxinput").val(grossmax);
+
+        if(grossradio==0){
+            document.getElementById("grossradio1").checked=false;
+            document.getElementById("grossradio0").checked=true;
+        }else{
+            document.getElementById("grossradio0").checked=false;
+            document.getElementById("grossradio1").checked=true;
+        }
+    });
+
+    $("#grosscancel").click(function () {
+        $("#gross-tip").css("visibility","hidden");
+    });
+
+    $("#grossreset").click(function (){
+        grossmin = 0;
+        grossmax = 100;
+        grossradio = 0;
+
+        $("#grossmininput").val(grossmin);
+        $("#grossmaxinput").val(grossmax);
+        document.getElementById("grossradio1").checked=false;
+        document.getElementById("grossradio0").checked=true;
+
+        $("#gross").css("background-color","white");
+        $("#gross").css("color","black");
+    });
+
+    $("#grossconfirm").click(function (){
+        grossmin = $("#grossmininput").val();
+        grossmax = $("#grossmaxinput").val();
+
+        if(document.getElementById("grossradio0").checked){
+            grossradio = 0;
+        }else{
+            grossradio = 1;
+        }
+
+        $("#gross-tip").css("visibility","hidden");
+
+        $("#gross").css("background-color","rgba(253, 104, 87, 1)");
+        $("#gross").css("color","rgba(255, 255, 255, 1)");
+    });
+
+
+
+
+
+    // retracement的弹框
+    $("#retracement").click(function() {
+        closetip();
         $("#retracement-tip").css("visibility","visible");
         $("#retracementmininput").val(retracementmin);
         $("#retracementmaxinput").val(retracementmax);
 
         if(retraceradio==0){
-            $("#retracementradio1").removeAttr("checked");
-            $("#retracementradio0").attr("checked","checked");
+            document.getElementById("retracementradio1").checked=false;
+            document.getElementById("retracementradio0").checked=true;
         }else{
-            $("#retracementradio0").removeAttr("checked");
-            $("#retracementradio1").attr("checked","checked");
+            document.getElementById("retracementradio0").checked=false;
+            document.getElementById("retracementradio1").checked=true;
         }
-
     });
 
     $("#retracementcancel").click(function () {
@@ -334,17 +675,11 @@
         retracementmin = 0;
         retracementmax = 100;
         retraceradio = 0;
-        $("#retracement").css("background-color","rgba(229, 229, 229, 1)");
-        $("#retracement").css("color","rgba(94, 94, 94, 1)");
 
         $("#retracementmininput").val(retracementmin);
         $("#retracementmaxinput").val(retracementmax);
-
-        if(retraceradio==0){
-            $("#retracementradio0").attr("checked","checked");
-        }else{
-            $("#retracementradio1").attr("checked","checked");
-        }
+        document.getElementById("retracementradio1").checked=false;
+        document.getElementById("retracementradio0").checked=true;
 
         $("#retracement").css("background-color","white");
         $("#retracement").css("color","black");
@@ -354,7 +689,7 @@
         retracementmin = $("#retracementmininput").val();
         retracementmax = $("#retracementmaxinput").val();
 
-        if($("#retracementradio0").checked){
+        if(document.getElementById("retracementradio0").checked){
             retraceradio = 0;
         }else{
             retraceradio = 1;
@@ -367,11 +702,253 @@
     });
 
 
+    // carry
+    $("#carry").click(function() {
+        closetip();
+        $("#carry-tip").css("visibility","visible");
+        $("#carrymininput").val(carrymin);
+        $("#carrymaxinput").val(carrymax);
+
+        if(carryradio==0){
+            document.getElementById("carryradio1").checked=false;
+            document.getElementById("carryradio0").checked=true;
+        }else{
+            document.getElementById("carryradio0").checked=false;
+            document.getElementById("carryradio1").checked=true;
+        }
+    });
+
+    $("#carrycancel").click(function () {
+        $("#carry-tip").css("visibility","hidden");
+    });
+
+    $("#carryreset").click(function (){
+        carrymin = 0;
+        carrymax = 100;
+        carryradio = 0;
+
+        $("#carrymininput").val(carrymin);
+        $("#carrymaxinput").val(carrymax);
+        document.getElementById("carryradio1").checked=false;
+        document.getElementById("carryradio0").checked=true;
+
+        $("#carry").css("background-color","white");
+        $("#carry").css("color","black");
+    });
+
+    $("#carryconfirm").click(function (){
+        carrymin = $("#carrymininput").val();
+        carrymax = $("#carrymaxinput").val();
+
+        if(document.getElementById("carryradio0").checked){
+            carryradio = 0;
+        }else{
+            carryradio = 1;
+        }
+
+        $("#carry-tip").css("visibility","hidden");
+
+        $("#carry").css("background-color","rgba(253, 104, 87, 1)");
+        $("#carry").css("color","rgba(255, 255, 255, 1)");
+    });
+
+
+    // win的弹框
+    $("#win").click(function() {
+        closetip();
+        $("#win-tip").css("visibility","visible");
+        $("#winmininput").val(winmin);
+        $("#winmaxinput").val(winmax);
+
+        if(winradio==0){
+            document.getElementById("winradio1").checked=false;
+            document.getElementById("winradio0").checked=true;
+        }else{
+            document.getElementById("winradio0").checked=false;
+            document.getElementById("winradio1").checked=true;
+        }
+    });
+
+    $("#wincancel").click(function () {
+        $("#win-tip").css("visibility","hidden");
+    });
+
+    $("#winreset").click(function (){
+        winmin = 0;
+        winmax = 100;
+        winradio = 0;
+
+        $("#winmininput").val(winmin);
+        $("#winmaxinput").val(winmax);
+        document.getElementById("winradio1").checked=false;
+        document.getElementById("winradio0").checked=true;
+
+        $("#win").css("background-color","white");
+        $("#win").css("color","black");
+    });
+
+    $("#winconfirm").click(function (){
+        winmin = $("#winmininput").val();
+        winmax = $("#winmaxinput").val();
+
+        if(document.getElementById("winradio0").checked){
+            winradio = 0;
+        }else{
+            winradio = 1;
+        }
+
+        $("#win-tip").css("visibility","hidden");
+
+        $("#win").css("background-color","rgba(253, 104, 87, 1)");
+        $("#win").css("color","rgba(255, 255, 255, 1)");
+    });
+
+
+    // profit的弹框
+    $("#profit").click(function() {
+        closetip();
+        $("#profit-tip").css("visibility","visible");
+        $("#profitmininput").val(profitmin);
+        $("#profitmaxinput").val(profitmax);
+
+        if(profitradio==0){
+            document.getElementById("profitradio1").checked=false;
+            document.getElementById("profitradio0").checked=true;
+        }else{
+            document.getElementById("profitradio0").checked=false;
+            document.getElementById("profitradio1").checked=true;
+        }
+    });
+
+    $("#profitcancel").click(function () {
+        $("#profit-tip").css("visibility","hidden");
+    });
+
+    $("#profitreset").click(function (){
+        profitmin = 0;
+        profitmax = 100;
+        profitradio = 0;
+
+        $("#profitmininput").val(profitmin);
+        $("#profitmaxinput").val(profitmax);
+        document.getElementById("profitradio1").checked=false;
+        document.getElementById("profitradio0").checked=true;
+
+        $("#profit").css("background-color","white");
+        $("#profit").css("color","black");
+    });
+
+    $("#profitconfirm").click(function (){
+        profitmin = $("#profitmininput").val();
+        profitmax = $("#profitmaxinput").val();
+
+        if(document.getElementById("profitradio0").checked){
+            profitradio = 0;
+        }else{
+            profitradio = 1;
+        }
+
+        $("#profit-tip").css("visibility","hidden");
+
+        $("#profit").css("background-color","rgba(253, 104, 87, 1)");
+        $("#profit").css("color","rgba(255, 255, 255, 1)");
+    });
+
 
 
 </script>
 
 
+<script>
+
+    var myChart = echarts.init(document.getElementById('graphdiv'));
+    var myChart0 = echarts.init(document.getElementById('graphdiv0'));
+    var myChart1 = echarts.init(document.getElementById('graphdiv1'));
+
+
+    option = {
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            top: '4%',
+            containLabel: true
+        },
+
+
+        dataZoom: [
+
+            {
+                show: true,
+                realtime: true,
+                start: 0,
+                end: 100,
+                height: 30,
+                y: 215
+            },
+            {
+                type: 'inside',
+                realtime: true,
+                start: 0,
+                end: 100
+
+            }
+
+
+
+        ],
+
+
+
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: "回测利率",
+                data: [820, -932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                sampling: 'average',
+                areaStyle: {
+                    normal: {
+                        color: "#DAE4F4"
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3,
+                        color: '#4577C8'
+                    }
+                },
+            },
+            {
+                name: "基准利率",
+                data: [80, 1922, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                lineStyle: {
+                    normal: {
+                        width: 3,
+                        color: "#A34240"
+                    }
+                },
+
+            }
+        ]
+    };
+
+
+    myChart.setOption(option);
+    myChart0.setOption(option);
+    myChart1.setOption(option);
+
+</script>
+
 <script src="mall-top-nav.js"></script>
 </html>
+
 
