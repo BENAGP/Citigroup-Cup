@@ -3,6 +3,7 @@ button{
     margin: 0;
     padding: 0;
     border: 1px solid transparent;
+    background-color: transparent;
 }
 
 .backboard{
@@ -272,8 +273,8 @@ button{
 }
 
 .futureboard{
-    width: 49%;
-    height: 545px;
+    width: 32%;
+    height: 400px;
     float: left;
     line-height: 20px;
     text-align: center;
@@ -285,31 +286,31 @@ button{
 
 .future_name{
     margin-left: 15px;
-    margin-top: 20px;
+    margin-top: 30px;
     width: 77%;
     line-height: 35px;
     color: rgba(143, 167, 255, 1);
-    font-size: 18px;
+    font-size: 24px;
     text-align: left;
     font-family: Roboto;
 }
 
 .staricon{
     position: relative;
-    width: 33px;
-    height: 33px;
+    width: 28px;
+    height: 28px;
     top: -37px;
-    left: 197px;
+    left: 125px;
 }
 
 
 .collectbutton{
     position: relative;
     top: -33px;
-    left: 195px;
+    left: 125px;
     line-height: 29px;
     color: rgba(255, 152, 0, 1);
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     font-family: Roboto;
 
@@ -321,7 +322,7 @@ button{
     position: relative;
     width: 200px;
     height: 30px;
-    top: -30px;
+    top: -20px;
     left: 15px;
     display: inline-block;
 
@@ -364,7 +365,7 @@ button{
     text-align: center;
     border: 1px solid #3F51B5;
     position: relative;
-    left: 100px;
+    left: 85px;
     top:-12px;
 }
 
@@ -381,13 +382,13 @@ button{
 
     position: relative;
     top: -27px;
-    left: 50px;
+    left: 35px;
 }
 
 .mobilityvalue{
     position: relative;
-    left: 365px;
-    top: -61px;
+    left: 200px;
+    top: -53px;
     width: 133px;
     height: 20px;
     line-height: 20px;
@@ -401,7 +402,7 @@ button{
 
 .graphdiv{
     width: 96%;
-    height: 240px;
+    height: 140px;
     position: relative;
     left: 10px;
     top: -20px;
@@ -409,11 +410,12 @@ button{
 
 .info{
     width: 90%;
-    height: 200px;
+    height: 120px;
     position: relative;
-    left: 30px;
-    top:30px;
+    left: 0px;
+    top:0px;
     display: inline-block;
+    /*background-color: #9fcdff;*/
 }
 
 
@@ -424,7 +426,7 @@ button{
     height: 23px;
     line-height: 23px;
     color: rgba(150, 151, 158, 1);
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     font-family: Roboto;
 
@@ -432,13 +434,13 @@ button{
 
 .retracement{
     position: relative;
-    left: 180px;
+    left: 110px;
     top: -100px;
     width: 70px;
     height: 23px;
     line-height: 23px;
     color: rgba(150, 151, 158, 1);
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     font-family: Roboto;
 
@@ -446,13 +448,13 @@ button{
 
 .carry{
     position: relative;
-    left: 320px;
+    left: 195px;
     top: -200px;
     width: 137px;
     height: 23px;
     line-height: 23px;
     color: rgba(150, 151, 158, 1);
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
     font-family: Roboto;
 
@@ -465,7 +467,7 @@ button{
     height: 27px;
     line-height: 35px;
     color: rgba(245, 93, 84, 1);
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     font-family: Roboto;
     left: -10px;
@@ -475,12 +477,12 @@ button{
 .retracementtext{
     position: relative;
     top: -100px;
-    left: 155px;
+    left: 80px;
     width: 130px;
     height: 27px;
     line-height: 35px;
     color: rgba(16, 16, 16, 1);
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     font-family: Roboto;
     font-weight: bold;
@@ -490,13 +492,13 @@ button{
 .carrytext{
     position: relative;
     top: -200px;
-    left: 330px;
+    left: 210px;
 
     width: 100px;
     height: 27px;
     line-height: 35px;
     color: rgba(245, 93, 84, 1);
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     font-family: Roboto;
 
@@ -508,7 +510,7 @@ button{
 
 .divisioner1{
     position: relative;
-    left: 130px;
+    left: 90px;
     top: -48px;
     width: 1px;
     height: 50px;
@@ -518,7 +520,7 @@ button{
 
 .divisioner2{
     position: relative;
-    left: 300px;
+    left: 195px;
     top: -148px;
     width: 1px;
     height: 50px;
@@ -531,8 +533,8 @@ button{
 
 .win{
     position: relative;
-    left: -20px;
-    top: -170px;
+    left: 0px;
+    top: -185px;
     width: 60px;
     height: 23px;
     line-height: 23px;
@@ -548,8 +550,8 @@ button{
 .wintext{
     position: relative;
 
-    left: 50px;
-    top: -193px;
+    left: 70px;
+    top: -208px;
     width: 45px;
     height: 23px;
     line-height: 23px;
@@ -564,8 +566,8 @@ button{
 
 .loss{
     position: relative;
-    left: -22px;
-    top: -190px;
+    left: -2px;
+    top: -210px;
     width: 80px;
     height: 23px;
     line-height: 23px;
@@ -580,8 +582,8 @@ button{
 .losstext{
     position: relative;
 
-    left: 50px;
-    top: -212px;
+    left: 70px;
+    top: -233px;
     width: 45px;
     height: 23px;
     line-height: 23px;
@@ -598,15 +600,15 @@ button{
 
 .buybutton{
     position: relative;
-    left: 140px;
-    top: -225px;
-    width: 189px;
-    height: 45px;
-    line-height: 32px;
+    left: 100px;
+    top: -275px;
+    width: 110px;
+    height: 40px;
+    line-height: 40px;
     border-radius: 5px;
     background-color: rgba(245, 93, 84, 1);
     color: rgba(255, 255, 255, 1);
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     box-shadow: 0px 0px 0px 0px rgba(229, 229, 229, 1);
     font-family: Roboto;

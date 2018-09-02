@@ -314,7 +314,7 @@
             <!-- 期货列表 -->
             <div class="futureboard">
 
-                <div class="future_name">沪深A股，港股（AH股）</div>
+                <div class="future_name">IF1706-IF1703</div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton">收藏</button></div>
 
@@ -361,54 +361,7 @@
 
             <div class="futureboard" >
 
-                <div class="future_name">沪深A股，港股（AH股）</div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton">收藏</button></div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_red"></div>
-                    <div class="lengend_red_text">基准利率</div>
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="mobilityvalue" id="mobilityvalue0">流动性：300元/分钟</div>
-
-                <div class="graphdiv" id="graphdiv0">
-                </div>
-
-
-                <div class="info">
-                    <div class="profit">总收益率</div>
-                    <div class="profittext">50.22%</div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext">50.22%</div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext">￥10000</div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext">30.99%</div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext">47.52%</div>
-
-                </div>
-
-
-                <button class="buybutton">购买</button>
-
-            </div>
-
-            <div class="futureboard" >
-
-                <div class="future_name">沪深A股，港股（AH股）</div>
+                <div class="future_name">IF1706-IF1703</div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton">收藏</button></div>
 
@@ -451,9 +404,102 @@
 
                 <button class="buybutton">购买</button>
 
+
+
             </div>
 
             <div class="futureboard" >
+
+                <div class="future_name">IF1706-IF1703</div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton">收藏</button></div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_red"></div>
+                    <div class="lengend_red_text">基准利率</div>
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="mobilityvalue" id="mobilityvalue2">流动性：300元/分钟</div>
+
+                <div class="graphdiv" id="graphdiv2">
+                </div>
+
+
+                <div class="info">
+                    <div class="profit">总收益率</div>
+                    <div class="profittext">50.22%</div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext">50.22%</div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext">￥10000</div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext">30.99%</div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext">47.52%</div>
+
+                </div>
+
+
+                <button class="buybutton">购买</button>
+
+
+            </div>
+
+            <div class="futureboard" >
+
+                <div class="future_name">IF1706-IF1703</div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton">收藏</button></div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_red"></div>
+                    <div class="lengend_red_text">基准利率</div>
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="mobilityvalue" id="mobilityvalue3">流动性：300元/分钟</div>
+
+                <div class="graphdiv" id="graphdiv3">
+                </div>
+
+
+                <div class="info">
+                    <div class="profit">总收益率</div>
+                    <div class="profittext">50.22%</div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext">50.22%</div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext">￥10000</div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext">30.99%</div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext">47.52%</div>
+
+                </div>
+
+
+                <button class="buybutton">购买</button>
 
             </div>
 
@@ -862,8 +908,9 @@
 <script>
 
     var myChart = echarts.init(document.getElementById('graphdiv'));
-    var myChart0 = echarts.init(document.getElementById('graphdiv0'));
+    var myChart2 = echarts.init(document.getElementById('graphdiv2'));
     var myChart1 = echarts.init(document.getElementById('graphdiv1'));
+    var myChart3 = echarts.init(document.getElementById('graphdiv3'));
 
 
     option = {
@@ -943,9 +990,10 @@
     };
 
 
-    myChart.setOption(option);
-    myChart0.setOption(option);
+   myChart.setOption(option);
+    myChart2.setOption(option);
     myChart1.setOption(option);
+    myChart3.setOption(option);
 
 </script>
 
