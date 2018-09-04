@@ -1,0 +1,443 @@
+
+button{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    outline: none;
+}
+
+td{
+    font-size: 18px;
+}
+
+.transactionboard{
+    left: 21px;
+    top: 170px;
+    width: 100%;
+    height: 520px;
+    line-height: 20px;
+    text-align: center;
+    box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+
+.topinfo{
+    position: relative;
+    left: 30px;
+    top: 30px;
+    width: 700px;
+    height: 40px;
+    display: inline-block;
+    float: left;
+}
+
+.futurename{
+    left: 75px;
+    top: 200px;
+    width: 300px;
+    height: 30px;
+    line-height: 41px;
+    color: rgba(143, 167, 255, 1);
+    font-size: 28px;
+    text-align: left;
+    font-family: Roboto;
+
+}
+
+.mobility{
+    position: relative;
+    left: 260px;
+    top: -27px;
+    width: 300px;
+    height: 41px;
+    line-height: 32px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 22px;
+    text-align: center;
+    font-family: Roboto;
+    text-align: left;
+
+    float: left;
+}
+
+
+
+.redeembutton{
+    position: relative;
+    left: 118px;
+    top: -28px;
+    width: 130px;
+    height: 36px;
+    line-height: 26px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    box-shadow: 0px 0px 0px 0px rgba(229, 229, 229, 1);
+    font-family: Roboto;
+    border: 1px solid rgba(229, 229, 229, 1);
+
+}
+
+
+.grossfundschoose {
+    position: relative;
+    float: left;
+    left: 20px;
+    top: 60px;
+    display: inline-block;
+}
+
+
+.gross{
+    position: relative;
+    width: 60px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+    font-weight: bolder;
+}
+
+
+.funds{
+    position: relative;
+    width: 100px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+    font-weight: bolder;
+}
+
+
+.choose_bottom{
+    position: relative;
+    left: -150px;
+    top: 30px;
+    width: 140px;
+    height: 1px;
+    background-color: rgba(94, 94, 94, 1);
+    float: left;
+
+}
+
+
+.gross_bottom{
+    position: relative;
+    left: -290px;
+    top: 30px;
+    width: 40px;
+    height: 3px;
+    background-color: rgba(94, 94, 94, 1);
+
+    float: left;
+}
+
+.funds_bottom{
+    position: relative;
+    left: -270px;
+    top: 30px;
+    width: 80px;
+    height: 3px;
+    background-color: rgba(94, 94, 94, 1);
+    float: left;
+    visibility: hidden;
+}
+
+
+
+.gorssboard{
+    position: relative;
+    width: 700px;
+    height: 350px;
+    top: 75px;
+    left: 30px;
+    float: left;
+}
+
+
+.grossinfo{
+    position: relative;
+    width: 300px;
+    height: 20px;
+
+    float: left;
+    text-align: left;
+}
+
+
+.zoom{
+    color: #7e7e7e;
+}
+
+.zoombutton{
+    position: relative;
+    left: 60px;
+    top:-20px;
+    margin-right: 10px;
+    background-color: #f7f7f7;
+    color: #545454;
+}
+
+
+
+
+.lg{
+    float: left;
+    margin-left: 0px;
+    position: relative;
+    width: 200px;
+    height: 30px;
+    top: -38px;
+    left: 505px;
+    display: inline-block;
+
+}
+
+
+
+.lg_red
+{
+    width: 8px;
+    height: 12px;
+    line-height: 20px;
+    background-color: rgba(204, 8, 14, 1);
+    text-align: center;
+    border: 1px solid rgba(204, 8, 14, 1);
+}
+
+.lg_red_text{
+
+    float: left;
+    width: 60px;
+    height: 17px;
+    line-height: 20px;
+    color: rgba(204, 8, 14, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+
+    position: relative;
+    top: -15px;
+    left: 10px;
+}
+
+.lg_blue
+{
+    width: 8px;
+    height: 12px;
+    line-height: 20px;
+    background-color: #3F51B5;
+    text-align: center;
+    border: 1px solid #3F51B5;
+    position: relative;
+    left: 100px;
+    top:-12px;
+}
+
+.lg_blue_text{
+
+    float: left;
+    width: 60px;
+    height: 17px;
+    line-height: 20px;
+    color: #3F51B5;
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+
+    position: relative;
+    top: -27px;
+    left: 50px;
+}
+
+
+
+
+.grossdiv{
+    position: relative;
+    top: 30px;
+    left:-20px;
+    width: 720px;
+    height: 300px;
+}
+
+
+.fundsboard{
+    position: relative;
+    left:30px;
+    top: 144px;
+    width: 700px;
+    height: 350px;
+    visibility: hidden;
+}
+
+
+/**/
+
+.currentnewestchoose {
+    position: relative;
+    float: left;
+    left: 720px;
+    top: -319px;
+    width: 381px;
+    height: 50px;
+    display: inline-block;
+}
+
+
+.current{
+    position: relative;
+    width: 120px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+    font-weight: bolder;
+}
+
+
+.newest{
+    position: relative;
+    width: 100px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+    font-weight: bolder;
+}
+
+
+.choose_bottom2{
+    position: relative;
+    left: 20px;
+    top: 1px;
+    width: 190px;
+    height: 1px;
+    background-color: rgba(94, 94, 94, 1);
+    float: left;
+
+}
+
+
+.current_bottom{
+    position: relative;
+    left: -170px;
+    top: 0px;
+    width: 80px;
+    height: 3px;
+    background-color: rgba(94, 94, 94, 1);
+
+    float: left;
+}
+
+.newest_bottom{
+    position: relative;
+    left: -140px;
+    top: 0px;
+    width: 80px;
+    height: 3px;
+    background-color: rgba(94, 94, 94, 1);
+    float: left;
+    visibility: hidden;
+}
+
+
+
+.currentboard{
+    position: relative;
+    width: 310px;
+    height: 350px;
+    top: -260px;
+    left: 360px;
+    float: left;
+    /*background-color: #9fcdff;*/
+    /*visibility: hidden;*/
+}
+
+
+
+
+.newestboard{
+    position: relative;
+    left:741px;
+    top: -191px;
+    width: 310px;
+    height: 350px;
+    visibility: hidden;
+    /*background-color: #00F7DE;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
