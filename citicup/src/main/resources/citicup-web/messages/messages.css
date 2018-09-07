@@ -1,0 +1,130 @@
+.messages {
+    position: relative;
+    width: 880px;
+    margin-top: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: right;
+}
+
+.message {
+    position: relative;
+    margin-left: 70px;
+    width: 810px;
+    margin-top: 10px;
+    float: left;
+}
+
+.message div{
+    width: 80px;
+    height: 160px;
+    float: left;
+}
+
+.message div img{
+    height: 79px;
+    border-radius: 60px;
+}
+
+.message_details{
+    line-height: 26px;
+    margin-left: 30px;
+    width: 700px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-align: left;
+    font-family: Roboto;
+    float: left;
+}
+
+.message div p{
+    margin-top: 12px;
+    line-height: 30px;
+    color: rgba(63, 81, 181, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.message_user {
+    line-height: 26px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.message_history {
+    float: left;
+    margin-left: 60px;
+    margin-top: 20px;
+    padding: 8px;
+    padding-right: 20px;
+    width: 670px;
+    line-height: 32px;
+    background-color: rgba(244, 244, 244, 1);
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    text-align: left;
+    font-family: Roboto;
+}
+
+.message_time {
+    margin-top: 15px;
+    margin-left: 110px;
+    line-height: 26px;
+    color: rgba(150, 151, 158, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+}
+
+.message button{
+    margin-top: 13px;
+    margin-left: 30px;
+    line-height: 26px;
+    color: rgba(63, 81, 181, 1);
+    font-size: 16px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+}
+
+.line {
+    position: relative;
+    margin-top: 30px;
+    left: -140px;
+    top: 0px;
+    width: 1100px;
+    height: 11px;
+    margin-bottom: 18px;
+}
+
+.page {
+    margin: 10px;
+    margin-top: 18px;
+    margin-bottom: 50px;
+    margin-left: 74px;
+    height: 40px;
+    width: 800px;
+    float: left;
+}
+
+.page button{
+    padding: 8px;
+    padding-right: 15px;
+    padding-left: 15px;
+    line-height: 26px;
+    color: rgba(16, 16, 16, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+    border: 1px solid rgba(187, 187, 187, 1);
+    float: left;
+}
+
+#active {
+    background-color: #46ACE3;
+    color: #ffffff;
+}
