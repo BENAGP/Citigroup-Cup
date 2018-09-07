@@ -5,6 +5,30 @@ let base = new Base64();
 const username = 'SandboxUser5';
 const password = 'P@ssUser5$';
 
+function Person(name) {
+    const age = 8;
+    this.name = name;
+    return {
+        sayage: function () {
+            window.alert(age);
+        }
+    }
+}
+
+function Student(name) {
+    this.name = name;
+}
+var student = new Student("bbb");
+Student.prototype = new Person("ttt");
+var p = new Person("aaa");
+Student.prototype.sayName = function () {
+    window.alert(this.name);
+};
+// window.alert(p.sayName());
+// student.sayName();
+p.sayName();
+p.sayage();
+
 function test() {
     getClientAccessToken().then(res => {
         console.log(res);
@@ -148,6 +172,17 @@ function getLoginAccessToken(uuid,encrypted_password,bizToken) {
             complete: function(XMLHttpRequest, status) { //请求完成后最终执行参数　
             }
         });
+    })
+}
+
+function register() {
+    $.post('/api/user/register',{
+        email: "8759",
+        psw: "86"
+    }).done(response=>{
+        console.log(response);
+    }).fail(err=>{
+        console.log("err",err);
     })
 }
 

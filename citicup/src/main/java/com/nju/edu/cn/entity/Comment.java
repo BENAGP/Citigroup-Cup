@@ -18,16 +18,37 @@ public class Comment {
     /**
      * 评论者ID
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "`user_id`")
+    @ManyToOne()
+    @JoinColumn(name = "`user_key`")
     private User user;
+
+    /**
+     * 评论者ID
+     */
+    @Column(name = "`user_id`")
+    public Long userId;
+
+    /**
+     * 昵称
+     */
+    @Column(name = "`nickname`")
+    private String userNickname;
+
+    /**
+     * 头像地址
+     */
+    @Column(name = "`avatar`")
+    private String userAvatar;
 
     /**
      * 被评论的合约ID
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "`contract_id`")
+    @ManyToOne()
+    @JoinColumn(name = "`contract_key`")
     private Contract contract;
+
+    @Column(name = "`contract_id`")
+    private Long contractId;
 
     /**
      * 此条评论内容
@@ -60,14 +81,23 @@ public class Comment {
     private String fatherCommentUserAvatar;
 
     /**
+     * 被回复的评论人昵称
+     */
+    @Column(name = "`father_user_nickname`")
+    private String fatherUserNickname;
+
+    /**
      * 此条评论创建时间
      */
     @Column(name = "`create_time`")
     private Date createTime;
 
-    @OneToOne(mappedBy = "comment",cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "`message_id`")
+    @OneToOne(mappedBy = "comment")
+    @JoinColumn(name = "`message_key`")
     private Message message;
+
+    @Column(name = "`message_id`")
+    private Long messageId;
 
     public Long getCommentId() {
         return commentId;
@@ -83,6 +113,33 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+        this.setUserId(user.getUserId());
+        this.setUserNickname(user.getNickname());
+        this.setUserAvatar(user.getAvatar());
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
     public Contract getContract() {
@@ -91,6 +148,15 @@ public class Comment {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+        this.setContractId(contract.getContractId());
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
     }
 
     public String getContent() {
@@ -99,6 +165,16 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setFatherComment(Comment fatherComment){
+        if(fatherComment!=null){
+            this.setFatherCommentContent(fatherComment.getContent());
+            this.setFatherCommentId(fatherComment.getCommentId());
+            this.setFatherCommentUserAvatar(fatherComment.getUserAvatar());
+            this.setFatherCommentUserId(fatherComment.getUserId());
+            this.setFatherUserNickname(fatherComment.getUserNickname());
+        }
     }
 
     public Long getFatherCommentId() {
@@ -133,6 +209,14 @@ public class Comment {
         this.fatherCommentUserAvatar = fatherCommentUserAvatar;
     }
 
+    public String getFatherUserNickname() {
+        return fatherUserNickname;
+    }
+
+    public void setFatherUserNickname(String fatherUserNickname) {
+        this.fatherUserNickname = fatherUserNickname;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -147,5 +231,13 @@ public class Comment {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
     }
 }

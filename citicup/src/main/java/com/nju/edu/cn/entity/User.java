@@ -48,13 +48,13 @@ public class User {
     /**
      * 用户的交易，进一步应该筛出deleted=false的
      */
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "user")
     private List<Trade> trades;
 
     /**
      * 用户的消息
      */
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "receiver")
     private List<Message> messages;
 
     public Long getUserId() {

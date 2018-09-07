@@ -1,10 +1,12 @@
 package com.nju.edu.cn.controller;
 
 import com.nju.edu.cn.model.UserModel;
+import com.nju.edu.cn.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping(value = "/api/user", produces = "application/json;charset=UTF-8")
 public class UserController {
+    @Autowired
+    UserService userService;
     /**
      * 用户注册
      * @param email 邮箱
@@ -30,7 +34,7 @@ public class UserController {
     })
     @PostMapping("/register")
     public void register(String email,String psw){
-
+        userService.register(email,psw);
     }
 
     /**

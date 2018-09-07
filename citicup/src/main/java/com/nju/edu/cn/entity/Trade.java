@@ -19,14 +19,14 @@ public class Trade {
     /**
      * 购买合约的用户
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne()
     @JoinColumn(name = "`user_id`")
     private User user;
 
     /**
      * 被购买的合约
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne()
     @JoinColumn(name = "`contract_id`")
     private Contract contract;
 
@@ -38,11 +38,47 @@ public class Trade {
     private Float investment;
 
     /**
-     * 风险等级
+     * 风险等级，假如有十个风险等级，那么一个合约初始化的时候，backtest增加十条线，分别对应十个风险等级。然后每增加一个trade，backtest增加一条线
      * todo 是否应放到trade表里
      */
     @Column(name = "`risk_level`")
     private Integer riskLevel;
+
+    /**
+     * 收益率
+     */
+    @Column(name = "`yield`")
+    private Float yield;
+
+    /**
+     * 最大回撤
+     */
+    @Column(name = "`max_drawdown`")
+    private Float maxDrawdown;
+
+    /**
+     * 胜率
+     */
+    @Column(name = "`win_rate`")
+    private Float winRate;
+
+    /**
+     * 盈亏比
+     */
+    @Column(name = "`profit_loss_ratio`")
+    private Float profitLossRatio;
+
+    /**
+     * 流动性
+     */
+    @Column(name = "`liquidity`")
+    private Float liquidity;
+
+    /**
+     * 市场最大承载资金
+     */
+    @Column(name = "`market_capital_capacity`")
+    private Float marketCapitalCapacity;
 
     /**
      * 合约被购买的时间
@@ -65,7 +101,7 @@ public class Trade {
     /**
      * 此条交易每分钟更新的回测数据。如果合约被赎回，回测数据不再更新
      */
-    @OneToMany(mappedBy = "trade",cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "trade")
     private List<ContractBackTest> contractBackTests;
 
     public Long getTradeId() {
@@ -138,5 +174,53 @@ public class Trade {
 
     public void setRiskLevel(Integer riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public Float getMaxDrawdown() {
+        return maxDrawdown;
+    }
+
+    public void setMaxDrawdown(Float maxDrawdown) {
+        this.maxDrawdown = maxDrawdown;
+    }
+
+    public Float getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(Float winRate) {
+        this.winRate = winRate;
+    }
+
+    public Float getProfitLossRatio() {
+        return profitLossRatio;
+    }
+
+    public void setProfitLossRatio(Float profitLossRatio) {
+        this.profitLossRatio = profitLossRatio;
+    }
+
+    public Float getLiquidity() {
+        return liquidity;
+    }
+
+    public void setLiquidity(Float liquidity) {
+        this.liquidity = liquidity;
+    }
+
+    public Float getMarketCapitalCapacity() {
+        return marketCapitalCapacity;
+    }
+
+    public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
+        this.marketCapitalCapacity = marketCapitalCapacity;
+    }
+
+    public Float getYield() {
+        return yield;
+    }
+
+    public void setYield(Float yield) {
+        this.yield = yield;
     }
 }

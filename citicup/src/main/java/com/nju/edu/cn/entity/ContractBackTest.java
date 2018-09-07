@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * Created by shea on 2018/9/1.
- * 正在回测的合约表
+ * 正在回测的合约表,每增加一条trade记录，ContractBackTest新增一条线
  */
 @Entity
 @Table(name = "`contract_back_test`")
@@ -20,36 +20,6 @@ public class ContractBackTest {
      */
     @Column(name = "`yield`")
     private Float yield;
-
-    /**
-     * 最大回撤
-     */
-    @Column(name = "`max_drawdown`")
-    private Float maxDrawdown;
-
-    /**
-     * 胜率
-     */
-    @Column(name = "`win_rate`")
-    private Float winRate;
-
-    /**
-     * 盈亏比
-     */
-    @Column(name = "`profit_loss_ratio`")
-    private Float profitLossRatio;
-
-    /**
-     * 流动性
-     */
-    @Column(name = "`liquidity`")
-    private Float liquidity;
-
-    /**
-     * 市场最大承载资金
-     */
-    @Column(name = "`market_capital_capacity`")
-    private Float marketCapitalCapacity;
 
     /**
      * 仓位
@@ -110,7 +80,7 @@ public class ContractBackTest {
     private Date createTime;
 
     /**
-     * 合约
+     * 交易
      */
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "`trade_id`")
@@ -130,46 +100,6 @@ public class ContractBackTest {
 
     public void setYield(Float yield) {
         this.yield = yield;
-    }
-
-    public Float getMaxDrawdown() {
-        return maxDrawdown;
-    }
-
-    public void setMaxDrawdown(Float maxDrawdown) {
-        this.maxDrawdown = maxDrawdown;
-    }
-
-    public Float getWinRate() {
-        return winRate;
-    }
-
-    public void setWinRate(Float winRate) {
-        this.winRate = winRate;
-    }
-
-    public Float getProfitLossRatio() {
-        return profitLossRatio;
-    }
-
-    public void setProfitLossRatio(Float profitLossRatio) {
-        this.profitLossRatio = profitLossRatio;
-    }
-
-    public Float getLiquidity() {
-        return liquidity;
-    }
-
-    public void setLiquidity(Float liquidity) {
-        this.liquidity = liquidity;
-    }
-
-    public Float getMarketCapitalCapacity() {
-        return marketCapitalCapacity;
-    }
-
-    public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
-        this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
     public Float getPosition() {
@@ -266,5 +196,13 @@ public class ContractBackTest {
 
     public void setTrade(Trade trade) {
         this.trade = trade;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

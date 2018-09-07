@@ -29,6 +29,12 @@ public class Futures {
     private Integer type;
 
     /**
+     * 期货名称（IF1706）
+     */
+    @Column(name = "`name`")
+    private String name;
+
+    /**
      * 期货每分钟更新的数据
      */
     @OneToMany(mappedBy = "futures",cascade = {CascadeType.PERSIST})
@@ -64,5 +70,13 @@ public class Futures {
 
     public void setFuturesUpdatings(List<FuturesUpdating> futuresUpdatings) {
         this.futuresUpdatings = futuresUpdatings;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

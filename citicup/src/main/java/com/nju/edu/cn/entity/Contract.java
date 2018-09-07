@@ -30,6 +30,12 @@ public class Contract {
     private Futures backFutures;
 
     /**
+     * 合约名称（IF1706-IF1703）
+     */
+    @Column(name = "`name`")
+    private String name;
+
+    /**
      * 合约的交易，进一步应该筛出deleted=false的
      */
     @OneToMany(mappedBy = "contract",cascade = {CascadeType.PERSIST})
@@ -71,5 +77,21 @@ public class Contract {
 
     public void setTrades(List<Trade> trades) {
         this.trades = trades;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
