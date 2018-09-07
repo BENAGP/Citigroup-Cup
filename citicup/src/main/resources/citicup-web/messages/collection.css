@@ -1,0 +1,106 @@
+button{
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    outline: none;
+}
+
+.person_title{
+    /*position: relative;*/
+    margin-top: 20px;
+    width: 200px;
+    height: 100px;
+    line-height: 100px;
+    background-color: rgba(253, 104, 87, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+.person_board{
+    left: 70px;
+    top: 160px;
+    width: 200px;
+    height: 470px;
+    line-height: 20px;
+    color: rgba(16, 16, 16, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+    border: 1px solid rgba(229, 229, 229, 1);
+
+}
+
+
+
+.personbutton{
+    position: relative;
+    left: 0px;
+    margin-top: 40px;
+    width: 90px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
+
+.collectionbutton{
+    position: relative;
+    left: 0px;
+    margin-top: 40px;
+    width: 90px;
+    height: 29px;
+    line-height: 29px;
+    color: #FD6857 ;
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.red_block{
+    position: relative;
+    left: 189px;
+    top: -28px;
+    width: 10px;
+    height: 30px;
+    line-height: 20px;
+    background-color: rgba(253, 104, 87, 1);
+    text-align: center;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
