@@ -22,6 +22,13 @@ public interface ContractService {
 
     public ContractTradeDetail getDetail(Long userId, Long tradeId);
 
+    /**
+     * 在详情页切换风险等级的时候调用此方法
+     * @param userId
+     * @param contractId
+     * @param riskLevel
+     * @return
+     */
     public ContractTradeDetail getDetail(Long userId,Long contractId,Integer riskLevel);
 
     public void redeem(Long userId,Long tradeId);

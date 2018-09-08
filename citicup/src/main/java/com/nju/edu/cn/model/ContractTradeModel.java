@@ -32,11 +32,6 @@ public class ContractTradeModel {
     public Float profitLossRatio;
 
     /**
-     * 流动性
-     */
-    public Float liquidity;
-
-    /**
      * 市场最大承载资金
      */
     public Float marketCapitalCapacity;
@@ -98,10 +93,6 @@ public class ContractTradeModel {
 
     public Float getProfitLossRatio() {
         return profitLossRatio;
-    }
-
-    public Float getLiquidity() {
-        return liquidity;
     }
 
     public Float getMarketCapitalCapacity() {

@@ -131,7 +131,7 @@ public class ContractController {
      * @param riskLevel 选择的风险等级
      * @return
      */
-    @ApiOperation(value="getDetailByRiskLevel", notes="获得合约详情")
+    @ApiOperation(value="getDetailByRiskLevel", notes="在详情页切换风险等级的时候调用此方法")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
             @ApiImplicitParam(name = "contractId", value = "合约ID", required = true ,dataType = "string"),

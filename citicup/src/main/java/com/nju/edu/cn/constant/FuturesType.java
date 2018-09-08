@@ -1,4 +1,4 @@
-package com.nju.edu.cn.util;
+package com.nju.edu.cn.constant;
 
 /**
  * Created by shea on 2018/9/7.

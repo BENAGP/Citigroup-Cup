@@ -1,8 +1,6 @@
 package com.nju.edu.cn.model;
 
-import com.nju.edu.cn.util.FuturesType;
-
-import javax.persistence.Column;
+import com.nju.edu.cn.constant.FuturesType;
 
 /**
  * Created by shea on 2018/9/2.
@@ -30,11 +28,6 @@ public class ContractTradeSearch {
     public Float profitLossRatioL;
 
     /**
-     * 流动性
-     */
-    public Float liquidityL;
-
-    /**
      * 市场最大承载资金
      */
     public Float marketCapitalCapacityL;
@@ -60,11 +53,6 @@ public class ContractTradeSearch {
     public Float profitRossRatioR;
 
     /**
-     * 流动性
-     */
-    public Float liquidityR;
-
-    /**
      * 市场最大承载资金
      */
     public Float marketCapitalCapacityR;
@@ -85,8 +73,6 @@ public class ContractTradeSearch {
         winRateR = winRateR==null?maxF:winRateR;
         profitLossRatioL = profitLossRatioL==null?minF:profitLossRatioL;
         profitRossRatioR = profitRossRatioR==null?maxF:profitRossRatioR;
-        liquidityL = liquidityL==null?minF:liquidityL;
-        liquidityR = liquidityR==null?maxF:liquidityR;
         marketCapitalCapacityL = marketCapitalCapacityL==null?minF:marketCapitalCapacityL;
         marketCapitalCapacityR = marketCapitalCapacityR==null?maxF:marketCapitalCapacityR;
         type = type==null? FuturesType.ALL:type;

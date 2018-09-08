@@ -57,22 +57,6 @@ public class ContractBackTest {
     @Column(name = "`back_futures_position`")
     private Integer backFuturesPosition;
 
-    //稳定分布的四个形状参数（alpha、beta、gam、delta）
-    @Column(name = "`alpha`")
-    private Float alpha;
-    @Column(name = "`beta`")
-    private Float beta;
-    @Column(name = "`gam`")
-    private Float gam;
-    @Column(name = "`delta`")
-    private Float delta;
-
-    /**
-     * 对数利率之差
-     */
-    @Column(name = "`interest_rate_diff`")
-    private Float interestRateDiff;
-
     /**
      * 最大回撤
      */
@@ -90,12 +74,6 @@ public class ContractBackTest {
      */
     @Column(name = "`profit_loss_ratio`")
     private Float profitLossRatio;
-
-    /**
-     * 流动性
-     */
-    @Column(name = "`liquidity`")
-    private Float liquidity;
 
     /**
      * 市场最大承载资金
@@ -180,46 +158,6 @@ public class ContractBackTest {
         this.backFuturesPosition = backFuturesPosition;
     }
 
-    public Float getAlpha() {
-        return alpha;
-    }
-
-    public void setAlpha(Float alpha) {
-        this.alpha = alpha;
-    }
-
-    public Float getBeta() {
-        return beta;
-    }
-
-    public void setBeta(Float beta) {
-        this.beta = beta;
-    }
-
-    public Float getGam() {
-        return gam;
-    }
-
-    public void setGam(Float gam) {
-        this.gam = gam;
-    }
-
-    public Float getDelta() {
-        return delta;
-    }
-
-    public void setDelta(Float delta) {
-        this.delta = delta;
-    }
-
-    public Float getInterestRateDiff() {
-        return interestRateDiff;
-    }
-
-    public void setInterestRateDiff(Float interestRateDiff) {
-        this.interestRateDiff = interestRateDiff;
-    }
-
     public Trade getTrade() {
         return trade;
     }
@@ -260,14 +198,6 @@ public class ContractBackTest {
         this.profitLossRatio = profitLossRatio;
     }
 
-    public Float getLiquidity() {
-        return liquidity;
-    }
-
-    public void setLiquidity(Float liquidity) {
-        this.liquidity = liquidity;
-    }
-
     public Float getMarketCapitalCapacity() {
         return marketCapitalCapacity;
     }
@@ -275,4 +205,6 @@ public class ContractBackTest {
     public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
         this.marketCapitalCapacity = marketCapitalCapacity;
     }
+
+
 }

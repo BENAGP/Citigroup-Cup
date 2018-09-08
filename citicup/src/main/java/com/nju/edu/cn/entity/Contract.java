@@ -44,8 +44,16 @@ public class Contract {
     /**
      * 合约的评论
      */
-    @OneToMany(mappedBy = "contract",cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "contract")
     private List<Comment> comments;
+
+
+    /**
+     * 合约的评论
+     */
+    @OneToMany(mappedBy = "contract")
+    private List<ContractBackTestParams> contractBackTestParams;
+
 
     public Long getContractId() {
         return contractId;
@@ -95,5 +103,11 @@ public class Contract {
         this.name = name;
     }
 
+    public List<ContractBackTestParams> getContractBackTestParams() {
+        return contractBackTestParams;
+    }
 
+    public void setContractBackTestParams(List<ContractBackTestParams> contractBackTestParams) {
+        this.contractBackTestParams = contractBackTestParams;
+    }
 }

@@ -69,12 +69,6 @@ public class Trade {
     private Float profitLossRatio;
 
     /**
-     * 流动性
-     */
-    @Column(name = "`liquidity`")
-    private Float liquidity;
-
-    /**
      * 市场最大承载资金
      */
     @Column(name = "`market_capital_capacity`")
@@ -198,14 +192,6 @@ public class Trade {
 
     public void setProfitLossRatio(Float profitLossRatio) {
         this.profitLossRatio = profitLossRatio;
-    }
-
-    public Float getLiquidity() {
-        return liquidity;
-    }
-
-    public void setLiquidity(Float liquidity) {
-        this.liquidity = liquidity;
     }
 
     public Float getMarketCapitalCapacity() {

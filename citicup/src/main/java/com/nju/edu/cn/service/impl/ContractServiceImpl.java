@@ -7,7 +7,7 @@ import com.nju.edu.cn.model.ContractTradeDetail;
 import com.nju.edu.cn.model.ContractTradeModel;
 import com.nju.edu.cn.model.ContractTradeSearch;
 import com.nju.edu.cn.service.ContractService;
-import com.nju.edu.cn.util.FuturesType;
+import com.nju.edu.cn.constant.FuturesType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -112,16 +112,14 @@ public class ContractServiceImpl implements ContractService {
         PageRequest pageRequest = new PageRequest(page,pageNum,sort);
         List<Trade> trades = null;
         if(contractTradeSearch.type== FuturesType.ALL){
-            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndLiquidityLessThanEqualAndLiquidityGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
                     userId,riskLevel,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
-                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.liquidityR,
-                    contractTradeSearch.liquidityL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
+                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
             ).getContent();
         }else {
-            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndLiquidityLessThanEqualAndLiquidityGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
                     userId,riskLevel,contractTradeSearch.type,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
-                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.liquidityR,
-                    contractTradeSearch.liquidityL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
+                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
             ).getContent();
         }
         trades.forEach(trade -> {
@@ -163,6 +161,13 @@ public class ContractServiceImpl implements ContractService {
         return getDetail(trade);
     }
 
+    /**
+     * 在详情页切换风险等级的时候调用此方法
+     * @param userId
+     * @param contractId
+     * @param riskLevel
+     * @return
+     */
     @Override
     public ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel) {
         Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId,riskLevel,null);
@@ -185,6 +190,15 @@ public class ContractServiceImpl implements ContractService {
         contractTradeDetail.yields = yields;
         //todo 添加其ta收益率
         Contract contract = trade.getContract();
+        List<ContractBackTestParams> contractBackTestParams = contract.getContractBackTestParams();
+        Comparator<ContractBackTestParams> contractBackTestParamsComparator = new Comparator<ContractBackTestParams>() {
+            @Override
+            public int compare(ContractBackTestParams o1, ContractBackTestParams o2) {
+                return (int)(o1.getCreateTime().getTime()-o2.getCreateTime().getTime());
+            }
+        };
+        Collections.sort(contractBackTestParams,contractBackTestParamsComparator);//按更新时间排序
+        contractTradeDetail.liquidity = contractBackTestParams.get(contractBackTestParams.size()-1).getLiquidity();
         //todo 是重新查还是直接get?
         List<Comment> comments = contract.getComments();
         List<CommentModel> commentModels = comments.stream().map(comment -> {
