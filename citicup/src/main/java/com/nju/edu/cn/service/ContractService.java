@@ -20,7 +20,9 @@ public interface ContractService {
 
     public void buy(Long userId,Long contractId,Float investment,Integer riskLevel);
 
-    public ContractTradeDetail getDetail(Long userId, Long contractId);
+    public ContractTradeDetail getDetail(Long userId, Long tradeId);
 
-    public void redeem(Long userId,Long contractId);
+    public ContractTradeDetail getDetail(Long userId,Long contractId,Integer riskLevel);
+
+    public void redeem(Long userId,Long tradeId);
 }

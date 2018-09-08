@@ -89,7 +89,7 @@ public class ContractTradeSearch {
         liquidityR = liquidityR==null?maxF:liquidityR;
         marketCapitalCapacityL = marketCapitalCapacityL==null?minF:marketCapitalCapacityL;
         marketCapitalCapacityR = marketCapitalCapacityR==null?maxF:marketCapitalCapacityR;
-        type = type==null? FuturesType.IF:type;
+        type = type==null? FuturesType.ALL:type;
     }
 
 }

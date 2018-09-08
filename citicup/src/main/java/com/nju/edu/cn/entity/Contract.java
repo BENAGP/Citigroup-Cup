@@ -38,7 +38,7 @@ public class Contract {
     /**
      * 合约的交易，进一步应该筛出deleted=false的
      */
-    @OneToMany(mappedBy = "contract",cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "contract")
     private List<Trade> trades;
 
     /**
@@ -94,4 +94,6 @@ public class Contract {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

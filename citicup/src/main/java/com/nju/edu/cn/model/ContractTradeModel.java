@@ -16,14 +16,6 @@ public class ContractTradeModel {
      */
     public Float yield;
 
-    public Float near3WeekYield;
-
-    public Float near1WeekYield;
-
-    public Float near12WeekYield;
-
-    public Float near6WeekYield;
-
     /**
      * 最大回撤
      */
@@ -94,22 +86,6 @@ public class ContractTradeModel {
 
     public Float getYield() {
         return yield;
-    }
-
-    public Float getNear3WeekYield() {
-        return near3WeekYield;
-    }
-
-    public Float getNear1WeekYield() {
-        return near1WeekYield;
-    }
-
-    public Float getNear12WeekYield() {
-        return near12WeekYield;
-    }
-
-    public Float getNear6WeekYield() {
-        return near6WeekYield;
     }
 
     public Float getMaxDrawdown() {

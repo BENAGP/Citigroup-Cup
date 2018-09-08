@@ -23,7 +23,20 @@ public class Futures {
     private Date lastTradingDate;
 
     /**
-     * 期货类型
+     * 最后交割日
+     */
+    @Column(name = "`last_delivery_date`")
+    private Date lastDeliveryDate;
+
+    /**
+     * 期货品种（IF/IH）
+     */
+    @Column(name = "`variety`")
+    private Integer variety;
+
+
+    /**
+     * 期货类型(金融／农产品)
      */
     @Column(name = "`type`")
     private Integer type;
@@ -78,5 +91,21 @@ public class Futures {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getLastDeliveryDate() {
+        return lastDeliveryDate;
+    }
+
+    public void setLastDeliveryDate(Date lastDeliveryDate) {
+        this.lastDeliveryDate = lastDeliveryDate;
+    }
+
+    public Integer getVariety() {
+        return variety;
+    }
+
+    public void setVariety(Integer variety) {
+        this.variety = variety;
     }
 }

@@ -110,32 +110,51 @@ public class ContractController {
     /**
      * 获得合约详情
      * @param userId 用户ID
-     * @param contractId 合约ID
+     * @param tradeId 购买的合约交易ID
      * @return
      */
     @ApiOperation(value="getDetail", notes="获得合约详情")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
-            @ApiImplicitParam(name = "contractId", value = "购买的合约ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "tradeId", value = "购买的合约交易ID", required = true ,dataType = "string"),
     })
     @PostMapping("/getDetail")
     public @ResponseBody
-    ContractTradeDetail getDetail(Long userId,Long contractId){
+    ContractTradeDetail getDetail(Long userId,Long tradeId){
+        return new ContractTradeDetail();
+    }
+
+    /**
+     * 获得合约详情
+     * @param userId 用户ID
+     * @param contractId 合约ID
+     * @param riskLevel 选择的风险等级
+     * @return
+     */
+    @ApiOperation(value="getDetailByRiskLevel", notes="获得合约详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "contractId", value = "合约ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "riskLevel", value = "选择的风险等级", required = true ,dataType = "string"),
+    })
+    @PostMapping("/getDetailByRiskLevel")
+    public @ResponseBody
+    ContractTradeDetail getDetailByRiskLevel(Long userId,Long contractId,Integer riskLevel){
         return new ContractTradeDetail();
     }
 
     /**
      * 赎回合约
      * @param userId 用户ID
-     * @param contractId 赎回的合约ID
+     * @param tradeId 赎回的合约ID
      */
     @ApiOperation(value="redeem", notes="赎回合约")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
-            @ApiImplicitParam(name = "contractId", value = "赎回的合约ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "tradeId", value = "赎回的合约交易ID", required = true ,dataType = "string"),
     })
     @PostMapping("/redeem")
-    public void redeem(Long userId,Long contractId){
+    public void redeem(Long userId,Long tradeId){
 
     }
 }

@@ -216,11 +216,5 @@ public class Trade {
         this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
-    public Float getYield() {
-        return yield;
-    }
 
-    public void setYield(Float yield) {
-        this.yield = yield;
-    }
 }

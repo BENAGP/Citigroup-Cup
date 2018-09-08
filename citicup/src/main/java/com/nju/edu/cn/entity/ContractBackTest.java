@@ -74,6 +74,36 @@ public class ContractBackTest {
     private Float interestRateDiff;
 
     /**
+     * 最大回撤
+     */
+    @Column(name = "`max_drawdown`")
+    private Float maxDrawdown;
+
+    /**
+     * 胜率
+     */
+    @Column(name = "`win_rate`")
+    private Float winRate;
+
+    /**
+     * 盈亏比
+     */
+    @Column(name = "`profit_loss_ratio`")
+    private Float profitLossRatio;
+
+    /**
+     * 流动性
+     */
+    @Column(name = "`liquidity`")
+    private Float liquidity;
+
+    /**
+     * 市场最大承载资金
+     */
+    @Column(name = "`market_capital_capacity`")
+    private Float marketCapitalCapacity;
+
+    /**
      * 更新时间
      */
     @Column(name = "`create_time`")
@@ -204,5 +234,45 @@ public class ContractBackTest {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Float getMaxDrawdown() {
+        return maxDrawdown;
+    }
+
+    public void setMaxDrawdown(Float maxDrawdown) {
+        this.maxDrawdown = maxDrawdown;
+    }
+
+    public Float getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(Float winRate) {
+        this.winRate = winRate;
+    }
+
+    public Float getProfitLossRatio() {
+        return profitLossRatio;
+    }
+
+    public void setProfitLossRatio(Float profitLossRatio) {
+        this.profitLossRatio = profitLossRatio;
+    }
+
+    public Float getLiquidity() {
+        return liquidity;
+    }
+
+    public void setLiquidity(Float liquidity) {
+        this.liquidity = liquidity;
+    }
+
+    public Float getMarketCapitalCapacity() {
+        return marketCapitalCapacity;
+    }
+
+    public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
+        this.marketCapitalCapacity = marketCapitalCapacity;
     }
 }

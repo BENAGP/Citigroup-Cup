@@ -74,6 +74,11 @@ public class ContractTradeDetail {
     public List<Float> yields;
 
     /**
+     * 合约的前十条评论
+     */
+    public List<CommentModel> comments;
+
+    /**
      * 合约被购买的时间
      */
     public Date createTime;
