@@ -44,7 +44,7 @@ public class FuturesUpdating {
      * 对数利率
      */
     @Column(name = "`interest_rate`")
-    private Float interestRate;
+    private Double interestRate;
 
     public Long getFuturesUpdatingId() {
         return futuresUpdatingId;
@@ -86,11 +86,11 @@ public class FuturesUpdating {
         this.futures = futures;
     }
 
-    public Float getInterestRate() {
+    public Double getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(Float interestRate) {
+    public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
     }
 }

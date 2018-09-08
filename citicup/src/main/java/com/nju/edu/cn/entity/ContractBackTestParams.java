@@ -17,19 +17,19 @@ public class ContractBackTestParams {
 
     //稳定分布的四个形状参数（alpha、beta、gam、delta）
     @Column(name = "`alpha`")
-    private Float alpha;
+    private Double alpha;
     @Column(name = "`beta`")
-    private Float beta;
+    private Double beta;
     @Column(name = "`gam`")
-    private Float gam;
+    private Double gam;
     @Column(name = "`delta`")
-    private Float delta;
+    private Double delta;
 
     /**
      * 对数利率之差
      */
     @Column(name = "`interest_rate_diff`")
-    private Float interestRateDiff;
+    private Double interestRateDiff;
 
     /**
      * 更新时间
@@ -59,43 +59,43 @@ public class ContractBackTestParams {
         this.contractBackTestParamsId = contractBackTestParamsId;
     }
 
-    public Float getAlpha() {
+    public Double getAlpha() {
         return alpha;
     }
 
-    public void setAlpha(Float alpha) {
+    public void setAlpha(Double alpha) {
         this.alpha = alpha;
     }
 
-    public Float getBeta() {
+    public Double getBeta() {
         return beta;
     }
 
-    public void setBeta(Float beta) {
+    public void setBeta(Double beta) {
         this.beta = beta;
     }
 
-    public Float getGam() {
+    public Double getGam() {
         return gam;
     }
 
-    public void setGam(Float gam) {
+    public void setGam(Double gam) {
         this.gam = gam;
     }
 
-    public Float getDelta() {
+    public Double getDelta() {
         return delta;
     }
 
-    public void setDelta(Float delta) {
+    public void setDelta(Double delta) {
         this.delta = delta;
     }
 
-    public Float getInterestRateDiff() {
+    public Double getInterestRateDiff() {
         return interestRateDiff;
     }
 
-    public void setInterestRateDiff(Float interestRateDiff) {
+    public void setInterestRateDiff(Double interestRateDiff) {
         this.interestRateDiff = interestRateDiff;
     }
 

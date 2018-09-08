@@ -1,5 +1,7 @@
 package com.nju.edu.cn.controller;
 
+import com.nju.edu.cn.service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,5 +17,11 @@ public class MainController {
         System.out.println("call 爆吧 index");
         return "index";
     }
+
+//    @GetMapping("/index")
+//    public String index(){
+//        System.out.println("call 爆吧 index2");
+//        return "index";
+//    }
 
 }

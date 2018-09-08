@@ -265,3 +265,11 @@ function test2() {
 
 
 }
+
+function initParams() {
+    $.get('/api/file/initParams').done(response=>{
+        console.log(response);
+    }).fail(err=>{
+        console.log("err",err);
+    })
+}
