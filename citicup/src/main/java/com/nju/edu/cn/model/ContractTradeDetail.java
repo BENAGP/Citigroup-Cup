@@ -11,30 +11,30 @@ public class ContractTradeDetail {
     /**
      * 收益率
      */
-    public Float yield;
+    public Double yield;
 
-    public Float near3WeekYield;
+    public Double near3WeekYield;
 
-    public Float near1WeekYield;
+    public Double near1WeekYield;
 
-    public Float near12WeekYield;
+    public Double near12WeekYield;
 
-    public Float near6WeekYield;
+    public Double near6WeekYield;
 
     /**
      * 最大回撤
      */
-    public Float maxDrawdown;
+    public Double maxDrawdown;
 
     /**
      * 胜率
      */
-    public Float winRate;
+    public Double winRate;
 
     /**
      * 盈亏比
      */
-    public Float profitLossRatio;
+    public Double profitLossRatio;
 
     /**
      * 流动性
@@ -44,7 +44,7 @@ public class ContractTradeDetail {
     /**
      * 市场最大承载资金
      */
-    public Float marketCapitalCapacity;
+    public Double marketCapitalCapacity;
 
     /**
      * 合约ID
@@ -61,7 +61,7 @@ public class ContractTradeDetail {
     /**
      * 投入资金
      */
-    public Float investment;
+    public Double investment;
 
     /**
      * 时间横轴
@@ -71,7 +71,7 @@ public class ContractTradeDetail {
     /**
      * 收益率纵轴
      */
-    public List<Float> yields;
+    public List<Double> yields;
 
     /**
      * 合约的前十条评论
@@ -94,35 +94,35 @@ public class ContractTradeDetail {
      */
     public Boolean isEnd;
 
-    public Float getYield() {
+    public Double getYield() {
         return yield;
     }
 
-    public Float getNear3WeekYield() {
+    public Double getNear3WeekYield() {
         return near3WeekYield;
     }
 
-    public Float getNear1WeekYield() {
+    public Double getNear1WeekYield() {
         return near1WeekYield;
     }
 
-    public Float getNear12WeekYield() {
+    public Double getNear12WeekYield() {
         return near12WeekYield;
     }
 
-    public Float getNear6WeekYield() {
+    public Double getNear6WeekYield() {
         return near6WeekYield;
     }
 
-    public Float getMaxDrawdown() {
+    public Double getMaxDrawdown() {
         return maxDrawdown;
     }
 
-    public Float getWinRate() {
+    public Double getWinRate() {
         return winRate;
     }
 
-    public Float getProfitLossRatio() {
+    public Double getProfitLossRatio() {
         return profitLossRatio;
     }
 
@@ -130,7 +130,7 @@ public class ContractTradeDetail {
         return liquidity;
     }
 
-    public Float getMarketCapitalCapacity() {
+    public Double getMarketCapitalCapacity() {
         return marketCapitalCapacity;
     }
 
@@ -146,7 +146,7 @@ public class ContractTradeDetail {
         return riskLevel;
     }
 
-    public Float getInvestment() {
+    public Double getInvestment() {
         return investment;
     }
 
@@ -154,7 +154,7 @@ public class ContractTradeDetail {
         return updateTimes;
     }
 
-    public List<Float> getYields() {
+    public List<Double> getYields() {
         return yields;
     }
 

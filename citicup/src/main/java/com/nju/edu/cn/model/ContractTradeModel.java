@@ -14,27 +14,27 @@ public class ContractTradeModel {
     /**
      * 收益率
      */
-    public Float yield;
+    public Double yield;
 
     /**
      * 最大回撤
      */
-    public Float maxDrawdown;
+    public Double maxDrawdown;
 
     /**
      * 胜率
      */
-    public Float winRate;
+    public Double winRate;
 
     /**
      * 盈亏比
      */
-    public Float profitLossRatio;
+    public Double profitLossRatio;
 
     /**
      * 市场最大承载资金
      */
-    public Float marketCapitalCapacity;
+    public Double marketCapitalCapacity;
 
     /**
      * 合约ID
@@ -51,7 +51,7 @@ public class ContractTradeModel {
     /**
      * 投入资金
      */
-    public Float investment;
+    public Double investment;
 
     /**
      * 时间横轴
@@ -61,7 +61,7 @@ public class ContractTradeModel {
     /**
      * 收益率纵轴
      */
-    public List<Float> yields;
+    public List<Double> yields;
 
     /**
      * 合约被购买的时间
@@ -79,23 +79,23 @@ public class ContractTradeModel {
      */
     public Boolean isEnd;
 
-    public Float getYield() {
+    public Double getYield() {
         return yield;
     }
 
-    public Float getMaxDrawdown() {
+    public Double getMaxDrawdown() {
         return maxDrawdown;
     }
 
-    public Float getWinRate() {
+    public Double getWinRate() {
         return winRate;
     }
 
-    public Float getProfitLossRatio() {
+    public Double getProfitLossRatio() {
         return profitLossRatio;
     }
 
-    public Float getMarketCapitalCapacity() {
+    public Double getMarketCapitalCapacity() {
         return marketCapitalCapacity;
     }
 
@@ -111,7 +111,7 @@ public class ContractTradeModel {
         return riskLevel;
     }
 
-    public Float getInvestment() {
+    public Double getInvestment() {
         return investment;
     }
 
@@ -119,7 +119,7 @@ public class ContractTradeModel {
         return updateTimes;
     }
 
-    public List<Float> getYields() {
+    public List<Double> getYields() {
         return yields;
     }
 

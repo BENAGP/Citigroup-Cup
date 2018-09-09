@@ -21,6 +21,7 @@ public class FileServiceImpl implements FileService {
     private static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
     private int count = 0;
     private int count2 = 0;
+    private int count3 = 0;
     @Autowired
     private SpotGoodsRepository spotGoodsRepository;
     @Autowired
@@ -179,6 +180,65 @@ public class FileServiceImpl implements FileService {
             }
 
             contractBackTestParamsRepository.saveAll(contractBackTestParamsList);
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initTrade(String path) {
+        if(count3==1)return;
+        count3++;
+        logger.info("--------------"+count3);
+        File csv = new File(path);  // CSV文件路径
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        BufferedReader br = null;
+        try
+        {
+            br = new BufferedReader(new FileReader(csv));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        String line = "";
+        String everyLine = "";
+        try {
+            List<String> allString = new ArrayList<>();
+            String[] strings;
+            int contractid = 1;
+            int risklevel = 2;
+            int yield = 3;
+            int max_drawdown = 4;
+            int win_rate = 5;
+            int profit_loss_ratio = 6,market_capial_capacity=7,create_time=8;
+            List<Trade> trades = new ArrayList<>();
+            List<Contract> contracts = contractRepository.findAll();
+            Map<Long,Contract> map = new TreeMap<>();
+            contracts.forEach(contract -> {
+                map.put(contract.getContractId(),contract);
+            });
+            while ((line = br.readLine()) != null)  //读取到的内容给line变量
+            {
+//                logger.info(line);
+                strings = line.split(",");
+                Trade trade = new Trade();
+                trade.setCreateTime(sdf.parse(strings[create_time].substring(1,19)));
+                trade.setRiskLevel(Integer.valueOf(strings[risklevel]));
+                trade.setContract(map.get(Long.valueOf(strings[contractid])));
+                trade.setInvestment(100000d);
+                trade.setMaxDrawdown(Double.valueOf(strings[max_drawdown]));
+                trade.setProfitLossRatio(Double.valueOf(strings[profit_loss_ratio]));
+                trade.setYield(Double.valueOf(strings[yield]));
+                trade.setWinRate(Double.valueOf(strings[win_rate]));
+                trade.setMarketCapitalCapacity(Double.valueOf(strings[market_capial_capacity]));
+                trades.add(trade);
+
+            }
+
 
         } catch (IOException e)
         {
