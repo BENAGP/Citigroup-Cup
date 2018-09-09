@@ -32,4 +32,11 @@ public class FileController {
 //        futuresService.initParams("/Users/shea/Downloads/params.csv");
 //        futuresService.initParams("/Users/shea/Downloads/params2.csv");
     }
+
+    @GetMapping("/initTrade")
+    public void initTrade(){
+        logger.info("initTrade");
+//        futuresService.initTrade("/Users/shea/Downloads/trade.csv");
+//        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test.csv");
+    }
 }

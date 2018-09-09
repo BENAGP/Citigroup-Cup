@@ -94,73 +94,86 @@ public class ContractTradeDetail {
      */
     public Boolean isEnd;
 
-    public Double getYield() {
-        return yield;
+    public ContractTradeDetail() {
     }
 
-    public Double getNear3WeekYield() {
-        return near3WeekYield;
+    public void setYield(Double yield) {
+        this.yield = yield;
     }
 
-    public Double getNear1WeekYield() {
-        return near1WeekYield;
+    public void setNear3WeekYield(Double near3WeekYield) {
+        this.near3WeekYield = near3WeekYield;
     }
 
-    public Double getNear12WeekYield() {
-        return near12WeekYield;
+    public void setNear1WeekYield(Double near1WeekYield) {
+        this.near1WeekYield = near1WeekYield;
     }
 
-    public Double getNear6WeekYield() {
-        return near6WeekYield;
+    public void setNear12WeekYield(Double near12WeekYield) {
+        this.near12WeekYield = near12WeekYield;
     }
 
-    public Double getMaxDrawdown() {
-        return maxDrawdown;
+    public void setNear6WeekYield(Double near6WeekYield) {
+        this.near6WeekYield = near6WeekYield;
     }
 
-    public Double getWinRate() {
-        return winRate;
+    public void setMaxDrawdown(Double maxDrawdown) {
+        this.maxDrawdown = maxDrawdown;
     }
 
-    public Double getProfitLossRatio() {
-        return profitLossRatio;
+    public void setWinRate(Double winRate) {
+        this.winRate = winRate;
     }
 
-    public Float getLiquidity() {
-        return liquidity;
+    public void setProfitLossRatio(Double profitLossRatio) {
+        this.profitLossRatio = profitLossRatio;
     }
 
-    public Double getMarketCapitalCapacity() {
-        return marketCapitalCapacity;
+    public void setLiquidity(Float liquidity) {
+        this.liquidity = liquidity;
     }
 
-    public Long getContractId() {
-        return contractId;
+    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
+        this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
-    public Long getTradeId() {
-        return tradeId;
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
     }
 
-    public Integer getRiskLevel() {
-        return riskLevel;
+    public void setTradeId(Long tradeId) {
+        this.tradeId = tradeId;
     }
 
-    public Double getInvestment() {
-        return investment;
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
     }
 
-    public List<Date> getUpdateTimes() {
-        return updateTimes;
+    public void setInvestment(Double investment) {
+        this.investment = investment;
     }
 
-    public List<Double> getYields() {
-        return yields;
+    public void setUpdateTimes(List<Date> updateTimes) {
+        this.updateTimes = updateTimes;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void setYields(List<Double> yields) {
+        this.yields = yields;
     }
 
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
+    }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setDdl(Date ddl) {
+        this.ddl = ddl;
+    }
+
+    public void setIsEnd(Boolean isEnd) {
+        isEnd = isEnd;
+    }
 }

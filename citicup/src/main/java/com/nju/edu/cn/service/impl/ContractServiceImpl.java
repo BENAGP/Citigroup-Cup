@@ -65,7 +65,7 @@ public class ContractServiceImpl implements ContractService {
             //找出与该此购买对应的一条回测数据线
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
             Collections.sort(contractBackTests,comparator);//按更新时间排序
-            BeanUtils.copyProperties(contractTradeModel,trade);
+            BeanUtils.copyProperties(trade,contractTradeModel);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
             contractBackTests.forEach(contractBackTest -> {
@@ -127,7 +127,7 @@ public class ContractServiceImpl implements ContractService {
             //找出与该此购买对应的一条回测数据线
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
             Collections.sort(contractBackTests,comparator);//按更新时间排序
-            BeanUtils.copyProperties(contractTradeModel,trade);
+            BeanUtils.copyProperties(trade,contractTradeModel);
             List<Double> yields = new ArrayList<>();//收益率纵轴
             List<Date> updateTimes = new ArrayList<>();// 时间横轴
             contractBackTests.forEach(contractBackTest -> {
@@ -179,7 +179,7 @@ public class ContractServiceImpl implements ContractService {
         //找出与该此购买对应的一条回测数据线
         List<ContractBackTest> contractBackTests = trade.getContractBackTests();
         Collections.sort(contractBackTests,comparator);//按更新时间排序
-        BeanUtils.copyProperties(contractTradeDetail,trade);
+        BeanUtils.copyProperties(trade,contractTradeDetail);
         List<Double> yields = new ArrayList<>();//收益率纵轴
         List<Date> updateTimes = new ArrayList<>();// 时间横轴
         contractBackTests.forEach(contractBackTest -> {
@@ -203,7 +203,7 @@ public class ContractServiceImpl implements ContractService {
         List<Comment> comments = contract.getComments();
         List<CommentModel> commentModels = comments.stream().map(comment -> {
             CommentModel commentModel = new CommentModel();
-            BeanUtils.copyProperties(commentModel,comment);
+            BeanUtils.copyProperties(comment,commentModel);
             return commentModel;
         }).limit(10).collect(Collectors.toList());
         contractTradeDetail.comments = commentModels;

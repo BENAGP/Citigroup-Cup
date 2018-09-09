@@ -10,61 +10,108 @@ public class ContractTradeSearch {
     /**
      * 收益率
      */
-    public Float yieldL;
+    public Double yieldL;
 
     /**
      * 最大回撤
      */
-    public Float maxDrawdownL;
+    public Double maxDrawdownL;
 
     /**
      * 胜率
      */
-    public Float winRateL;
+    public Double winRateL;
 
     /**
      * 盈亏比
      */
-    public Float profitLossRatioL;
+    public Double profitLossRatioL;
 
     /**
      * 市场最大承载资金
      */
-    public Float marketCapitalCapacityL;
+    public Double marketCapitalCapacityL;
 
     /**
      * 收益率
      */
-    public Float yieldR;
+    public Double yieldR;
 
     /**
      * 最大回撤
      */
-    public Float maxDrawdownR;
+    public Double maxDrawdownR;
 
     /**
      * 胜率
      */
-    public Float winRateR;
+    public Double winRateR;
 
     /**
      * 盈亏比
      */
-    public Float profitRossRatioR;
+    public Double profitRossRatioR;
 
     /**
      * 市场最大承载资金
      */
-    public Float marketCapitalCapacityR;
+    public Double marketCapitalCapacityR;
 
     /**
      * 期货类型
      */
     public Integer type;
 
+    public ContractTradeSearch() {
+    }
+
+    public void setYieldL(Double yieldL) {
+        this.yieldL = yieldL;
+    }
+
+    public void setMaxDrawdownL(Double maxDrawdownL) {
+        this.maxDrawdownL = maxDrawdownL;
+    }
+
+    public void setWinRateL(Double winRateL) {
+        this.winRateL = winRateL;
+    }
+
+    public void setProfitLossRatioL(Double profitLossRatioL) {
+        this.profitLossRatioL = profitLossRatioL;
+    }
+
+    public void setMarketCapitalCapacityL(Double marketCapitalCapacityL) {
+        this.marketCapitalCapacityL = marketCapitalCapacityL;
+    }
+
+    public void setYieldR(Double yieldR) {
+        this.yieldR = yieldR;
+    }
+
+    public void setMaxDrawdownR(Double maxDrawdownR) {
+        this.maxDrawdownR = maxDrawdownR;
+    }
+
+    public void setWinRateR(Double winRateR) {
+        this.winRateR = winRateR;
+    }
+
+    public void setProfitRossRatioR(Double profitRossRatioR) {
+        this.profitRossRatioR = profitRossRatioR;
+    }
+
+    public void setMarketCapitalCapacityR(Double marketCapitalCapacityR) {
+        this.marketCapitalCapacityR = marketCapitalCapacityR;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public void checkNullValue(){
-        Float minF = Float.MIN_VALUE;
-        Float maxF = Float.MAX_VALUE;
+        Double minF = Double.MIN_VALUE;
+        Double maxF = Double.MAX_VALUE;
         yieldL = yieldL==null?minF:yieldL;
         yieldR = yieldR==null?maxF:yieldR;
         maxDrawdownL = maxDrawdownL==null?minF:maxDrawdownL;

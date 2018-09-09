@@ -70,6 +70,51 @@ public class CommentModel{
     public CommentModel() {
     }
 
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
 
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setFatherCommentId(Long fatherCommentId) {
+        this.fatherCommentId = fatherCommentId;
+    }
+
+    public void setFatherCommentUserId(Long fatherCommentUserId) {
+        this.fatherCommentUserId = fatherCommentUserId;
+    }
+
+    public void setFatherCommentContent(String fatherCommentContent) {
+        this.fatherCommentContent = fatherCommentContent;
+    }
+
+    public void setFatherCommentUserAvatar(String fatherCommentUserAvatar) {
+        this.fatherCommentUserAvatar = fatherCommentUserAvatar;
+    }
+
+    public void setFatherUserNickname(String fatherUserNickname) {
+        this.fatherUserNickname = fatherUserNickname;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

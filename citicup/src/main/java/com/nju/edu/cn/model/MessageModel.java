@@ -60,4 +60,50 @@ public class MessageModel {
      */
     public Date createTime;
 
+    public MessageModel() {
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
+
+    public void setHasRead(Boolean hasRead) {
+        this.hasRead = hasRead;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setFatherCommentId(Long fatherCommentId) {
+        this.fatherCommentId = fatherCommentId;
+    }
+
+    public void setFatherCommentContent(String fatherCommentContent) {
+        this.fatherCommentContent = fatherCommentContent;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

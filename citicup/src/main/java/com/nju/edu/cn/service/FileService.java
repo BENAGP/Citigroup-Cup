@@ -7,4 +7,5 @@ public interface FileService {
     public void initFuturesUpdating(String path);
     public void initParams(String path);
     public void initTrade(String path);
+    public void initContractBackTest(String path);
 }

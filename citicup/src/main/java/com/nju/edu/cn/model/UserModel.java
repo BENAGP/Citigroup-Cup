@@ -42,5 +42,28 @@ public class UserModel {
             this.isCompleted = true;
         }
     }
-    
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setPreferRiskLevel(Integer preferRiskLevel) {
+        this.preferRiskLevel = preferRiskLevel;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setIsCompleted(Boolean completed) {
+        isCompleted = completed;
+    }
 }

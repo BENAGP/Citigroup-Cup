@@ -32,7 +32,7 @@ public class MessageServiceImpl implements MessageService {
         List<MessageModel> messageModels = new ArrayList<>();
         messages.forEach(message -> {
             MessageModel messageModel = new MessageModel();
-            BeanUtils.copyProperties(messageModel,message);
+            BeanUtils.copyProperties(message,messageModel);
             messageModels.add(messageModel);
         });
         return messageModels;
@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
         List<MessageModel> messageModels = new ArrayList<>();
         messages.forEach(message -> {
             MessageModel messageModel = new MessageModel();
-            BeanUtils.copyProperties(messageModel,message);
+            BeanUtils.copyProperties(message,messageModel);
             messageModels.add(messageModel);
             message.setHasRead(true);
         });

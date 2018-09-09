@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by shea on 2018/9/1.
@@ -34,6 +35,7 @@ public class UserController {
     })
     @PostMapping("/register")
     public void register(String email,String psw){
+
         userService.register(email,psw);
     }
 
@@ -51,9 +53,25 @@ public class UserController {
     @PostMapping("/login")
     public @ResponseBody
     UserModel login(String email, String psw){
-        return new UserModel();
+
+        return userService.login(email,psw);
     }
 
+    /**
+     * 用户完善上传头像
+     * @param userId 用户ID
+     * @param file 头像图片文件
+     * @return 头像URL
+     */
+    @ApiOperation(value="postAvatar", notes="用户完善／修改个人信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "file", value = "头像图片文件", required = true ,dataType = "string"),
+    })
+    @PostMapping("/postAvatar")
+    public @ResponseBody String postAvatar(Long userId, MultipartFile file){
+        return userService.postAvatar(userId,file);
+    }
 
     /**
      * 用户完善个人信息,登陆后检查用户信息是否未完善
@@ -75,7 +93,7 @@ public class UserController {
     @PostMapping("/perfectInfo")
     public @ResponseBody
     UserModel perfectInfo(Long userId, String email, String nickname, Integer preferRiskLevel,String avatar){
-        return new UserModel();
+        return userService.perfectInfo(userId,email,nickname,preferRiskLevel,avatar);
     }
 
 
@@ -91,7 +109,7 @@ public class UserController {
     @PostMapping("/getInfo")
     public @ResponseBody
     UserModel getInfo(Long userId){
-        return new UserModel();
+        return userService.getInfo(userId);
     }
 
     /**
@@ -108,7 +126,7 @@ public class UserController {
     })
     @PostMapping("/changePsw")
     public void changePsw(Long userId,String originPsw,String newPsw){
-
+        userService.changePsw(userId,originPsw,newPsw);
     }
 
 }

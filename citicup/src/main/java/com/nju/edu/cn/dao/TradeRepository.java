@@ -19,10 +19,10 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     Trade findByContract_ContractIdAndRiskLevelAndUser_UserId(Long contractId, Integer riskLevel, Long userId);
 
     Page<Trade> findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-            Long userId, Integer riskLevel,Integer type,Date today, Float yieldR, Float yieldL, Float maxDrawdownR, Float maxDrawdownL, Float winRateR, Float winRateL,
-            Float profitLossRatioR, Float profitLossRatioL, Float marketCapitalCapacityR, Float marketCapitalCapacityL, Pageable pageable);
+            Long userId, Integer riskLevel,Integer type,Date today, Double yieldR, Double yieldL, Double maxDrawdownR, Double maxDrawdownL, Double winRateR, Double winRateL,
+            Double profitLossRatioR, Double profitLossRatioL, Double marketCapitalCapacityR, Double marketCapitalCapacityL, Pageable pageable);
 
     Page<Trade> findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-            Long userId, Integer riskLevel,Date today, Float yieldR, Float yieldL, Float maxDrawdownR, Float maxDrawdownL, Float winRateR, Float winRateL,
-            Float profitLossRatioR, Float profitLossRatioL, Float marketCapitalCapacityR, Float marketCapitalCapacityL, Pageable pageable);
+            Long userId, Integer riskLevel,Date today, Double yieldR, Double yieldL, Double maxDrawdownR, Double maxDrawdownL, Double winRateR, Double winRateL,
+            Double profitLossRatioR, Double profitLossRatioL, Double marketCapitalCapacityR, Double marketCapitalCapacityL, Pageable pageable);
 }

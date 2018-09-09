@@ -1,13 +1,18 @@
 package com.nju.edu.cn.service.impl;
 
+import com.nju.edu.cn.configuration.FilePathConfig;
 import com.nju.edu.cn.dao.UserRepository;
 import com.nju.edu.cn.entity.User;
 import com.nju.edu.cn.exception.InvalidRequestException;
+import com.nju.edu.cn.exception.MethodFailureException;
 import com.nju.edu.cn.model.UserModel;
 import com.nju.edu.cn.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 
 /**
@@ -34,21 +39,47 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if(user==null||!user.getPassword().equals(psw))throw new InvalidRequestException("用户名或密码错误");
         UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userModel,user);
+        BeanUtils.copyProperties(user,userModel);
         userModel.setIsCompleted();
         return userModel;
+    }
+
+    @Override
+    public String postAvatar(Long userId, MultipartFile file) {
+        // 文件保存路径
+        String filePath = FilePathConfig.PATH +userId+"_"+ System.currentTimeMillis()+file.getOriginalFilename();
+        // 文件url
+        String fileUrl = FilePathConfig.URL +userId+"_"+ System.currentTimeMillis()+file.getOriginalFilename();
+        if (!file.isEmpty()) {
+            try {
+                File dest = new File(filePath);
+
+                // 检测是否存在目录
+                if (!dest.getParentFile().exists()) {
+                    dest.getParentFile().mkdirs();
+                }
+
+                file.transferTo(dest);
+                return fileUrl;
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new MethodFailureException("文件上传出错");
+            }
+        }else {
+            throw new InvalidRequestException("文件不存在");
+        }
     }
 
     @Override
     public UserModel perfectInfo(Long userId, String email, String nickname, Integer preferRiskLevel, String avatar) {
         User user = userRepository.findByUserId(userId);
         if(user==null)throw new InvalidRequestException("用户名错误");
-        user.setNickname(nickname);
-        user.setAvatar(avatar);
-        user.setPreferRiskLevel(preferRiskLevel);
+        if(nickname!=null)user.setNickname(nickname);
+        if(avatar!=null)user.setAvatar(avatar);
+        if(preferRiskLevel!=null)user.setPreferRiskLevel(preferRiskLevel);
         userRepository.save(user);
         UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userModel,user);
+        BeanUtils.copyProperties(user,userModel);
         userModel.setIsCompleted();
         return userModel;
     }
@@ -58,7 +89,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserId(userId);
         if(user==null)throw new InvalidRequestException("用户名不存在");
         UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userModel,user);
+        BeanUtils.copyProperties(user,userModel);
         userModel.setIsCompleted();
         return userModel;
     }
@@ -71,7 +102,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPsw);
         userRepository.save(user);
         UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userModel, user);
+        BeanUtils.copyProperties(user,userModel);
         userModel.setIsCompleted();
         return userModel;
     }

@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
         List<CommentModel> commentModels = new ArrayList<>();
         comments.forEach(comment -> {
             CommentModel commentModel = new CommentModel();
-            BeanUtils.copyProperties(commentModel,comment);
+            BeanUtils.copyProperties(comment,commentModel);
             commentModels.add(commentModel);
         });
         return commentModels;

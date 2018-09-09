@@ -79,53 +79,62 @@ public class ContractTradeModel {
      */
     public Boolean isEnd;
 
-    public Double getYield() {
-        return yield;
+    public ContractTradeModel() {
     }
 
-    public Double getMaxDrawdown() {
-        return maxDrawdown;
+    public void setYield(Double yield) {
+        this.yield = yield;
     }
 
-    public Double getWinRate() {
-        return winRate;
+    public void setMaxDrawdown(Double maxDrawdown) {
+        this.maxDrawdown = maxDrawdown;
     }
 
-    public Double getProfitLossRatio() {
-        return profitLossRatio;
+    public void setWinRate(Double winRate) {
+        this.winRate = winRate;
     }
 
-    public Double getMarketCapitalCapacity() {
-        return marketCapitalCapacity;
+    public void setProfitLossRatio(Double profitLossRatio) {
+        this.profitLossRatio = profitLossRatio;
     }
 
-    public Long getContractId() {
-        return contractId;
+    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
+        this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
-    public Long getTradeId() {
-        return tradeId;
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
     }
 
-    public Integer getRiskLevel() {
-        return riskLevel;
+    public void setTradeId(Long tradeId) {
+        this.tradeId = tradeId;
     }
 
-    public Double getInvestment() {
-        return investment;
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
     }
 
-    public List<Date> getUpdateTimes() {
-        return updateTimes;
+    public void setInvestment(Double investment) {
+        this.investment = investment;
     }
 
-    public List<Double> getYields() {
-        return yields;
+    public void setUpdateTimes(List<Date> updateTimes) {
+        this.updateTimes = updateTimes;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void setYields(List<Double> yields) {
+        this.yields = yields;
     }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
+    public void setDdl(Date ddl) {
+        this.ddl = ddl;
+    }
+
+    public void setIsEnd(Boolean isEnd) {
+        isEnd = isEnd;
+    }
 }
