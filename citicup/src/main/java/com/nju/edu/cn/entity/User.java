@@ -48,14 +48,14 @@ public class User {
     /**
      * 用户的交易，进一步应该筛出deleted=false的
      */
-    @OneToMany(mappedBy = "user")
-    private List<Trade> trades;
+//    @OneToMany(mappedBy = "user")
+//    private List<Trade> trades;
 
     /**
      * 用户的消息
      */
-    @OneToMany(mappedBy = "receiver")
-    private List<Message> messages;
+//    @OneToMany(mappedBy = "receiver")
+//    private List<Message> messages;
 
     public Long getUserId() {
         return userId;
@@ -105,19 +105,19 @@ public class User {
         this.password = password;
     }
 
-    public List<Trade> getTrades() {
-        return trades;
-    }
-
-    public void setTrades(List<Trade> trades) {
-        this.trades = trades;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
+//    public List<Trade> getTrades() {
+//        return trades;
+//    }
+//
+//    public void setTrades(List<Trade> trades) {
+//        this.trades = trades;
+//    }
+//
+//    public List<Message> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(List<Message> messages) {
+//        this.messages = messages;
+//    }
 }

@@ -1,11 +1,17 @@
 package com.nju.edu.cn.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nju.edu.cn.model.ContractTradeDetail;
 import com.nju.edu.cn.model.ContractTradeModel;
+import com.nju.edu.cn.model.ContractTradeSearch;
+import com.nju.edu.cn.service.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +27,10 @@ import java.util.List;
 @RestController()
 @RequestMapping(value = "/api/contract", produces = "application/json;charset=UTF-8")
 public class ContractController {
+    @Autowired
+    private ContractService contractService;
+
+    private static Logger logger = LoggerFactory.getLogger(ContractController.class);
     /**
      * 获得用户收藏的合约列表
      * @param userId 用户ID
@@ -35,7 +45,7 @@ public class ContractController {
     })
     @PostMapping("/getCollectList")
     public @ResponseBody List<ContractTradeModel> getCollectList(Long userId,Integer page,Integer pageNum){
-        return new ArrayList<>();
+        return contractService.getCollectList(userId,page,pageNum);
     }
 
     /**
@@ -50,7 +60,7 @@ public class ContractController {
     })
     @PostMapping("/collect")
     public void collect(Long userId,Long contractId){
-
+        contractService.collect(userId,contractId);
     }
 
     /**
@@ -65,7 +75,7 @@ public class ContractController {
     })
     @PostMapping("/cancelCollect")
     public void cancelCollect(Long userId,Long contractId){
-
+        contractService.cancelCollect(userId,contractId);
     }
 
     /**
@@ -85,7 +95,9 @@ public class ContractController {
     })
     @PostMapping("/getList")
     public @ResponseBody List<ContractTradeModel> getList(Long userId,String contractTradeSearch,Integer page,Integer pageNum){
-        return new ArrayList<>();
+        logger.info("userId:{},contractTradeSearch:{},page:{},pageNum:{}",userId,contractTradeSearch,page,pageNum);
+        ContractTradeSearch contractTradeSearch1 = (ContractTradeSearch)JSONObject.parse(contractTradeSearch);
+        return contractService.getList(userId,contractTradeSearch1,page,pageNum);
     }
 
     /**
@@ -103,8 +115,8 @@ public class ContractController {
             @ApiImplicitParam(name = "riskLevel", value = "选择的风险等级", required = true ,dataType = "string"),
     })
     @PostMapping("/buy")
-    public void buy(Long userId,Long contractId,Float investment,Integer riskLevel){
-
+    public void buy(Long userId,Long contractId,Double investment,Integer riskLevel){
+        contractService.buy(userId,contractId,investment,riskLevel);
     }
 
     /**
@@ -121,7 +133,8 @@ public class ContractController {
     @PostMapping("/getDetail")
     public @ResponseBody
     ContractTradeDetail getDetail(Long userId,Long tradeId){
-        return new ContractTradeDetail();
+
+        return contractService.getDetail(userId,tradeId);
     }
 
     /**
@@ -140,7 +153,7 @@ public class ContractController {
     @PostMapping("/getDetailByRiskLevel")
     public @ResponseBody
     ContractTradeDetail getDetailByRiskLevel(Long userId,Long contractId,Integer riskLevel){
-        return new ContractTradeDetail();
+        return contractService.getDetail(userId,contractId,riskLevel);
     }
 
     /**
@@ -155,6 +168,6 @@ public class ContractController {
     })
     @PostMapping("/redeem")
     public void redeem(Long userId,Long tradeId){
-
+        contractService.redeem(userId,tradeId);
     }
 }
