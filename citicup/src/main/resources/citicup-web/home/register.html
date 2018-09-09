@@ -10,6 +10,56 @@
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
+	<script>
+		let layer;
+		layui.use(['layer'],function(){
+			layer = layui.layer;
+		});
+		function resigter () 
+		{
+			if(CheckPost()) 
+			{
+				$.post('/api/user/register',{
+					email:resigter.usrname.value,
+					psw:resigter.password.value
+				}).done(response->{
+					forward("login.html");
+				}).fail(err->{
+					layer.msg("注册失败！");
+				});
+			}
+		}
+
+		function CheckPostd() 
+		{
+			 if (resigter.usrname.value == "") 
+			 {
+				   resigter.usrname.focus();
+				   layer.msg("用户名不符合邮箱规范！");
+				   return false;
+			 }
+			 with (resigter.usrname)
+			{
+				apos = value.indexOf("@");
+				dotpos = value.lastIndexOf(".");
+				if (apos < 1 || dotpos-apos < 2) 
+				{
+					layer.msg("用户名不符合邮箱规范！");
+					return false;
+				}
+				
+			}
+			 if (resigter.password.value.length > 10) 
+			 {
+				   layer.msg("密码不能超过10个字符！");
+				   resigter.title.focus();
+				   return false;
+			 }
+			 return true;
+		}
+
+	</script>
+	<script type="text/javascript" scr="../util/href-helper.js"></script>
 </head>
 <style>
 	.registerpad{
@@ -92,16 +142,16 @@
 
         <!--write your code here-->
 		<div class = "registerpad" >
-				<form action="" method="">
+				<form name="resigter" action="" method="">
 					<h1 class="login">注册</h1>
 					<label>
-						<input class="usrname" type="text"  onfocus="if (value =='  邮箱'){value =''}" onblur="if (value ==''){value='  邮箱'}" value="  邮箱">
+						<input name="usrname" class="usrname" type="text"  onfocus="if (value =='  邮箱'){value =''}" onblur="if (value ==''){value='  邮箱'}" value="  邮箱">
 					</label>
 					<label>
-						<input class="password" type="text" onfocus="if (value =='  密码'){value =''} if (type == 'text'){type='password'} " onblur="if(value ==''){type='text';value='  密码'} "   onblur="if (value ==''){value='  密码'}" value="  密码">
+						<input name="password" class="password" type="text" onfocus="if (value =='  密码'){value =''} if (type == 'text'){type='password'} " onblur="if(value ==''){type='text';value='  密码'} "   onblur="if (value ==''){value='  密码'}" value="  密码">
 					</label>
 					<label>
-						<input class="submit" type="submit" value="提交">
+						<input class="submit" type="submit" value="提交" onclick="resigter()">
 					</label>
 					<div>
 						<span class="text01">已有账号？</span>	
