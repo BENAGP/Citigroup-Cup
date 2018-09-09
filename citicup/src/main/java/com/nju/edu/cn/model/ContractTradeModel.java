@@ -1,5 +1,6 @@
 package com.nju.edu.cn.model;
 
+import com.nju.edu.cn.constant.Constant;
 import com.nju.edu.cn.entity.ContractBackTest;
 import com.nju.edu.cn.entity.Trade;
 
@@ -14,7 +15,7 @@ public class ContractTradeModel {
     /**
      * 收益率
      */
-    public Double yield;
+    public Double yearYield;
 
     /**
      * 最大回撤
@@ -64,6 +65,11 @@ public class ContractTradeModel {
     public List<Double> yields;
 
     /**
+     * 资金占用纵轴
+     */
+    public List<Double> fundOccupation;
+
+    /**
      * 合约被购买的时间
      */
     public Date createTime;
@@ -80,10 +86,6 @@ public class ContractTradeModel {
     public Boolean isEnd;
 
     public ContractTradeModel() {
-    }
-
-    public void setYield(Double yield) {
-        this.yield = yield;
     }
 
     public void setMaxDrawdown(Double maxDrawdown) {
@@ -136,5 +138,15 @@ public class ContractTradeModel {
 
     public void setIsEnd(Boolean isEnd) {
         isEnd = isEnd;
+    }
+
+    public void computeYield(){
+        int minutesIn1Week = Constant.MINUTES_PER_WEEK;
+        int last = yields.size()-1;
+        int aWeekAgo = last-minutesIn1Week;
+        if(aWeekAgo<0)aWeekAgo=0;
+        Double near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
+        this.yearYield = near1WeekYield*Constant.WEEKS_PER_YEER;
+
     }
 }

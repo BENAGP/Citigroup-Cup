@@ -120,12 +120,12 @@ public class ContractController {
     }
 
     /**
-     * 获得合约详情
+     * 获得合约详情，详情页初始化的时候调用此方法
      * @param userId 用户ID
      * @param tradeId 购买的合约交易ID
      * @return
      */
-    @ApiOperation(value="getDetail", notes="获得合约详情")
+    @ApiOperation(value="getDetail", notes="获得合约详情，详情页初始化的时候调用此方法")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
             @ApiImplicitParam(name = "tradeId", value = "购买的合约交易ID", required = true ,dataType = "string"),

@@ -1,5 +1,7 @@
 package com.nju.edu.cn.model;
 
+import com.nju.edu.cn.constant.Constant;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +11,13 @@ import java.util.List;
 public class ContractTradeDetail {
 
     /**
-     * 收益率
+     * 年化益率
      */
-    public Double yield;
+    public Double yearYield;
 
+    /**
+     * 近1／3／6／12周收益率
+     */
     public Double near3WeekYield;
 
     public Double near1WeekYield;
@@ -97,10 +102,6 @@ public class ContractTradeDetail {
     public ContractTradeDetail() {
     }
 
-    public void setYield(Double yield) {
-        this.yield = yield;
-    }
-
     public void setNear3WeekYield(Double near3WeekYield) {
         this.near3WeekYield = near3WeekYield;
     }
@@ -175,5 +176,28 @@ public class ContractTradeDetail {
 
     public void setIsEnd(Boolean isEnd) {
         isEnd = isEnd;
+    }
+
+    public void setYearYield(Double yearYield) {
+        this.yearYield = yearYield;
+    }
+
+    public void computeYield(){
+        int minutesIn1Week = Constant.MINUTES_PER_WEEK;
+        int last = yields.size()-1;
+        int aWeekAgo = last-minutesIn1Week;
+        if(aWeekAgo<0)aWeekAgo=0;
+        int threeWeekAgo = last - minutesIn1Week*3;
+        if(threeWeekAgo<0)threeWeekAgo=0;
+        int sixWeekAgo = last-minutesIn1Week*6;
+        if(sixWeekAgo<0)sixWeekAgo=0;
+        int twelveWeekAgo = last - minutesIn1Week*12;
+        if(twelveWeekAgo<0)twelveWeekAgo=0;
+        this.near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
+        this.near3WeekYield = yields.get(last)-yields.get(threeWeekAgo);
+        this.near6WeekYield = yields.get(last)-yields.get(sixWeekAgo);
+        this.near12WeekYield = yields.get(last)-yields.get(twelveWeekAgo);
+        this.yearYield = this.near1WeekYield*Constant.WEEKS_PER_YEER;
+
     }
 }

@@ -79,6 +79,7 @@ public class ContractServiceImpl implements ContractService {
             });
             contractTradeModel.updateTimes = updateTimes;
             contractTradeModel.yields = yields;
+            contractTradeModel.computeYield();
             contractTradeModel.ddl = ddl;
             contractTradeModel.contractId = contractId;
             contractTradeModel.isEnd = (ddl.getTime()<now);
@@ -119,10 +120,15 @@ public class ContractServiceImpl implements ContractService {
         PageRequest pageRequest = new PageRequest(page,pageNum,sort);
         List<Trade> trades = null;
         if(contractTradeSearch.type== FuturesType.ALL){
-            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-                    null,riskLevel,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
+//            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+//                    null,riskLevel,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
+//                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
+//            ).getContent();
+            trades = tradeRepository.findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+                    null,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
                     contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
             ).getContent();
+
         }else {
             trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
                     null,riskLevel,contractTradeSearch.type,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
@@ -143,6 +149,7 @@ public class ContractServiceImpl implements ContractService {
             });
             contractTradeModel.updateTimes = updateTimes;
             contractTradeModel.yields = yields;
+            contractTradeModel.computeYield();
             contractTradeModels.add(contractTradeModel);
         });
 
@@ -162,6 +169,12 @@ public class ContractServiceImpl implements ContractService {
         tradeRepository.save(trade);
     }
 
+    /**
+     * 详情页初始化的时候调用此方法
+     * @param userId
+     * @param tradeId
+     * @return
+     */
     @Override
     public ContractTradeDetail getDetail(Long userId, Long tradeId) {
         Trade trade = tradeRepository.findTopByTradeId(tradeId);
@@ -195,6 +208,7 @@ public class ContractServiceImpl implements ContractService {
         });
         contractTradeDetail.updateTimes = updateTimes;
         contractTradeDetail.yields = yields;
+        contractTradeDetail.computeYield();
         //todo 添加其ta收益率
         Contract contract = trade.getContract();
         List<ContractBackTestParams> contractBackTestParams = contract.getContractBackTestParams();
