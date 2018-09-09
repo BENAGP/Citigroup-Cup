@@ -18,7 +18,7 @@ public interface ContractService {
 
     public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum);
 
-    public void buy(Long userId,Long contractId,Float investment,Integer riskLevel);
+    public void buy(Long userId,Long contractId,Double investment,Integer riskLevel);
 
     public ContractTradeDetail getDetail(Long userId, Long tradeId);
 

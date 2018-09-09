@@ -35,7 +35,7 @@ public class Trade {
      * todo 是否应放到trade表里
      */
     @Column(name = "`investment`")
-    private Float investment;
+    private Double investment;
 
     /**
      * 风险等级，假如有十个风险等级，那么一个合约初始化的时候，backtest增加十条线，分别对应十个风险等级。然后每增加一个trade，backtest增加一条线
@@ -45,34 +45,34 @@ public class Trade {
     private Integer riskLevel;
 
     /**
-     * 收益率
+     * 累计收益率
      */
     @Column(name = "`yield`")
-    private Float yield;
+    private Double yield;
 
     /**
      * 最大回撤
      */
     @Column(name = "`max_drawdown`")
-    private Float maxDrawdown;
+    private Double maxDrawdown;
 
     /**
      * 胜率
      */
     @Column(name = "`win_rate`")
-    private Float winRate;
+    private Double winRate;
 
     /**
      * 盈亏比
      */
     @Column(name = "`profit_loss_ratio`")
-    private Float profitLossRatio;
+    private Double profitLossRatio;
 
     /**
      * 市场最大承载资金
      */
     @Column(name = "`market_capital_capacity`")
-    private Float marketCapitalCapacity;
+    private Double marketCapitalCapacity;
 
     /**
      * 合约被购买的时间
@@ -154,11 +154,11 @@ public class Trade {
         this.contractBackTests = contractBackTests;
     }
 
-    public Float getInvestment() {
+    public Double getInvestment() {
         return investment;
     }
 
-    public void setInvestment(Float investment) {
+    public void setInvestment(Double investment) {
         this.investment = investment;
     }
 
@@ -170,37 +170,43 @@ public class Trade {
         this.riskLevel = riskLevel;
     }
 
-    public Float getMaxDrawdown() {
+    public Double getMaxDrawdown() {
         return maxDrawdown;
     }
 
-    public void setMaxDrawdown(Float maxDrawdown) {
+    public void setMaxDrawdown(Double maxDrawdown) {
         this.maxDrawdown = maxDrawdown;
     }
 
-    public Float getWinRate() {
+    public Double getWinRate() {
         return winRate;
     }
 
-    public void setWinRate(Float winRate) {
+    public void setWinRate(Double winRate) {
         this.winRate = winRate;
     }
 
-    public Float getProfitLossRatio() {
+    public Double getProfitLossRatio() {
         return profitLossRatio;
     }
 
-    public void setProfitLossRatio(Float profitLossRatio) {
+    public void setProfitLossRatio(Double profitLossRatio) {
         this.profitLossRatio = profitLossRatio;
     }
 
-    public Float getMarketCapitalCapacity() {
+    public Double getMarketCapitalCapacity() {
         return marketCapitalCapacity;
     }
 
-    public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
+    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
         this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
+    public Double getYield() {
+        return yield;
+    }
 
+    public void setYield(Double yield) {
+        this.yield = yield;
+    }
 }

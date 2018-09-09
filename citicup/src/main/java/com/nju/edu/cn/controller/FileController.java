@@ -21,14 +21,15 @@ public class FileController {
 
     @GetMapping("/initFuturesUpdating")
     public void initFuturesUpdating(){
-        futuresService.initFuturesUpdating("/Users/shea/Downloads/futures_updating.csv");
-        futuresService.initFuturesUpdating("/Users/shea/Downloads/updating.csv");
+        logger.info("initFuturesUpdating");
+//        futuresService.initFuturesUpdating("/Users/shea/Downloads/futures_updating.csv");
+//        futuresService.initFuturesUpdating("/Users/shea/Downloads/updating.csv");
     }
 
     @GetMapping("/initParams")
     public void initParams(){
         logger.info("initParams");
-        futuresService.initParams("/Users/shea/Downloads/params.csv");
-        futuresService.initParams("/Users/shea/Downloads/params2.csv");
+//        futuresService.initParams("/Users/shea/Downloads/params.csv");
+//        futuresService.initParams("/Users/shea/Downloads/params2.csv");
     }
 }

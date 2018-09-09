@@ -66,7 +66,7 @@ public class ContractServiceImpl implements ContractService {
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
             Collections.sort(contractBackTests,comparator);//按更新时间排序
             BeanUtils.copyProperties(contractTradeModel,trade);
-            List<Float> yields = new ArrayList<>();// 收益率纵轴
+            List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
             contractBackTests.forEach(contractBackTest -> {
                 yields.add(contractBackTest.getYield());
@@ -128,7 +128,7 @@ public class ContractServiceImpl implements ContractService {
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
             Collections.sort(contractBackTests,comparator);//按更新时间排序
             BeanUtils.copyProperties(contractTradeModel,trade);
-            List<Float> yields = new ArrayList<>();//收益率纵轴
+            List<Double> yields = new ArrayList<>();//收益率纵轴
             List<Date> updateTimes = new ArrayList<>();// 时间横轴
             contractBackTests.forEach(contractBackTest -> {
                 yields.add(contractBackTest.getYield());
@@ -143,7 +143,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void buy(Long userId, Long contractId, Float investment, Integer riskLevel) {
+    public void buy(Long userId, Long contractId, Double investment, Integer riskLevel) {
         Contract contract = contractRepository.findByContractId(contractId);
         User user = userRepository.findByUserId(userId);
         Trade trade = new Trade();
@@ -180,7 +180,7 @@ public class ContractServiceImpl implements ContractService {
         List<ContractBackTest> contractBackTests = trade.getContractBackTests();
         Collections.sort(contractBackTests,comparator);//按更新时间排序
         BeanUtils.copyProperties(contractTradeDetail,trade);
-        List<Float> yields = new ArrayList<>();//收益率纵轴
+        List<Double> yields = new ArrayList<>();//收益率纵轴
         List<Date> updateTimes = new ArrayList<>();// 时间横轴
         contractBackTests.forEach(contractBackTest -> {
             yields.add(contractBackTest.getYield());

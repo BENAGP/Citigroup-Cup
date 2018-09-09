@@ -16,28 +16,28 @@ public class ContractBackTest {
     private Long contractTradeId;
 
     /**
-     * 收益率
+     * 累计收益率
      */
     @Column(name = "`yield`")
-    private Float yield;
+    private Double yield;
 
     /**
      * 仓位
      */
     @Column(name = "`position`")
-    private Float position;
+    private Double position;
 
     /**
      * 当日盈亏
      */
     @Column(name = "`today_profit_loss`")
-    private Float todayProfitLoss;
+    private Double todayProfitLoss;
 
     /**
      * 成交均价
      */
     @Column(name = "`average_trading_price`")
-    private Float averageTradingPrice;
+    private Double averageTradingPrice;
 
     /**
      * 是否调仓
@@ -61,25 +61,25 @@ public class ContractBackTest {
      * 最大回撤
      */
     @Column(name = "`max_drawdown`")
-    private Float maxDrawdown;
+    private Double maxDrawdown;
 
     /**
      * 胜率
      */
     @Column(name = "`win_rate`")
-    private Float winRate;
+    private Double winRate;
 
     /**
      * 盈亏比
      */
     @Column(name = "`profit_loss_ratio`")
-    private Float profitLossRatio;
+    private Double profitLossRatio;
 
     /**
      * 市场最大承载资金
      */
     @Column(name = "`market_capital_capacity`")
-    private Float marketCapitalCapacity;
+    private Double marketCapitalCapacity;
 
     /**
      * 更新时间
@@ -102,35 +102,35 @@ public class ContractBackTest {
         this.contractTradeId = contractTradeId;
     }
 
-    public Float getYield() {
+    public Double getYield() {
         return yield;
     }
 
-    public void setYield(Float yield) {
+    public void setYield(Double yield) {
         this.yield = yield;
     }
 
-    public Float getPosition() {
+    public Double getPosition() {
         return position;
     }
 
-    public void setPosition(Float position) {
+    public void setPosition(Double position) {
         this.position = position;
     }
 
-    public Float getTodayProfitLoss() {
+    public Double getTodayProfitLoss() {
         return todayProfitLoss;
     }
 
-    public void setTodayProfitLoss(Float todayProfitLoss) {
+    public void setTodayProfitLoss(Double todayProfitLoss) {
         this.todayProfitLoss = todayProfitLoss;
     }
 
-    public Float getAverageTradingPrice() {
+    public Double getAverageTradingPrice() {
         return averageTradingPrice;
     }
 
-    public void setAverageTradingPrice(Float averageTradingPrice) {
+    public void setAverageTradingPrice(Double averageTradingPrice) {
         this.averageTradingPrice = averageTradingPrice;
     }
 
@@ -174,35 +174,35 @@ public class ContractBackTest {
         this.createTime = createTime;
     }
 
-    public Float getMaxDrawdown() {
+    public Double getMaxDrawdown() {
         return maxDrawdown;
     }
 
-    public void setMaxDrawdown(Float maxDrawdown) {
+    public void setMaxDrawdown(Double maxDrawdown) {
         this.maxDrawdown = maxDrawdown;
     }
 
-    public Float getWinRate() {
+    public Double getWinRate() {
         return winRate;
     }
 
-    public void setWinRate(Float winRate) {
+    public void setWinRate(Double winRate) {
         this.winRate = winRate;
     }
 
-    public Float getProfitLossRatio() {
+    public Double getProfitLossRatio() {
         return profitLossRatio;
     }
 
-    public void setProfitLossRatio(Float profitLossRatio) {
+    public void setProfitLossRatio(Double profitLossRatio) {
         this.profitLossRatio = profitLossRatio;
     }
 
-    public Float getMarketCapitalCapacity() {
+    public Double getMarketCapitalCapacity() {
         return marketCapitalCapacity;
     }
 
-    public void setMarketCapitalCapacity(Float marketCapitalCapacity) {
+    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
         this.marketCapitalCapacity = marketCapitalCapacity;
     }
 
