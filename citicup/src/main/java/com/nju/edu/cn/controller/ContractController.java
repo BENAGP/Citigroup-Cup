@@ -83,6 +83,26 @@ public class ContractController {
     }
 
     /**
+     * 获得我的交易列表
+     * @param userId 用户ID
+     * @param page 第几页
+     * @param pageNum 每页项数
+     * @return
+     */
+    @ApiOperation(value="getMyTradeList", notes="获得我的交易列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "page", value = "第几页", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "pageNum", value = "每页项数", required = true ,dataType = "string")
+    })
+    @PostMapping("/getMyTradeList")
+    public @ResponseBody List<ContractTradeModel> getMyTradeList(Long userId,Integer page,Integer pageNum){
+        logger.info("userId:{},page:{},pageNum:{}",userId,page,pageNum);
+
+        return contractService.getMyTradeList(userId,page,pageNum);
+    }
+
+    /**
      * 获得合约列表
      * @param userId 用户ID
      * @param contractTradeSearch 筛选条件ContractTradeSearch,转成JSON字符串

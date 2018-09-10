@@ -12,4 +12,6 @@ import java.util.List;
 @Repository
 public interface FuturesUpdatingRepository extends JpaRepository<FuturesUpdating,Long> {
     List<FuturesUpdating> findByFutures_FuturesId(Long futuresId);
+
+    FuturesUpdating findTopByFutures_FuturesIdOrderByUpdateTimeDesc(Long futuresId);
 }

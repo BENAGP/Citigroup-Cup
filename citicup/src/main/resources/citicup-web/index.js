@@ -5,6 +5,9 @@ let base = new Base64();
 const username = 'SandboxUser5';
 const password = 'P@ssUser5$';
 
+const arr = [1,2,3,4,5,6];
+console.log(JSON.stringify(arr));
+
 function Person(name) {
     const age = 8;
     this.name = name;
@@ -177,8 +180,8 @@ function getLoginAccessToken(uuid,encrypted_password,bizToken) {
 
 function register() {
     $.post('/api/user/register',{
-        email: "8759",
-        psw: "86"
+        email: "875934635@qq.com",
+        psw: "86ewr"
     }).done(response=>{
         console.log(response);
     }).fail(err=>{

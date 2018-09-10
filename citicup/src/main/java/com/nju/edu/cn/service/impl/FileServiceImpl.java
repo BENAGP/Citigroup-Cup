@@ -278,8 +278,8 @@ public class FileServiceImpl implements FileService {
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
             {
                 if(line.contains("NaN"))continue;
-//                logger.info(line);
                 data = line.split(",");
+//                logger.info(data[head.getDo_adjust()].trim().equals("1")+"");
                 ContractBackTest contractBackTest = new ContractBackTest();
                 contractBackTest.setYield(Double.valueOf(data[head.getYield()].trim()));
                 contractBackTest.setMaxDrawdown(Double.valueOf(data[head.getMax_drawdown()].trim()));
@@ -288,7 +288,7 @@ public class FileServiceImpl implements FileService {
                 contractBackTest.setPosition(Double.valueOf(data[head.getPosition()].trim()));
                 contractBackTest.setTodayProfitLoss(Double.valueOf(data[head.getToday_profitloss()].trim()));
                 contractBackTest.setAverageTradingPrice(Double.valueOf(data[head.getAverage_trading_price()].trim()));
-                contractBackTest.setDoAdjustWarehouse(Boolean.valueOf(data[head.getDo_adjust()].trim()));
+                contractBackTest.setDoAdjustWarehouse(data[head.getDo_adjust()].trim().equals("1"));
                 contractBackTest.setTrade(map.get(Long.valueOf(data[head.getTradeid()].trim())));//data[head.getTradeid()].trim()=101,tradeid=109,
                 contractBackTest.setNearbyFuturesPosition(Integer.valueOf(data[head.getNearbyposition()].trim()));
                 contractBackTest.setBackFuturesPosition(Integer.valueOf(data[head.getBackposition()].trim()));
