@@ -3,10 +3,7 @@ package com.nju.edu.cn.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.nju.edu.cn.dao.*;
 import com.nju.edu.cn.entity.*;
-import com.nju.edu.cn.model.CommentModel;
-import com.nju.edu.cn.model.ContractTradeDetail;
-import com.nju.edu.cn.model.ContractTradeModel;
-import com.nju.edu.cn.model.ContractTradeSearch;
+import com.nju.edu.cn.model.*;
 import com.nju.edu.cn.service.ContractService;
 import com.nju.edu.cn.constant.FuturesType;
 import org.slf4j.Logger;
@@ -35,6 +32,10 @@ public class ContractServiceImpl implements ContractService {
     private TradeRepository tradeRepository;
     @Autowired
     private ContractRepository contractRepository;
+    @Autowired
+    private ContractBackTestParamsRepository contractBackTestParamsRepository;
+    @Autowired
+    private FuturesUpdatingRepository futuresUpdatingRepository;
 
     private static Logger logger = LoggerFactory.getLogger(ContractServiceImpl.class);
 
@@ -55,13 +56,13 @@ public class ContractServiceImpl implements ContractService {
         //然后找到用户收藏表
         Sort sort = new Sort(Sort.Direction.DESC,"createTime");
         PageRequest pageRequest = new PageRequest(page,pageNum,sort);
-        List<Collect> collects = collectRepository.findByUser_UserIdAndDeleted(userId,false,pageRequest).getContent();
+        List<Collect> collects = collectRepository.findByUserIdAndDeleted(userId,false,pageRequest).getContent();
         Long now = System.currentTimeMillis();
         //遍历收藏表，生成ContractTradeModel
         collects.forEach(collect -> {
             //取出收藏的合约ID
-            Contract contract = collect.getContract();
-            Long contractId = contract.getContractId();
+            Long contractId = collect.getContractId();
+            Contract contract = contractRepository.findByContractId(contractId);
             Date ddl = contract.getNearbyFutures().getLastTradingDate();
             //合约ID+风险等级+购买用户ID=>一次购买（每有一次购买，就增加一条回测数据线）
             //这里应该是新增合约的时候默认增加的回测数据多条数据线中的一条
@@ -69,8 +70,9 @@ public class ContractServiceImpl implements ContractService {
             ContractTradeModel contractTradeModel = new ContractTradeModel();
             //找出与该此购买对应的一条回测数据线
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-            Collections.sort(contractBackTests,comparator);//按更新时间排序
-            BeanUtils.copyProperties(trade,contractTradeModel);
+//            Collections.sort(contractBackTests,comparator);//按更新时间排序
+//            BeanUtils.copyProperties(trade,contractTradeModel);
+            copyProperties(trade,contractTradeModel);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
             contractBackTests.forEach(contractBackTest -> {
@@ -81,7 +83,6 @@ public class ContractServiceImpl implements ContractService {
             contractTradeModel.yields = yields;
             contractTradeModel.computeYield();
             contractTradeModel.ddl = ddl;
-            contractTradeModel.contractId = contractId;
             contractTradeModel.isEnd = (ddl.getTime()<now);
             contractTradeModels.add(contractTradeModel);
         });
@@ -91,17 +92,16 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void collect(Long userId, Long contractId) {
         Collect collect = new Collect();
-        Contract contract = contractRepository.findByContractId(contractId);
-        User user = userRepository.findByUserId(userId);
-        collect.setContract(contract);
-        collect.setUser(user);
+        collect.setContractId(contractId);
+        collect.setUserId(userId);
         collect.setCreateTime(new Date(System.currentTimeMillis()));
+        collect.setDeleted(false);
         collectRepository.save(collect);
     }
 
     @Override
     public void cancelCollect(Long userId, Long contractId) {
-        Collect collect = collectRepository.findByContract_ContractIdAndUser_UserId(contractId,userId);
+        Collect collect = collectRepository.findByContractIdAndUserId(contractId,userId);
         collect.setDeleted(true);
         collectRepository.save(collect);
     }
@@ -120,14 +120,14 @@ public class ContractServiceImpl implements ContractService {
         PageRequest pageRequest = new PageRequest(page,pageNum,sort);
         List<Trade> trades = null;
         if(contractTradeSearch.type== FuturesType.ALL){
-//            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-//                    null,riskLevel,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
-//                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
-//            ).getContent();
-            trades = tradeRepository.findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-                    null,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
+            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+                    null,riskLevel,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
                     contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
             ).getContent();
+//            trades = tradeRepository.findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+//                    null,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
+//                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
+//            ).getContent();
 
         }else {
             trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
@@ -139,8 +139,9 @@ public class ContractServiceImpl implements ContractService {
             ContractTradeModel contractTradeModel = new ContractTradeModel();
             //找出与该此购买对应的一条回测数据线
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-            Collections.sort(contractBackTests,comparator);//按更新时间排序
-            BeanUtils.copyProperties(trade,contractTradeModel);
+//            Collections.sort(contractBackTests,comparator);//按更新时间排序
+//            BeanUtils.copyProperties(trade,contractTradeModel);
+            copyProperties(trade,contractTradeModel);
             List<Double> yields = new ArrayList<>();//收益率纵轴
             List<Date> updateTimes = new ArrayList<>();// 时间横轴
             contractBackTests.forEach(contractBackTest -> {
@@ -154,6 +155,37 @@ public class ContractServiceImpl implements ContractService {
         });
 
         return contractTradeModels;
+    }
+
+    @Override
+    public Map<Long, Boolean> isCollected(Long userId, List<Long> contractIds) {
+        Map<Long,Boolean> res = new TreeMap<>();
+        contractIds.forEach(contractId->{
+            res.put(contractId,false);
+        });
+        List<Collect> collects = collectRepository.findByUserIdAndDeleted(userId,false);
+        collects.forEach(collect -> {
+            Long contractId = collect.getContractId();
+            if(contractIds.contains(contractId)){
+                res.replace(contractId,true);
+            }
+        });
+
+        return res;
+    }
+
+    private void copyProperties(Trade trade,ContractTradeModel contractTradeModel){
+        contractTradeModel.riskLevel = trade.getRiskLevel();
+        contractTradeModel.investment = trade.getInvestment();
+        contractTradeModel.marketCapitalCapacity = trade.getMarketCapitalCapacity();
+        contractTradeModel.maxDrawdown = trade.getMaxDrawdown();
+        contractTradeModel.profitLossRatio = trade.getProfitLossRatio();
+        contractTradeModel.tradeId = trade.getTradeId();
+        contractTradeModel.winRate = trade.getWinRate();
+        contractTradeModel.createTime = trade.getCreateTime();
+        Contract contract = trade.getContract();
+        contractTradeModel.contractId = contract.getContractId();
+        contractTradeModel.contractName = contract.getName();
     }
 
     @Override
@@ -181,6 +213,63 @@ public class ContractServiceImpl implements ContractService {
         return getDetail(trade);
     }
 
+    @Override
+    public double getLiquidity(Long userId, Long contractId) {
+        List<ContractBackTestParams> contractBackTestParams = contractBackTestParamsRepository.findByContract_ContractId(contractId);
+        Comparator<ContractBackTestParams> contractBackTestParamsComparator = new Comparator<ContractBackTestParams>() {
+            @Override
+            public int compare(ContractBackTestParams o1, ContractBackTestParams o2) {
+                return (int)(o2.getCreateTime().getTime()-o1.getCreateTime().getTime());
+            }
+        };
+        Collections.sort(contractBackTestParams,contractBackTestParamsComparator);//按更新时间排序
+        return contractBackTestParams.get(0).getLiquidity();
+    }
+
+    @Override
+    public HistoryMarket getHistoryMarket(Long userId, Long contractId) {
+        HistoryMarket historyMarket = new HistoryMarket();
+        historyMarket.contractId = contractId;
+        Contract contract = contractRepository.findByContractId(contractId);
+        Futures nearbyFutures = contract.getNearbyFutures();
+        Futures backFutures = contract.getBackFutures();
+        historyMarket.nearbyFuturesId = nearbyFutures.getFuturesId();
+        historyMarket.backFuturesId = backFutures.getFuturesId();
+        Comparator<FuturesUpdating> comparator = new Comparator<FuturesUpdating>() {
+            @Override
+            public int compare(FuturesUpdating o1, FuturesUpdating o2) {
+                return (int)(o1.getUpdateTime().getTime()-o2.getUpdateTime().getTime());
+            }
+        };
+        List<FuturesUpdating> nearbyFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(nearbyFutures.getFuturesId());
+        List<FuturesUpdating> backFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(backFutures.getFuturesId());
+        Collections.sort(nearbyFuturesUpdating,comparator);
+        Collections.sort(backFuturesUpdating,comparator);
+        List<Date> updateTimes = new ArrayList<>();
+        List<Float> nearbyPrices = new ArrayList<>();
+        List<Float> backPrices = new ArrayList<>();
+
+        List<Integer> nearbyTradings = new ArrayList<>();
+        List<Integer> backTradings = new ArrayList<>();
+
+        nearbyFuturesUpdating.forEach(futuresUpdating -> {
+            updateTimes.add(futuresUpdating.getUpdateTime());
+            nearbyPrices.add(futuresUpdating.getPrice());
+            nearbyTradings.add(futuresUpdating.getTrading());
+        });
+        backFuturesUpdating.forEach(futuresUpdating -> {
+            backPrices.add(futuresUpdating.getPrice());
+            backTradings.add(futuresUpdating.getTrading());
+        });
+        historyMarket.updateTimes = updateTimes;
+        historyMarket.nearbyPrices = nearbyPrices;
+        historyMarket.nearbyTradings = nearbyTradings;
+        historyMarket.backPrices = backPrices;
+        historyMarket.backTradings = backTradings;
+
+        return historyMarket;
+    }
+
     /**
      * 在详情页切换风险等级的时候调用此方法
      * @param userId
@@ -195,11 +284,15 @@ public class ContractServiceImpl implements ContractService {
     }
 
     private ContractTradeDetail getDetail(Trade trade){
+        Long now = System.currentTimeMillis();
+        Contract contract = trade.getContract();
+        Date ddl = contract.getNearbyFutures().getLastTradingDate();
         ContractTradeDetail contractTradeDetail = new ContractTradeDetail();
         //找出与该此购买对应的一条回测数据线
         List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-        Collections.sort(contractBackTests,comparator);//按更新时间排序
-        BeanUtils.copyProperties(trade,contractTradeDetail);
+//        Collections.sort(contractBackTests,comparator);//按更新时间排序
+//        BeanUtils.copyProperties(trade,contractTradeDetail);
+        copyProperties(trade,contractTradeDetail);
         List<Double> yields = new ArrayList<>();//收益率纵轴
         List<Date> updateTimes = new ArrayList<>();// 时间横轴
         contractBackTests.forEach(contractBackTest -> {
@@ -209,27 +302,33 @@ public class ContractServiceImpl implements ContractService {
         contractTradeDetail.updateTimes = updateTimes;
         contractTradeDetail.yields = yields;
         contractTradeDetail.computeYield();
-        //todo 添加其ta收益率
-        Contract contract = trade.getContract();
-        List<ContractBackTestParams> contractBackTestParams = contract.getContractBackTestParams();
-        Comparator<ContractBackTestParams> contractBackTestParamsComparator = new Comparator<ContractBackTestParams>() {
-            @Override
-            public int compare(ContractBackTestParams o1, ContractBackTestParams o2) {
-                return (int)(o1.getCreateTime().getTime()-o2.getCreateTime().getTime());
-            }
-        };
-        Collections.sort(contractBackTestParams,contractBackTestParamsComparator);//按更新时间排序
-        contractTradeDetail.liquidity = contractBackTestParams.get(contractBackTestParams.size()-1).getLiquidity();
-        //todo 是重新查还是直接get?
-        List<Comment> comments = contract.getComments();
-        List<CommentModel> commentModels = comments.stream().map(comment -> {
-            CommentModel commentModel = new CommentModel();
-            BeanUtils.copyProperties(comment,commentModel);
-            return commentModel;
-        }).limit(10).collect(Collectors.toList());
-        contractTradeDetail.comments = commentModels;
+        contractTradeDetail.ddl = ddl;
+        contractTradeDetail.isEnd = (ddl.getTime()<now);
+//        //todo 重新查
+//        List<Comment> comments = contract.getComments();
+//        List<CommentModel> commentModels = comments.stream().map(comment -> {
+//            CommentModel commentModel = new CommentModel();
+//            BeanUtils.copyProperties(comment,commentModel);
+//            return commentModel;
+//        }).limit(10).collect(Collectors.toList());
+//        contractTradeDetail.comments = commentModels;
         return contractTradeDetail;
     }
+
+    private void copyProperties(Trade trade,ContractTradeDetail contractTradeDetail){
+        contractTradeDetail.riskLevel = trade.getRiskLevel();
+        contractTradeDetail.investment = trade.getInvestment();
+        contractTradeDetail.marketCapitalCapacity = trade.getMarketCapitalCapacity();
+        contractTradeDetail.maxDrawdown = trade.getMaxDrawdown();
+        contractTradeDetail.profitLossRatio = trade.getProfitLossRatio();
+        contractTradeDetail.tradeId = trade.getTradeId();
+        contractTradeDetail.winRate = trade.getWinRate();
+        contractTradeDetail.createTime = trade.getCreateTime();
+        Contract contract = trade.getContract();
+        contractTradeDetail.contractId = contract.getContractId();
+        contractTradeDetail.contractName = contract.getName();
+    }
+
 
     @Override
     public void redeem(Long userId, Long tradeId) {

@@ -1,9 +1,12 @@
 package com.nju.edu.cn.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.nju.edu.cn.entity.ContractBackTestParams;
 import com.nju.edu.cn.model.ContractTradeDetail;
 import com.nju.edu.cn.model.ContractTradeModel;
 import com.nju.edu.cn.model.ContractTradeSearch;
+import com.nju.edu.cn.model.HistoryMarket;
 import com.nju.edu.cn.service.ContractService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by shea on 2018/9/2.
@@ -86,7 +90,7 @@ public class ContractController {
      * @param pageNum 每页项数
      * @return
      */
-    @ApiOperation(value="getList", notes="获得合约列表")
+    @ApiOperation(value="getList", notes="获得合约列表,如果用户没有登陆，userId传null")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
             @ApiImplicitParam(name = "contractTradeSearch", value = "筛选条件ContractTradeSearch,转成JSON字符串", required = true ,dataType = "string"),
@@ -98,6 +102,25 @@ public class ContractController {
         logger.info("userId:{},contractTradeSearch:{},page:{},pageNum:{}",userId,contractTradeSearch,page,pageNum);
         ContractTradeSearch contractTradeSearch1 = (ContractTradeSearch)JSONObject.parse(contractTradeSearch);
         return contractService.getList(userId,contractTradeSearch1,page,pageNum);
+    }
+
+    /**
+     * 获得合约列表
+     * @param userId 用户ID
+     * @param contractIdList contractId列表,转成JSON字符串
+     * @return 这些合约是否别该用户收藏
+     */
+    @ApiOperation(value="isCollected", notes="获得合约列表之后，取消合约列表里的contractID，组成一个list，返回这些合约是否别该用户收藏")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "contractIdList", value = "contractId列表,转成JSON字符串", required = true ,dataType = "string"),
+    })
+    @PostMapping("/isCollected")
+    public @ResponseBody
+    Map<Long,Boolean> isCollected(Long userId,String contractIdList){
+        JSONArray jsonArray = JSONArray.parseArray(contractIdList);
+        List<Long> contractIds = jsonArray.toJavaList(Long.class);
+        return contractService.isCollected(userId,contractIds);
     }
 
     /**
@@ -136,6 +159,41 @@ public class ContractController {
 
         return contractService.getDetail(userId,tradeId);
     }
+
+    /**
+     * 获得合约流动性，详情页初始化的时候调用此方法
+     * @param userId 用户ID
+     * @param contractId 合约ID
+     * @return
+     */
+    @ApiOperation(value="getLiquidity", notes="获得合约流动性，详情页初始化的时候调用此方法")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "contractId", value = "合约ID", required = true ,dataType = "string"),
+    })
+    @PostMapping("/getLiquidity")
+    public double getLiquidity(Long userId,Long contractId){
+        return contractService.getLiquidity(userId,contractId);
+    }
+
+    /**
+     * 获得历史行情，详情页初始化的时候调用此方法
+     * @param userId 用户ID
+     * @param contractId 合约ID
+     * @return
+     */
+    @ApiOperation(value="getHistoryMarket", notes="获得历史行情，详情页初始化的时候调用此方法")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "contractId", value = "合约ID", required = true ,dataType = "string"),
+    })
+    @PostMapping("/getHistoryMarket")
+    public @ResponseBody
+    HistoryMarket getHistoryMarket(Long userId, Long contractId){
+        return contractService.getHistoryMarket(userId,contractId);
+    }
+
+
 
     /**
      * 获得合约详情

@@ -36,7 +36,9 @@ public class FileController {
     @GetMapping("/initTrade")
     public void initTrade(){
         logger.info("initTrade");
-//        futuresService.initTrade("/Users/shea/Downloads/trade.csv");
-//        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test.csv");
+//        futuresService.initTrade("/Users/shea/Downloads/trade_xu.csv");
+//        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test_xu.csv");
+//        futuresService.initTrade("/Users/shea/Downloads/trade_li.csv");
+//        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test_li.csv");
     }
 }

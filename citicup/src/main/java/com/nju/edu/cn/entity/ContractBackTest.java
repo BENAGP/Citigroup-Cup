@@ -82,12 +82,6 @@ public class ContractBackTest {
     private Double marketCapitalCapacity;
 
     /**
-     * 资金占用
-     */
-    @Column(name = "`fund_occupation`")
-    private Double fundOccupation;
-
-    /**
      * 更新时间
      */
     @Column(name = "`create_time`")
@@ -210,13 +204,5 @@ public class ContractBackTest {
 
     public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
         this.marketCapitalCapacity = marketCapitalCapacity;
-    }
-
-    public Double getFundOccupation() {
-        return fundOccupation;
-    }
-
-    public void setFundOccupation(Double fundOccupation) {
-        this.fundOccupation = fundOccupation;
     }
 }

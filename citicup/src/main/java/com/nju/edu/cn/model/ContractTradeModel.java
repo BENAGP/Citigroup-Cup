@@ -42,6 +42,8 @@ public class ContractTradeModel {
      */
     public Long contractId;
 
+    public String contractName;
+
     public Long tradeId;
 
     /**
@@ -73,6 +75,11 @@ public class ContractTradeModel {
      * 合约被购买的时间
      */
     public Date createTime;
+
+//    /**
+//     * 此合约是否被收藏
+//     */
+//    public Boolean isCollected;
 
     /**
      * 合约交易截止日
@@ -136,17 +143,26 @@ public class ContractTradeModel {
         this.ddl = ddl;
     }
 
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
     public void setIsEnd(Boolean isEnd) {
         isEnd = isEnd;
     }
+
+//    public void setIsCollected(Boolean isCollected) {
+//        this.isCollected = isCollected;
+//    }
 
     public void computeYield(){
         int minutesIn1Week = Constant.MINUTES_PER_WEEK;
         int last = yields.size()-1;
         int aWeekAgo = last-minutesIn1Week;
-        if(aWeekAgo<0)aWeekAgo=0;
-        Double near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
-        this.yearYield = near1WeekYield*Constant.WEEKS_PER_YEER;
+        if(aWeekAgo>=0){
+            Double near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
+            this.yearYield = near1WeekYield*Constant.WEEKS_PER_YEER;
+        }
 
     }
 }

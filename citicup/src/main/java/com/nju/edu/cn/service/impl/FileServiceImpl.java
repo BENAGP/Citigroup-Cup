@@ -1,5 +1,7 @@
 package com.nju.edu.cn.service.impl;
 
+import com.nju.edu.cn.constant.ContractBackTestHead;
+import com.nju.edu.cn.constant.TradeHead;
 import com.nju.edu.cn.dao.*;
 import com.nju.edu.cn.entity.*;
 import com.nju.edu.cn.service.FileService;
@@ -193,10 +195,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void initTrade(String path) {
-        if(count3==1)return;
+        if(count3==2)return;
         count3++;
         logger.info("--------------"+count3);
         File csv = new File(path);  // CSV文件路径
+        TradeHead tradeHead = new TradeHead(path);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BufferedReader br = null;
         try
@@ -209,12 +212,6 @@ public class FileServiceImpl implements FileService {
         String line = "";
         try {
             String[] strings;
-            int contractid = 1;
-            int risklevel = 2;
-            int yield = 3;
-            int max_drawdown = 4;
-            int win_rate = 5;
-            int profit_loss_ratio = 6,market_capial_capacity=7,create_time=8;
             List<Trade> trades = new ArrayList<>();
             List<Contract> contracts = contractRepository.findAll();
             Map<Long,Contract> map = new TreeMap<>();
@@ -224,19 +221,20 @@ public class FileServiceImpl implements FileService {
             br.readLine();
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
             {
+                if(line.contains("NaN"))continue;
 //                logger.info(line);
                 strings = line.split(",");
                 Trade trade = new Trade();
-                logger.info(strings[create_time]);
-                trade.setCreateTime(sdf.parse(strings[create_time].substring(1,19)));
-                trade.setRiskLevel(Integer.valueOf(strings[risklevel]));
-                trade.setContract(map.get(Long.valueOf(strings[contractid])));
+                logger.info(strings[tradeHead.getCreate_time()]);
+                trade.setCreateTime(sdf.parse(strings[tradeHead.getCreate_time()].substring(1,19)));
+                trade.setRiskLevel(Integer.valueOf(strings[tradeHead.getRisklevel()].trim()));
+                trade.setContract(map.get(Long.valueOf(strings[tradeHead.getContractid()].trim())));
                 trade.setInvestment(100000d);
-                trade.setMaxDrawdown(Double.valueOf(strings[max_drawdown]));
-                trade.setProfitLossRatio(Double.valueOf(strings[profit_loss_ratio]));
-                trade.setYield(Double.valueOf(strings[yield]));
-                trade.setWinRate(Double.valueOf(strings[win_rate]));
-                trade.setMarketCapitalCapacity(Double.valueOf(strings[market_capial_capacity]));
+                trade.setMaxDrawdown(Double.valueOf(strings[tradeHead.getMax_drawdown()].trim()));
+                trade.setProfitLossRatio(Double.valueOf(strings[tradeHead.getProfit_loss_ratio()].trim()));
+                trade.setYield(Double.valueOf(strings[tradeHead.getYield()].trim()));
+                trade.setWinRate(Double.valueOf(strings[tradeHead.getWin_rate()].trim()));
+                trade.setMarketCapitalCapacity(Double.valueOf(strings[tradeHead.getMarket_capial_capacity()].trim()));
                 trade.setDeleted(false);
                 trades.add(trade);
 
@@ -253,10 +251,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void initContractBackTest(String path) {
-        if(count4==1)return;
+        if(count4==2)return;
         count4++;
         logger.info("--------------"+count4);
         File csv = new File(path);  // CSV文件路径
+        ContractBackTestHead head = new ContractBackTestHead(path);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BufferedReader br = null;
         try
@@ -269,38 +268,32 @@ public class FileServiceImpl implements FileService {
         String line = "";
         try {
             String[] data;
-            int yield = 0;
-            int max_drawdown = 1;
-            int win_rate = 2;
-            int profit_loss_ratio = 3;
-            int position = 4;
-            int today_profitloss = 5;
-            int average_trading_price = 6,do_adjust=7,tradeid=8,nearbyposition=9,backposition=10,market_capial_capacity=11,creattime=12;
             List<ContractBackTest> contractBackTests = new ArrayList<>();
             List<Trade> trades = tradeRepository.findAll();
             Map<Long,Trade> map = new TreeMap<>();
             trades.forEach(trade -> {
-                map.put(trade.getTradeId()+100l,trade);
+                map.put(trade.getTradeId()-head.getGap(),trade);
             });
             br.readLine();
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
             {
+                if(line.contains("NaN"))continue;
 //                logger.info(line);
                 data = line.split(",");
                 ContractBackTest contractBackTest = new ContractBackTest();
-                contractBackTest.setYield(Double.valueOf(data[yield]));
-                contractBackTest.setMaxDrawdown(Double.valueOf(data[max_drawdown]));
-                contractBackTest.setWinRate(Double.valueOf(data[win_rate]));
-                contractBackTest.setProfitLossRatio(Double.valueOf(profit_loss_ratio));
-                contractBackTest.setPosition(Double.valueOf(data[position]));
-                contractBackTest.setTodayProfitLoss(Double.valueOf(data[today_profitloss]));
-                contractBackTest.setAverageTradingPrice(Double.valueOf(data[average_trading_price]));
-                contractBackTest.setDoAdjustWarehouse(Boolean.valueOf(data[do_adjust]));
-                contractBackTest.setTrade(map.get(Long.valueOf(data[tradeid])));
-                contractBackTest.setNearbyFuturesPosition(Integer.valueOf(data[nearbyposition]));
-                contractBackTest.setBackFuturesPosition(Integer.valueOf(data[backposition]));
-                contractBackTest.setMarketCapitalCapacity(Double.valueOf(data[market_capial_capacity]));
-                contractBackTest.setCreateTime(sdf.parse(data[creattime].substring(1,19)));
+                contractBackTest.setYield(Double.valueOf(data[head.getYield()].trim()));
+                contractBackTest.setMaxDrawdown(Double.valueOf(data[head.getMax_drawdown()].trim()));
+                contractBackTest.setWinRate(Double.valueOf(data[head.getWin_rate()].trim()));
+                contractBackTest.setProfitLossRatio(Double.valueOf(data[head.getProfit_loss_ratio()].trim()));
+                contractBackTest.setPosition(Double.valueOf(data[head.getPosition()].trim()));
+                contractBackTest.setTodayProfitLoss(Double.valueOf(data[head.getToday_profitloss()].trim()));
+                contractBackTest.setAverageTradingPrice(Double.valueOf(data[head.getAverage_trading_price()].trim()));
+                contractBackTest.setDoAdjustWarehouse(Boolean.valueOf(data[head.getDo_adjust()].trim()));
+                contractBackTest.setTrade(map.get(Long.valueOf(data[head.getTradeid()].trim())));//data[head.getTradeid()].trim()=101,tradeid=109,
+                contractBackTest.setNearbyFuturesPosition(Integer.valueOf(data[head.getNearbyposition()].trim()));
+                contractBackTest.setBackFuturesPosition(Integer.valueOf(data[head.getBackposition()].trim()));
+                contractBackTest.setMarketCapitalCapacity(Double.valueOf(data[head.getMarket_capial_capacity()].trim()));
+                contractBackTest.setCreateTime(sdf.parse(data[head.getCreattime()].substring(1,19)));
                 contractBackTests.add(contractBackTest);
             }
             contractBackTestRepository.saveAll(contractBackTests);

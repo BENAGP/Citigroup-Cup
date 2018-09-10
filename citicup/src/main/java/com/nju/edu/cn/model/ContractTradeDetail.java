@@ -41,10 +41,10 @@ public class ContractTradeDetail {
      */
     public Double profitLossRatio;
 
-    /**
-     * 流动性
-     */
-    public Float liquidity;
+//    /**
+//     * 流动性
+//     */
+//    public Float liquidity;
 
     /**
      * 市场最大承载资金
@@ -55,6 +55,7 @@ public class ContractTradeDetail {
      * 合约ID
      */
     public Long contractId;
+    public String contractName;
 
     public Long tradeId;
 
@@ -102,6 +103,10 @@ public class ContractTradeDetail {
     public ContractTradeDetail() {
     }
 
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
     public void setNear3WeekYield(Double near3WeekYield) {
         this.near3WeekYield = near3WeekYield;
     }
@@ -130,9 +135,9 @@ public class ContractTradeDetail {
         this.profitLossRatio = profitLossRatio;
     }
 
-    public void setLiquidity(Float liquidity) {
-        this.liquidity = liquidity;
-    }
+//    public void setLiquidity(Float liquidity) {
+//        this.liquidity = liquidity;
+//    }
 
     public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
         this.marketCapitalCapacity = marketCapitalCapacity;
@@ -186,18 +191,18 @@ public class ContractTradeDetail {
         int minutesIn1Week = Constant.MINUTES_PER_WEEK;
         int last = yields.size()-1;
         int aWeekAgo = last-minutesIn1Week;
-        if(aWeekAgo<0)aWeekAgo=0;
+        if(aWeekAgo>=0){
+            this.near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
+            this.yearYield = this.near1WeekYield*Constant.WEEKS_PER_YEER;
+        }
         int threeWeekAgo = last - minutesIn1Week*3;
-        if(threeWeekAgo<0)threeWeekAgo=0;
+        if(threeWeekAgo>=0){
+            this.near3WeekYield = yields.get(last)-yields.get(threeWeekAgo);
+        }
         int sixWeekAgo = last-minutesIn1Week*6;
-        if(sixWeekAgo<0)sixWeekAgo=0;
+        if(sixWeekAgo>=0)this.near6WeekYield = yields.get(last)-yields.get(sixWeekAgo);
         int twelveWeekAgo = last - minutesIn1Week*12;
-        if(twelveWeekAgo<0)twelveWeekAgo=0;
-        this.near1WeekYield = yields.get(last)-yields.get(aWeekAgo);
-        this.near3WeekYield = yields.get(last)-yields.get(threeWeekAgo);
-        this.near6WeekYield = yields.get(last)-yields.get(sixWeekAgo);
-        this.near12WeekYield = yields.get(last)-yields.get(twelveWeekAgo);
-        this.yearYield = this.near1WeekYield*Constant.WEEKS_PER_YEER;
+        if(twelveWeekAgo>=0)this.near12WeekYield = yields.get(last)-yields.get(twelveWeekAgo);
 
     }
 }

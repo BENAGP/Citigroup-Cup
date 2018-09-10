@@ -35,24 +35,24 @@ public class Contract {
     @Column(name = "`name`")
     private String name;
 
-    /**
-     * 合约的交易，进一步应该筛出deleted=false的
-     */
-    @OneToMany(mappedBy = "contract")
-    private List<Trade> trades;
+//    /**
+//     * 合约的交易，进一步应该筛出deleted=false的
+//     */
+//    @OneToMany(mappedBy = "contract")
+//    private List<Trade> trades;
 
-    /**
-     * 合约的评论
-     */
-    @OneToMany(mappedBy = "contract")
-    private List<Comment> comments;
-
-
-    /**
-     * 合约的评论
-     */
-    @OneToMany(mappedBy = "contract")
-    private List<ContractBackTestParams> contractBackTestParams;
+//    /**
+//     * 合约的评论
+//     */
+//    @OneToMany(mappedBy = "contract")
+//    private List<Comment> comments;
+//
+//
+//    /**
+//     * 合约的评论
+//     */
+//    @OneToMany(mappedBy = "contract")
+//    private List<ContractBackTestParams> contractBackTestParams;
 
 
     public Long getContractId() {
@@ -79,21 +79,21 @@ public class Contract {
         this.backFutures = backFutures;
     }
 
-    public List<Trade> getTrades() {
-        return trades;
-    }
+//    public List<Trade> getTrades() {
+//        return trades;
+//    }
+//
+//    public void setTrades(List<Trade> trades) {
+//        this.trades = trades;
+//    }
 
-    public void setTrades(List<Trade> trades) {
-        this.trades = trades;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+//    public List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(List<Comment> comments) {
+//        this.comments = comments;
+//    }
 
     public String getName() {
         return name;
@@ -103,11 +103,11 @@ public class Contract {
         this.name = name;
     }
 
-    public List<ContractBackTestParams> getContractBackTestParams() {
-        return contractBackTestParams;
-    }
-
-    public void setContractBackTestParams(List<ContractBackTestParams> contractBackTestParams) {
-        this.contractBackTestParams = contractBackTestParams;
-    }
+//    public List<ContractBackTestParams> getContractBackTestParams() {
+//        return contractBackTestParams;
+//    }
+//
+//    public void setContractBackTestParams(List<ContractBackTestParams> contractBackTestParams) {
+//        this.contractBackTestParams = contractBackTestParams;
+//    }
 }
