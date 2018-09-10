@@ -69,7 +69,7 @@ public class ContractTradeModel {
     /**
      * 资金占用纵轴
      */
-    public List<Double> fundOccupation;
+    public List<Double> positions;
 
     /**
      * 合约被购买的时间
@@ -92,68 +92,48 @@ public class ContractTradeModel {
      */
     public Boolean isEnd;
 
+    //=====================当前持仓=========================
+    /**
+     * 近月期货持有数量
+     */
+    public Integer nearbyFuturesPosition;
+    /**
+     * 远月期货持有数量
+     */
+    public Integer backFuturesPosition;
+    /**
+     * 当日盈亏
+     */
+    public Double todayProfitLoss;
+    /**
+     * 仓位
+     */
+    public Double position;
+    /**
+     * 近月期货市值
+     */
+    public Float nearbyFuturesPrice;
+    /**
+     * 远月期货市值
+     */
+    public Float backFuturesPrice;
+
+    /**
+     * 近月期货名称
+     */
+    public String nearbyFuturesName;
+    /**
+     * 远月期货名称
+     */
+    public String backFuturesName;
+
+    //=================历史调仓================
+    public List<Integer> nearbyFuturesPositionOperations;
+    public List<Integer> backFuturesPositionOperations;
+
+
     public ContractTradeModel() {
     }
-
-    public void setMaxDrawdown(Double maxDrawdown) {
-        this.maxDrawdown = maxDrawdown;
-    }
-
-    public void setWinRate(Double winRate) {
-        this.winRate = winRate;
-    }
-
-    public void setProfitLossRatio(Double profitLossRatio) {
-        this.profitLossRatio = profitLossRatio;
-    }
-
-    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
-        this.marketCapitalCapacity = marketCapitalCapacity;
-    }
-
-    public void setContractId(Long contractId) {
-        this.contractId = contractId;
-    }
-
-    public void setTradeId(Long tradeId) {
-        this.tradeId = tradeId;
-    }
-
-    public void setRiskLevel(Integer riskLevel) {
-        this.riskLevel = riskLevel;
-    }
-
-    public void setInvestment(Double investment) {
-        this.investment = investment;
-    }
-
-    public void setUpdateTimes(List<Date> updateTimes) {
-        this.updateTimes = updateTimes;
-    }
-
-    public void setYields(List<Double> yields) {
-        this.yields = yields;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public void setDdl(Date ddl) {
-        this.ddl = ddl;
-    }
-
-    public void setContractName(String contractName) {
-        this.contractName = contractName;
-    }
-
-    public void setIsEnd(Boolean isEnd) {
-        isEnd = isEnd;
-    }
-
-//    public void setIsCollected(Boolean isCollected) {
-//        this.isCollected = isCollected;
-//    }
 
     public void computeYield(){
         int minutesIn1Week = Constant.MINUTES_PER_WEEK;

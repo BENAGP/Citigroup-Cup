@@ -14,7 +14,9 @@ import java.util.List;
  */
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Long> {
-    Trade findTopByTradeId(Long tradeId);
+    Trade findByTradeId(Long tradeId);
+
+    Page<Trade> findByUser_UserIdAndDeletedIsFalse(Long userId,Pageable pageable);
 
     Trade findByContract_ContractIdAndRiskLevelAndUser_UserId(Long contractId, Integer riskLevel, Long userId);
 

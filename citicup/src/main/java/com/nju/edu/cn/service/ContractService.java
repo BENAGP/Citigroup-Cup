@@ -18,6 +18,8 @@ public interface ContractService {
 
     public void cancelCollect(Long userId,Long contractId);
 
+    public List<ContractTradeModel> getMyTradeList(Long userId,Integer page,Integer pageNum);
+
     public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum);
 
     public Map<Long,Boolean> isCollected(Long userId,List<Long> contractIds);
