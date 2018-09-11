@@ -1,10 +1,12 @@
 package com.nju.edu.cn.controller;
 
 import com.nju.edu.cn.model.MessageModel;
+import com.nju.edu.cn.service.MessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +22,8 @@ import java.util.List;
 @RestController()
 @RequestMapping(value = "/api/message", produces = "application/json;charset=UTF-8")
 public class MessageController {
+    @Autowired
+    private MessageService messageService;
     /**
      * 获得用户已经阅读的消息列表
      * @param userId 用户ID

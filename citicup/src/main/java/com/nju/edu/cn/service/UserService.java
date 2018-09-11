@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface UserService {
 
-    public void register(String email,String psw);
+    public UserModel register(String email,String psw);
 
     public UserModel login(String email,String psw);
 

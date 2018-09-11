@@ -6,6 +6,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController()
 @RequestMapping(value = "/api/user", produces = "application/json;charset=UTF-8")
 public class UserController {
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     UserService userService;
     /**
@@ -34,9 +37,10 @@ public class UserController {
             @ApiImplicitParam(name = "psw", value = "密码", required = true ,dataType = "string")
     })
     @PostMapping("/register")
-    public void register(String email,String psw){
-
-        userService.register(email,psw);
+    public @ResponseBody
+    UserModel register(String email,String psw){
+        logger.info("email:{},psw:{}",email,psw);
+        return userService.register(email,psw);
     }
 
     /**
@@ -53,7 +57,7 @@ public class UserController {
     @PostMapping("/login")
     public @ResponseBody
     UserModel login(String email, String psw){
-
+        logger.info("email:{},psw:{}",email,psw);
         return userService.login(email,psw);
     }
 
@@ -70,6 +74,7 @@ public class UserController {
     })
     @PostMapping("/postAvatar")
     public @ResponseBody String postAvatar(Long userId, MultipartFile file){
+        logger.info("userId:{},file:{}",userId,file);
         return userService.postAvatar(userId,file);
     }
 
@@ -93,6 +98,7 @@ public class UserController {
     @PostMapping("/perfectInfo")
     public @ResponseBody
     UserModel perfectInfo(Long userId, String email, String nickname, Integer preferRiskLevel,String avatar){
+        logger.info("userId:{},email:{},nickname:{},preferRiskLevel:{},avatar:{}",userId,email,nickname,preferRiskLevel,avatar);
         return userService.perfectInfo(userId,email,nickname,preferRiskLevel,avatar);
     }
 
@@ -109,6 +115,7 @@ public class UserController {
     @PostMapping("/getInfo")
     public @ResponseBody
     UserModel getInfo(Long userId){
+        logger.info("userId:{}",userId);
         return userService.getInfo(userId);
     }
 
@@ -126,6 +133,7 @@ public class UserController {
     })
     @PostMapping("/changePsw")
     public void changePsw(Long userId,String originPsw,String newPsw){
+        logger.info("userId:{},originPsw:{},newPsw:{}",userId,originPsw,newPsw);
         userService.changePsw(userId,originPsw,newPsw);
     }
 

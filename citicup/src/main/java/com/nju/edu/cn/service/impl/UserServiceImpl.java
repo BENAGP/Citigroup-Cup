@@ -24,13 +24,17 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public void register(String email, String psw) {
+    public UserModel register(String email, String psw) {
         User exist = userRepository.findByEmail(email);
         if(exist!=null)throw new InvalidRequestException("邮箱已被注册");
         User user = new User();
         user.setEmail(email);
         user.setPassword(psw);
-        userRepository.save(user);
+        user = userRepository.save(user);
+        UserModel userModel = new UserModel();
+        BeanUtils.copyProperties(user,userModel);
+        return userModel;
+
 
     }
 

@@ -14,8 +14,8 @@ public class MainController {
 
     @GetMapping("/home")
     public String member(){
-        System.out.println("call 爆吧 index");
-        return "index";
+        System.out.println("call home");
+        return "/home/home";
     }
 
 //    @GetMapping("/index")

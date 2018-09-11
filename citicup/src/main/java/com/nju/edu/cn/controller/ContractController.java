@@ -113,7 +113,7 @@ public class ContractController {
     @ApiOperation(value="getList", notes="获得合约列表,如果用户没有登陆，userId传null")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
-            @ApiImplicitParam(name = "contractTradeSearch", value = "筛选条件ContractTradeSearch,转成JSON字符串", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "contractTradeSearch", value = "筛选条件ContractTradeSearch,转成JSON字符串,页面初始化用户尚未选筛选条件的时候可以不传，后端会用默认的", required = false ,dataType = "string"),
             @ApiImplicitParam(name = "page", value = "第几页", required = true ,dataType = "string"),
             @ApiImplicitParam(name = "pageNum", value = "每页项数", required = true ,dataType = "string")
     })

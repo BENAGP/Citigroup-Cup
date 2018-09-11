@@ -6,11 +6,13 @@
     padding-top: 8px;
     padding-bottom: 16px;
 }
+
 .top-nav>div {
     display: inline-block;
     width: 1080px;
 }
 .tab, .logo {
+    color: rgba(244, 244, 244, 0.9);
     height: 40px;
     display: inline;
     cursor: pointer;
@@ -23,7 +25,7 @@
 }
 .tab {
     /*color: white;*/
-    color: rgba(244, 244, 244, 0.9);
+    cursor: pointer;
     padding: 12px 4px;
     float: right;
     margin-left: 40px;

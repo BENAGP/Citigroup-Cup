@@ -19,6 +19,19 @@ function getUrlParam2(name){
     var r = encodeURI(window.location.search).substr(1).match(reg);
     if(r!==null)return unescape(r[2]); return null;
 }
+
+function setUser(user) {
+    let userId = user.userId;
+    let email = user.email;
+    let nickname = user.nickname;
+    let preferRiskLevel = user.preferRiskLevel;
+    let avatar = user.avatar;
+    window.localStorage.setItem("userId",userId);
+    window.localStorage.setItem("email",email);
+    window.localStorage.setItem("nickname",nickname);
+    window.localStorage.setItem("preferRiskLevel",preferRiskLevel);
+    window.localStorage.setItem("avatar",avatar);
+}
 // //使用获取参数方法
 // var id= GetUrlParam("id");
 // var name = decodeURI(GetUrlParam("name"));

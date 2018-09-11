@@ -9,44 +9,6 @@
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
-	<script>
-		let layer;
-		layui.use(['layer'],function(){
-			layer = layui.layer;
-		});
-		function login () 
-		{
-			if(login.usrname.value == '')
-			{
-				layer.msg("请输入用户名！");
-			}
-			if(login.password.value == '')
-			{
-				layer.msg("请输入密码！");
-			}
-			if(login.usrname.value != '' && login.password.value != '')
-			{
-				$.post('/api/user/login',{
-					email:login.usrname.value,
-					psw:login.password.value
-				}).done(response->{
-					console.log(response);
-					if(response['isCompleted'] == "false")
-					{
-						layer.msg("用户信息不完整,请补完信息！");
-					}
-					forward("home.html");
-				}).fail(err->{
-					layer.msg("登陆失败！请重新输入用户名和密码！");
-				})
-			}
-		};
-		
-
-	
-
-	</script>
-	<script type="text/javascript" scr="../util/href-helper.js"></script>
 </head>
 <style>
 	.registerpad{
@@ -79,6 +41,7 @@
 		text-align: left;
 		font-family: Microsoft Yahei;
 		border: 1px solid rgba(187, 187, 187, 1);
+		text-indent: 10px;
 	}
 	.password{
 		margin-left: 0px;
@@ -90,6 +53,7 @@
 		text-align: left;
 		font-family: Microsoft Yahei;
 		border: 1px solid rgba(187, 187, 187, 1);
+		text-indent: 10px;
 	}
 	.submit{
 		margin-left: 52px;
@@ -112,7 +76,7 @@
 		font-size: 15px;
 		font-family: Roboto;
 	}
-	.text02{
+	.text02,.text02:hover{
 		margin-left: 0px;
 		margin-right: 160px;
 		width: 78px;
@@ -129,26 +93,69 @@
 
         <!--write your code here-->
 		<div class = "registerpad" >
-				<form name ="login" action="" method="">
-					<h1 class="login">登陆</h1>
-					<label>
-						<input name = "usrname" class="usrname" type="text"  onfocus="if (value =='  邮箱'){value =''}" onblur="if (value ==''){value='  邮箱'}" value="  邮箱">
-					</label>
-					<label>
-						<input name = "password" class="password" type="text" onfocus="if (value =='  密码'){value =''} if (type == 'text'){type='password'} " onblur="if(value ==''){type='text';value='  密码'} "   onblur="if (value ==''){value='  密码'}" value="  密码">
-					</label>
-					<label>
-						<input class="submit" type="submit" value="提交" onclick="login()">
-					</label>
-					<div>
-						<span class="text01">没有账号？</span>	
-						<span><a class="text02" href="register.html">立即注册</a><span>
-					</div>
-				</form>	
-		   </div>	
+			<h1 class="login">登陆</h1>
+			<label>
+				<input id = "usrname" class="usrname" type="text" placeholder="邮箱">
+			</label>
+			<label>
+				<input id = "password" class="password" type="password" placeholder="密码">
+			</label>
+			<label>
+				<input class="submit" type="submit" value="提交" onclick="login()">
+			</label>
+			<div>
+				<span class="text01">没有账号？</span>
+				<span><a class="text02" href="register.html">立即注册</a><span>
+			</div>
+		</div>
     </div>
 </div>
 <div class="footer"></div>
 </body>
+<script type="text/javascript" src="../util/href-helper.js"></script>
+
+<script>
+    let layer;
+    layui.use(['layer'],function(){
+        layer = layui.layer;
+    });
+    function login ()
+    {
+        if($("#usrname").val() === '')
+        {
+            layer.msg("请输入用户名！");
+            return;
+        }
+        if($("#password").val() === '')
+        {
+            layer.msg("请输入密码！");
+            return;
+        }
+        $.post('/api/user/login',{
+            email:$("#usrname").val(),
+            psw:$("#password").val()
+        }).done(response=>{
+            console.log(response);
+            setUser(response);
+
+            if(!response.isCompleted)
+            {
+                layer.alert("用户信息不完整,请补完信息！",function (index) {
+                    layer.close(index);
+                    forward("/home/home.html");
+                });
+            }else {
+                forward("/home/home.html");
+			}
+
+        }).fail(err=>{
+            layer.msg(err.responseText);
+        })
+    };
+
+
+
+
+</script>
 <script src="../components/top-nav.js"></script>
 </html>
