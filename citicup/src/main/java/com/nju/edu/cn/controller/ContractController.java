@@ -49,6 +49,7 @@ public class ContractController {
     })
     @PostMapping("/getCollectList")
     public @ResponseBody List<ContractTradeModel> getCollectList(Long userId,Integer page,Integer pageNum){
+        logger.info("userId:{},page:{},pageNum:{}",userId,page,pageNum);
         return contractService.getCollectList(userId,page,pageNum);
     }
 
@@ -64,6 +65,7 @@ public class ContractController {
     })
     @PostMapping("/collect")
     public void collect(Long userId,Long contractId){
+        logger.info("userId:{},contractId:{}",userId,contractId);
         contractService.collect(userId,contractId);
     }
 
@@ -79,6 +81,7 @@ public class ContractController {
     })
     @PostMapping("/cancelCollect")
     public void cancelCollect(Long userId,Long contractId){
+        logger.info("userId:{},contractId:{}",userId,contractId);
         contractService.cancelCollect(userId,contractId);
     }
 
@@ -138,6 +141,7 @@ public class ContractController {
     @PostMapping("/isCollected")
     public @ResponseBody
     Map<Long,Boolean> isCollected(Long userId,String contractIdList){
+        logger.info("userId:{},contractIdList:{}",userId,contractIdList);
         JSONArray jsonArray = JSONArray.parseArray(contractIdList);
         List<Long> contractIds = jsonArray.toJavaList(Long.class);
         return contractService.isCollected(userId,contractIds);
@@ -159,6 +163,7 @@ public class ContractController {
     })
     @PostMapping("/buy")
     public void buy(Long userId,Long contractId,Double investment,Integer riskLevel){
+        logger.info("userId:{},contractId:{},investment:{},riskLevel:{}",userId,contractId,investment,riskLevel);
         contractService.buy(userId,contractId,investment,riskLevel);
     }
 
@@ -176,7 +181,7 @@ public class ContractController {
     @PostMapping("/getDetail")
     public @ResponseBody
     ContractTradeDetail getDetail(Long userId,Long tradeId){
-
+        logger.info("userId:{},tradeId:{}",userId,tradeId);
         return contractService.getDetail(userId,tradeId);
     }
 
@@ -193,6 +198,7 @@ public class ContractController {
     })
     @PostMapping("/getLiquidity")
     public double getLiquidity(Long userId,Long contractId){
+        logger.info("userId:{},contractId:{}",userId,contractId);
         return contractService.getLiquidity(userId,contractId);
     }
 
@@ -210,6 +216,7 @@ public class ContractController {
     @PostMapping("/getHistoryMarket")
     public @ResponseBody
     HistoryMarket getHistoryMarket(Long userId, Long contractId){
+        logger.info("userId:{},contractId:{}",userId,contractId);
         return contractService.getHistoryMarket(userId,contractId);
     }
 
@@ -231,6 +238,7 @@ public class ContractController {
     @PostMapping("/getDetailByRiskLevel")
     public @ResponseBody
     ContractTradeDetail getDetailByRiskLevel(Long userId,Long contractId,Integer riskLevel){
+        logger.info("userId:{},contractId:{},riskLevel:{}",userId,contractId,riskLevel);
         return contractService.getDetail(userId,contractId,riskLevel);
     }
 
@@ -246,6 +254,7 @@ public class ContractController {
     })
     @PostMapping("/redeem")
     public void redeem(Long userId,Long tradeId){
+        logger.info("userId:{},tradeId:{}",userId,tradeId);
         contractService.redeem(userId,tradeId);
     }
 }

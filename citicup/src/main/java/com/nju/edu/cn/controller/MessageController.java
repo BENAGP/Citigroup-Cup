@@ -6,6 +6,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController()
 @RequestMapping(value = "/api/message", produces = "application/json;charset=UTF-8")
 public class MessageController {
+    private static Logger logger = LoggerFactory.getLogger(MessageController.class);
     @Autowired
     private MessageService messageService;
     /**
@@ -39,7 +42,8 @@ public class MessageController {
     @PostMapping("/getHasReadList")
     public @ResponseBody
     List<MessageModel> getHasReadList(Long userId,Integer page,Integer pageNum){
-        return new ArrayList<>();
+        logger.info("userId:{},page:{},pageNum:{}",userId,page,pageNum);
+        return messageService.getHasReadList(userId,page,pageNum);
     }
 
     /**
@@ -57,7 +61,8 @@ public class MessageController {
     @PostMapping("/getHasNotReadList")
     public @ResponseBody
     List<MessageModel> getHasNotReadList(Long userId,Integer page,Integer pageNum){
-        return new ArrayList<>();
+        logger.info("userId:{},page:{},pageNum:{}",userId,page,pageNum);
+        return messageService.getHasNotReadList(userId,page,pageNum);
     }
 
     /**
@@ -65,14 +70,14 @@ public class MessageController {
      * @param userId 用户ID
      * @param messages 消息列表，转成JSON字符串
      */
-    @ApiOperation(value="readMessage", notes="获得用户未阅读的消息列表")
+    @ApiOperation(value="readMessage", notes="阅读消息，暂时废弃不用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户ID", required = true ,dataType = "string"),
             @ApiImplicitParam(name = "messages", value = "消息列表，转成JSON字符串", required = true ,dataType = "string"),
     })
     @PostMapping("/readMessage")
     public void readMessage(Long userId,String messages){
-
+//        messageService.readMessage(userId);
     }
 
 }

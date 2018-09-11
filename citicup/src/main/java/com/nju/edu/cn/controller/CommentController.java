@@ -1,10 +1,14 @@
 package com.nju.edu.cn.controller;
 
 import com.nju.edu.cn.model.CommentModel;
+import com.nju.edu.cn.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +24,9 @@ import java.util.List;
 @RestController()
 @RequestMapping(value = "/api/comment", produces = "application/json;charset=UTF-8")
 public class CommentController {
+    private static Logger logger = LoggerFactory.getLogger(CommentController.class);
+    @Autowired
+    private CommentService commentService;
     /**
      * 获得合约评论
      * @param contractId 合约ID
@@ -37,7 +44,8 @@ public class CommentController {
     })
     @PostMapping("/getList")
     public @ResponseBody List<CommentModel> getComments(Long contractId,Long userId,Integer page,Integer pageNum){
-        return new ArrayList<CommentModel>();
+        logger.info("contractId:{},userId:{},page:{},pageNum:{}",contractId,userId,page,pageNum);
+        return commentService.getComments(contractId,userId,page,pageNum);
     }
 
     /**
@@ -57,7 +65,8 @@ public class CommentController {
     })
     @PostMapping("/reply")
     public void reply(Long contractId,Long userId,Long commentId,String content){
-
+        logger.info("contractId:{},userId:{},commentId:{},content:{}",contractId,userId,commentId,content);
+        commentService.reply(contractId,userId,commentId,content);
     }
 
     /**
@@ -75,6 +84,7 @@ public class CommentController {
     })
     @PostMapping("/postComment")
     public void postComment(Long contractId,Long userId,String content){
-
+        logger.info("contractId:{},userId:{},content:{}",contractId,userId,content);
+        commentService.postComment(contractId,userId,content);
     }
 }
