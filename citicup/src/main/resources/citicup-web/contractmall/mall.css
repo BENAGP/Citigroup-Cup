@@ -3,6 +3,7 @@ button{
     margin: 0;
     padding: 0;
     border: 1px solid transparent;
+    background-color: transparent;
 }
 
 .backboard{
@@ -97,7 +98,7 @@ button{
 
 .sameline{
     float: left;
-    margin-left: 50px;
+    margin-left: 94px;
 }
 
 /* 修饰选择框，扁平的效果 */
@@ -420,7 +421,7 @@ button{
 .profit{
     position: relative;
     left: 0px;
-    width: 70px;
+    width: 80px;
     height: 23px;
     line-height: 23px;
     color: rgba(150, 151, 158, 1);
