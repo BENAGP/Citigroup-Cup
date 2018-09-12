@@ -51,18 +51,29 @@
                         return;
                     }
                     $.post("/api/contract/collect", {
-                        "userId": uid,
-                        "contractId": cid
-                    }).done(change_pic());
-                    layer.msg("收藏成功");
+                        userId: uid,
+                        contractId: cid
+                    }).done(function(response){
+                        console.log(response);
+                        change_pic();
+                        layer.msg("收藏成功");
+                    }).fail(function (err) {
+                        console.log("err",err);
+                    })
                 }
                 function cancel_collect() {
                     var uid = window.localStorage.getItem("userId");
                     var cid = 3;
-                    $.post("/api/contract/cancelCollect", {
-                        "userId": uid,
-                        "contractId": cid
-                    }).done(change_pic());
+                    $.post('/api/contract/cancelCollect', {
+                        userId: uid,
+                        contractId: cid
+                    }).done(function(response){
+                        console.log(response);
+                        change_pic();
+                        layer.msg("取消收藏");
+                    }).fail(function (err) {
+                        console.log("err",err);
+                    })
                 }
                 function collection() {
                     var imgObj = document.getElementById("收藏_pic");
@@ -72,7 +83,6 @@
                     }
                     else {
                         cancel_collect();
-                        layer.msg("取消收藏");
                         return;
                     }
                 }
@@ -87,20 +97,25 @@
                     var risk_level = 1;
                     var d = document.getElementById('risk_level');
                     d.innerHTML = risk_level;
-                    return risk_level;
                 }
                 function risk_down() {
+                    var uid = window.localStorage.getItem("userId");
+                    var cid = window.localStorage.getItem("contractId");
                     var risk_level=document.getElementById("risk_level").innerHTML;
                     if(risk_level>>1){
                         risk_level = parseInt(risk_level)-1;
                     }
                     var d = document.getElementById('risk_level');
                     d.innerHTML = risk_level;
-                    $.post("/api/contract/getDetailByRiskLevel",{
-                        "userId": uid,
-                        "contractId": cid,
-                        "riskLevel": risk_level
-                    }).fail(function(){
+                    $.post('/api/contract/getDetailByRiskLevel',{
+                        userId: uid,
+                        contractId: cid,
+                        riskLevel: risk_level
+                    }).done(function (response) {
+                        console.log(response);
+                        }
+                    ).fail(function(err){
+                        console.log("err",err);
                         if(parseInt(risk_level)>>1){
                             risk_level = parseInt(risk_level)+1;
                             var d = document.getElementById('risk_level');
@@ -108,20 +123,42 @@
                         }
                     })
                 }
+                function risk_down_2() {
+                    var risk_level=document.getElementById("risk_level_2").innerHTML;
+                    if(risk_level>>1){
+                        risk_level = parseInt(risk_level)-1;
+                    }
+                    var e = document.getElementById('risk_level_2');
+                    e.innerHTML = risk_level;
+                }
                 function risk_up() {
+                    var uid = window.localStorage.getItem("userId");
+                    var cid = window.localStorage.getItem("contractId");
                     var risk_level=document.getElementById("risk_level").innerHTML;
                     risk_level = parseInt(risk_level)+1;
                     var d = document.getElementById('risk_level');
                     d.innerHTML = risk_level;
+                    alert("uid"+uid+"cid"+cid+"risk"+risk_level)
                     $.post("/api/contract/getDetailByRiskLevel",{
-                        "userId":uid,
-                        "contractId":cid,
-                        "riskLevel":risk_level
-                    }).fail(function(){
+                        userId: uid,
+                        contractId: cid,
+                        riskLevel: risk_level
+                    }).done(function (response) {
+                        console.log(response);
+                        }
+
+                    ).fail(function(err){
+                        console.log("err",err);
                         risk_level = parseInt(risk_level)-1;
                         var d = document.getElementById('risk_level');
                         d.innerHTML = risk_level;
                     })
+                }
+                function risk_up_2() {
+                    var risk_level=document.getElementById("risk_level_2").innerHTML;
+                    risk_level = parseInt(risk_level)+1;
+                    var d = document.getElementById('risk_level_2');
+                    d.innerHTML = risk_level;
                 }
             </script>
             <div id="ds">
@@ -230,6 +267,32 @@
                 layui.use(['layer'],function(){
                     layer = layui.layer;
                 });
+                function buy_how_many() {
+                    var risk_level = document.getElementById("risk_level_2").innerHTML;
+                    var uid = window.localStorage.getItem("userId");
+                    var cid = 3;
+                    var buy = document.getElementById("buy_how_many").value;
+                    console.log("uid:" + uid + "cid:" + cid + "buy:" + buy + "risk_level:" + risk_level);
+                    $.post('/api/contract/buy', {
+                        userId: uid,
+                        contractId: cid,
+                        investment: buy,
+                        riskLevel: risk_level
+                    }).done(function (response) {
+                        console.log(response);
+                        layer.closeAll();
+                        layer.msg("购买成功");
+                    }).fail(function (err) {
+                        console.log("err",err);
+                        layer.closeAll();
+                        layer.msg("网络超时，请稍后再操作");
+                    })
+                }
+            </script>
+            <script>
+                layui.use(['layer'],function(){
+                    layer = layui.layer;
+                });
                 function buy(){
                     layer.open({
                         type: 1,
@@ -238,11 +301,14 @@
                         closeBtn: 0,
                         shadeClose: true,
                         skin: 'yourclass',
-                        content: '<div ><b class="goumai">购买（IF1706-IF1703）</b><span>买入金额</span><span>风险等级</span><div><span style="position: relative;top: 6px;left: 23px;" id="risk_level"></span></div><button style="outline:none;" id="t2" onClick="risk_up()"><img src="上.png"></button><button style="outline:none;" id="t2c" onClick="risk_down()"><img src="下.png"></button></div>'
+                        content: '<div ><b class="goumai">购买（IF1706-IF1703）</b><span class="mairu">买入金额</span><span class="riskLv">风险等级</span><div class="mairurisk"><span style="position: relative;top: 10px;left: 23px;" id="risk_level_2"></span></div><button class="up" style="outline:none;" onClick="risk_up_2()"><img src="上.png"></button><button class="down" style="outline:none;"  onClick="risk_down_2()"><img src="下.png"></button><input class="buy" id="buy_how_many" type="text" placeholder="最低金额1000元"><button onClick="buy_how_many()" class="buy_button">确认购买</button></div>'
                     });
+                    var risk_level=document.getElementById("risk_level").innerHTML;
+                    var e = document.getElementById('risk_level_2');
+                    e.innerHTML = risk_level;
                 }
             </script>
-            <button id="jx"  onClick="buy()">购买</button>
+            <button id="jx"  onClick="buy()" onClick="shu_xin()">购买</button>
             <span id="w7">市场最大承载资金</span>
             <span id="w8"><b>¥10000</b></span>
             <span id="w9">最大回撤：</span>

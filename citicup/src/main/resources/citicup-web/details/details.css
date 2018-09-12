@@ -1025,14 +1025,95 @@
 
 .goumai {
     position: relative;
-    top: 58px;
-    left: 140px;
+    top: 70px;
+    left: 180px;
     width: 257px;
     height: 35px;
     margin-top: 80px;
     line-height: 35px;
     color: rgba(94, 94, 94, 1);
     font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.mairu {
+    position: absolute;
+    left: 65px;
+    top: 150px;
+    width: 73px;
+    height: 35px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.riskLv {
+    position: absolute;
+    left: 468px;
+    top: 150px;
+    width: 73px;
+    height: 35px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.mairurisk {
+    position: absolute;
+    left: 468px;
+    top: 190px;
+    width: 73px;
+    height: 43px;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    text-align: left;
+    font-family: Roboto;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.up {
+    position: absolute;
+    left: 520px;
+    top: 194px;
+    background-color: rgb(255, 255, 255);
+}
+
+.down {
+    position: absolute;
+    left: 520px;
+    top: 213px;
+    background-color: rgb(255, 255, 255);
+}
+
+.buy {
+    position: absolute;
+    left: 65px;
+    top: 190px;
+    width: 370px;
+    height: 43px;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    text-align: left;
+    font-family: Microsoft Yahei;
+    border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.buy_button {
+    position: absolute;
+    left: 65px;
+    top: 270px;
+    width: 475px;
+    height: 50px;
+    line-height: 29px;
+    border-radius: 5px;
+    background-color: rgba(70, 172, 227, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
     text-align: center;
     font-family: Roboto;
 }
