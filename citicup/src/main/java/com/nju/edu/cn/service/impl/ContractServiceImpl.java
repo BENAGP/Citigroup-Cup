@@ -109,9 +109,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<ContractTradeModel> getMyTradeList(Long userId, Integer page, Integer pageNum) {
         List<ContractTradeModel> contractTradeModels = new ArrayList<>();
-        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
-        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
-        List<Trade> trades = tradeRepository.findByUser_UserIdAndDeletedIsFalse(userId, pageRequest).getContent();
+//        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+//        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
+//        List<Trade> trades = tradeRepository.findByUser_UserIdAndDeletedIsFalse(userId, pageRequest).getContent();
+        List<Trade> trades = tradeRepository.findTop4ByRiskLevel(3);
         trades.forEach(trade -> {
             ContractTradeModel contractTradeModel = new ContractTradeModel();
             //找出与该此购买对应的一条回测数据线

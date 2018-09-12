@@ -31,4 +31,6 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
     Page<Trade> findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
             Long userId,Date today, Double yieldR, Double yieldL, Double maxDrawdownR, Double maxDrawdownL, Double winRateR, Double winRateL,
             Double profitLossRatioR, Double profitLossRatioL, Double marketCapitalCapacityR, Double marketCapitalCapacityL, Pageable pageable);
+
+    List<Trade> findTop4ByRiskLevel(Integer riskLevel);
 }

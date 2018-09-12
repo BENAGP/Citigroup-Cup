@@ -1,7 +1,9 @@
 package com.nju.edu.cn.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nju.edu.cn.model.UserModel;
 import com.nju.edu.cn.service.UserService;
+import com.nju.edu.cn.util.GetAccounts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,6 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by shea on 2018/9/1.
@@ -56,10 +65,35 @@ public class UserController {
     })
     @PostMapping("/login")
     public @ResponseBody
-    UserModel login(String email, String psw){
+    UserModel login(String email, String psw, HttpServletRequest request){
         logger.info("email:{},psw:{}",email,psw);
         return userService.login(email,psw);
     }
+
+    /**
+     * 获得加密参数
+     * @return
+     */
+    @ApiOperation(value="getEncryptParams", notes="获得加密参数")
+    @PostMapping("/getEncryptParams")
+    public @ResponseBody
+    JSONObject getEncryptParams(HttpServletRequest request){
+        ServletContext context = request.getServletContext();
+        if(context.getAttribute("access_token")==null||context.getAttribute("event_id")==null){
+            try {
+                GetAccounts.getBizToken(context);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("biz_token",context.getAttribute("biz_token"));
+        jsonObject.put("modulus",context.getAttribute("modulus"));
+        jsonObject.put("exponent",context.getAttribute("exponent"));
+        jsonObject.put("event_id",context.getAttribute("event_id"));
+        return jsonObject;
+    }
+
 
     /**
      * 用户完善上传头像
