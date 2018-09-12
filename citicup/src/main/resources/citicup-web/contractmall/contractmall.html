@@ -7,9 +7,9 @@
     <link href="../components/top-nav.css" rel="stylesheet"/>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <script src="../lib/jquery-3.3.1.js"></script>
+    <script src="layui/layui.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/echarts.min.js"></script>
-    <script src="layui/layui.js"></script>
     <script src="mall.js"></script>
     <link rel="stylesheet" type="text/css" href="mall.css">
 </head>
@@ -268,8 +268,348 @@
 
         <div class="futures" id="futures">
             <!-- 期货列表 -->
-            <div class="futureboard" id="graphdiv0"></div>
+            <div class="futureboard" id="futureboard0">
+
+                <div class="future_name" id = futurename0></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect0">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv0">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext0"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext0"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext0"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext0"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext0"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy0">购买</button>
+
+            </div>
+
+
+
+
+            <div class="futureboard" id="futureboard1">
+
+
+                <div class="future_name" id = futurename1></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect1">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv1">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext1"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext1"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext1"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext1"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext1"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy1">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard2">
+
+                <div class="future_name" id = futurename2></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect2">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv2">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext2"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext2"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext2"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext2"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext2"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy2">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard3">
+
+                <div class="future_name" id = futurename3></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect3">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv3">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext3"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext3"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext3"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext3"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext3"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy3">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard4">
+
+                <div class="future_name" id = futurename4></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect4">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv4">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext4"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext4"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext4"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext4"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext4"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy4">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard5">
+
+                <div class="future_name" id = futurename5></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect5">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv5">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext5"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext5"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext5"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext5"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext5"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy5">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard6">
+
+                <div class="future_name" id = futurename6></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect6">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv6">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext6"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext6"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext6"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext6"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext6"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy6">购买</button>
+
+            </div>
+
+            <div class="futureboard" id="futureboard7">
+
+                <div class="future_name" id = futurename7></div>
+                <div><img class="staricon" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect7">收藏</button>
+                </div>
+
+                <!-- lengend -->
+                <div class="legend">
+                    <div class="lengend_blue"></div>
+                    <div class="lengend_blue_text">回测利率</div>
+                </div>
+
+                <div class="graphdiv" id="graphdiv7">
+                </div>
+
+                <div class="info">
+                    <div class="profit">年华收益率</div>
+                    <div class="profittext" id="profittext7"></div>
+
+                    <div class="divisioner1"></div>
+
+                    <div class="retracement">最大回撤</div>
+                    <div class="retracementtext" id="retracementtext7"></div>
+
+                    <div class="divisioner2"></div>
+
+                    <div class="carry">市场最大承载资金</div>
+                    <div class="carrytext" id="carrytext7"></div>
+
+                    <div class="win">胜率：</div>
+                    <div class="wintext" id="wintext7"></div>
+
+                    <div class="loss">盈亏比：</div>
+                    <div class="losstext" id="losstext7"></div>
+
+                </div>
+
+                <button class="buybutton" id="buy7">购买</button>
+
+            </div>
+
         </div>
+
 
     </div>
     <div id="paging" class="paging"></div>
@@ -285,6 +625,7 @@
 <script>
 
 
+    $("#profittext0").innerHTML = "hihi";
 
     var futuretype = "all";
 
@@ -679,6 +1020,7 @@
 
     var totalCount = 0;
     var PAGENUM = 8;
+
     var contractFilterInfo = {
         "contractTradeSearch": {
             "yieldL":0,
@@ -792,48 +1134,58 @@
             }
         ]
     };
+    //
+    // $('#futures').on('DOMNodeInserted',function(){
+    //     for(var i =0 ;i<contractList.length;i++){
+    //         var child = contractList[i];
+    //         var myChart = echarts.init(document.getElementById("graphdiv"+i));
+    //         myChart.setOption({
+    //             xAxis: {
+    //                 data: child.updateTimes
+    //             },
+    //             series: [
+    //                 {
+    //                     name: "回测利率",
+    //                     data: child.yields,
+    //                     type: "line",
+    //                     sampling: "average",
+    //                     areaStyle: {
+    //                         normal: {
+    //                             color: "#DAE4F4"
+    //                         }
+    //                     },
+    //                     lineStyle: {
+    //                         normal: {
+    //                             width: 3,
+    //                             color: "#4577C8"
+    //                         }
+    //                     },
+    //                 },
+    //                 {
+    //                     name: "基准利率",
+    //                     data:child.positions,
+    //                     type: "line",
+    //                     lineStyle: {
+    //                         normal: {
+    //                             width: 3,
+    //                             color: "#A34240"
+    //                         }
+    //                     },
+    //                 }
+    //             ]
+    //         });
+    //     }
+    // });
 
-    $('#futures').on('DOMNodeInserted',function(){
-        for(var i =0 ;i<contractList.length;i++){
-            var child = contractList[i];
-            var myChart = echarts.init(document.getElementById("graphdiv"+i));
-            myChart.setOption({
-                xAxis: {
-                    data: child.updateTimes
-                },
-                series: [
-                    {
-                        name: "回测利率",
-                        data: child.yields,
-                        type: "line",
-                        sampling: "average",
-                        areaStyle: {
-                            normal: {
-                                color: "#DAE4F4"
-                            }
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 3,
-                                color: "#4577C8"
-                            }
-                        },
-                    },
-                    {
-                        name: "基准利率",
-                        data:child.positions,
-                        type: "line",
-                        lineStyle: {
-                            normal: {
-                                width: 3,
-                                color: "#A34240"
-                            }
-                        },
-                    }
-                ]
-            });
+
+    function format(list){
+        var res = [];
+        for(var i=0;i<list.length;i++){
+           // res.push(list[i].format('YYYY-MM-DD HH:mm:ss'));
+            res.push(list[i].substring(0,19));
         }
-    });
+        return res;
+    }
 
     layui.use(['laypage', 'layer'], function(){
         var laypage = layui.laypage
@@ -844,17 +1196,93 @@
             elem: 'paging'
             ,count: totalCount //数据总数
             ,limit: PAGENUM
-            ,layout:[ 'prev', 'next']
+            ,layout:['prev', 'next']
             ,jump: function(obj,first){
+                contractFilterInfo.page = obj.curr-1;
+                getContractList();
+                obj.count = totalCount;
+
+                for(var i = 0; i < contractList.length ; i++){
+                    var info = contractList[i];
+
+                    $("#futurename"+i).html(info.contractName);
+                    $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
+                    $("#retracementtext"+i).html(parseFloat((info.maxDrawdown*100).toFixed(2))+"%");
+                    $("#carrytext"+i).html("￥"+parseInt(info.marketCapitalCapacity));
+                    $("#wintext"+i).html(parseFloat((info.winRate*100).toFixed(2))+"%");
+                    $("#losstext"+i).html(parseFloat((info.profitLossRatio*100).toFixed(2))+"%");
+
+                    var option = {
+                        grid: {
+                            left: "3%",
+                            right: "4%",
+                            bottom: "3%",
+                            top: "4%",
+                            containLabel: true
+                        },
+                        dataZoom: [
+                            {
+                                show: true,
+                                realtime: true,
+                                start: 0,
+                                end: 100,
+                                height: 30,
+                                y: 215
+                            },
+                            {
+                                type: "inside",
+                                realtime: true,
+                                start: 0,
+                                end: 100
+                            }
+                        ],
+                        xAxis: {
+                            type: "category",
+                            boundaryGap: false,
+                            data: format(info.updateTimes)
+                        },
+                        yAxis: {
+                            type: "value"
+                        },
+                        series: [
+                            {
+                                name: "回测利率",
+                                data: info.yields,
+                                type: "line",
+                                sampling: "average",
+                                areaStyle: {
+                                    normal: {
+                                        color: "#DAE4F4"
+                                    }
+                                },
+                                lineStyle: {
+                                    normal: {
+                                        width: 3,
+                                        color: "#4577C8"
+                                    }
+                                },
+                            },
+                        ]
+                    };
+
+                    var myChart = echarts.init(document.getElementById("graphdiv"+i));
+                    myChart.setOption(option);
+                }
+
+
+
+
+
+/*
                 document.getElementById('futures').innerHTML = function(){
-                    contractFilterInfo.page = obj.curr-1;
-                    getContractList();
-                    obj.count = totalCount;
+
+
 
                     var arr = []
                         ,thisData = contractList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
 
                     layui.each(thisData, function(index, item){
+
                         var text = '<div class="futureboard">\n' +
                             '                <div class="future_name">'+item.contractName+'</div>\n' +
                             '                <div><img class="staricon" src="../imgs/star.png" />\n' +
@@ -901,18 +1329,89 @@
 
                         arr.push(text);
 
-});
+                    });
 
 
-return arr.join('');
-}();
-}
-,theme: '#FD6857'
-});
+                    alert("hh");
+                    var option = {
+                        grid: {
+                            left: "3%",
+                            right: "4%",
+                            bottom: "3%",
+                            top: "4%",
+                            containLabel: true
+                        },
+                        dataZoom: [
+                            {
+                                show: true,
+                                realtime: true,
+                                start: 0,
+                                end: 100,
+                                height: 30,
+                                y: 215
+                            },
+                            {
+                                type: "inside",
+                                realtime: true,
+                                start: 0,
+                                end: 100
+                            }
+                        ],
+                        xAxis: {
+                            type: "category",
+                            boundaryGap: false,
+                            data: [10,70]
+                        },
+                        yAxis: {
+                            type: "value"
+                        },
+                        series: [
+                            {
+                                name: "回测利率",
+                                data: [10,70],
+                                type: "line",
+                                sampling: "average",
+                                areaStyle: {
+                                    normal: {
+                                        color: "#DAE4F4"
+                                    }
+                                },
+                                lineStyle: {
+                                    normal: {
+                                        width: 3,
+                                        color: "#4577C8"
+                                    }
+                                },
+                            },
+                            {
+                                name: "基准利率",
+                                data:[10,70],
+                                type: "line",
+                                lineStyle: {
+                                    normal: {
+                                        width: 3,
+                                        color: "#A34240"
+                                    }
+                                },
+                            }
+                        ]
+                    };
 
 
+                    alert(">>>>");
+                    var myChart = echarts.init(document.getElementById("graphdiv0"));
+                    myChart.setOption(option);
 
-});
+
+                    return arr.join('');
+                }();
+
+*/
+            }
+            ,theme: '#FD6857'
+        });
+
+    });
 
 
 

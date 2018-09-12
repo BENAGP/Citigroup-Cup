@@ -12,6 +12,7 @@ td{
 }
 
 .transactionboard{
+    float: left;
     left: 21px;
     top: 170px;
     width: 100%;
@@ -67,7 +68,7 @@ td{
 
 .redeembutton{
     position: relative;
-    left: 118px;
+    left: 190px;
     top: -28px;
     width: 130px;
     height: 36px;
@@ -120,12 +121,24 @@ td{
     font-weight: bolder;
 }
 
+.history{
+    position: relative;
+    width: 100px;
+    height: 29px;
+    line-height: 29px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+    float: left;
+    font-weight: bolder;
+}
 
 .choose_bottom{
     position: relative;
-    left: -150px;
+    left: -250px;
     top: 30px;
-    width: 140px;
+    width: 240px;
     height: 1px;
     background-color: rgba(94, 94, 94, 1);
     float: left;
@@ -135,7 +148,7 @@ td{
 
 .gross_bottom{
     position: relative;
-    left: -290px;
+    left: -490px;
     top: 30px;
     width: 40px;
     height: 3px;
@@ -146,7 +159,7 @@ td{
 
 .funds_bottom{
     position: relative;
-    left: -270px;
+    left: -470px;
     top: 30px;
     width: 80px;
     height: 3px;
@@ -155,7 +168,16 @@ td{
     visibility: hidden;
 }
 
-
+.history_bottom{
+    position: relative;
+    left: -450px;
+    top: 30px;
+    width: 80px;
+    height: 3px;
+    background-color: rgba(94, 94, 94, 1);
+    float: left;
+    visibility: hidden;
+}
 
 .gorssboard{
     position: relative;
@@ -200,7 +222,7 @@ td{
     width: 200px;
     height: 30px;
     top: -38px;
-    left: 505px;
+    left: 438px;
     display: inline-block;
 
 }
@@ -225,7 +247,7 @@ td{
     line-height: 20px;
     color: rgba(204, 8, 14, 1);
     font-size: 14px;
-    text-align: center;
+    text-align: left;
     font-family: Roboto;
 
     position: relative;
@@ -254,7 +276,7 @@ td{
     line-height: 20px;
     color: #3F51B5;
     font-size: 14px;
-    text-align: center;
+    text-align: left;
     font-family: Roboto;
 
     position: relative;
@@ -265,12 +287,12 @@ td{
 
 
 
-.grossdiv{
+.graphdiv{
     position: relative;
     top: 30px;
     left:-20px;
-    width: 720px;
-    height: 300px;
+    width: 700px;
+    height: 280px;
 }
 
 
@@ -283,6 +305,15 @@ td{
     visibility: hidden;
 }
 
+
+.historyboard{
+    position: relative;
+    left:30px;
+    top: -206px;
+    width: 700px;
+    height: 350px;
+    visibility: hidden;
+}
 
 /**/
 
@@ -311,25 +342,12 @@ td{
 }
 
 
-.newest{
-    position: relative;
-    width: 100px;
-    height: 29px;
-    line-height: 29px;
-    color: rgba(94, 94, 94, 1);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    float: left;
-    font-weight: bolder;
-}
-
 
 .choose_bottom2{
     position: relative;
-    left: 20px;
-    top: 1px;
-    width: 190px;
+    left: -100px;
+    top: 30px;
+    width: 80px;
     height: 1px;
     background-color: rgba(94, 94, 94, 1);
     float: left;
@@ -339,27 +357,14 @@ td{
 
 .current_bottom{
     position: relative;
-    left: -170px;
-    top: 0px;
+    left: -180px;
+    top: 30px;
     width: 80px;
     height: 3px;
     background-color: rgba(94, 94, 94, 1);
 
     float: left;
 }
-
-.newest_bottom{
-    position: relative;
-    left: -140px;
-    top: 0px;
-    width: 80px;
-    height: 3px;
-    background-color: rgba(94, 94, 94, 1);
-    float: left;
-    visibility: hidden;
-}
-
-
 
 .currentboard{
     position: relative;
@@ -370,19 +375,6 @@ td{
     float: left;
     /*background-color: #9fcdff;*/
     /*visibility: hidden;*/
-}
-
-
-
-
-.newestboard{
-    position: relative;
-    left:741px;
-    top: -191px;
-    width: 310px;
-    height: 350px;
-    visibility: hidden;
-    /*background-color: #00F7DE;*/
 }
 
 

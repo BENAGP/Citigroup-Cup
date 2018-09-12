@@ -274,11 +274,11 @@ button{
 
 .futureboard{
     width: 49%;
-    height: 545px;
+    height: 520px;
     float: left;
     line-height: 20px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     box-shadow: 2px 2px 6px 2px rgba(229, 229, 229, 1);
     border: 1px solid rgba(255, 255, 255, 0);
 
@@ -299,14 +299,14 @@ button{
     position: relative;
     width: 33px;
     height: 33px;
-    top: -37px;
+    top: -35px;
     left: 197px;
 }
 
 
 .collectbutton{
     position: relative;
-    top: -33px;
+    top: -30px;
     left: 195px;
     line-height: 29px;
     color: rgba(255, 152, 0, 1);
@@ -322,7 +322,7 @@ button{
     position: relative;
     width: 200px;
     height: 30px;
-    top: -30px;
+    top: -25px;
     left: 15px;
     display: inline-block;
 
@@ -330,43 +330,14 @@ button{
 
 
 
-.lengend_red
-{
-    width: 8px;
-    height: 12px;
-    line-height: 20px;
-    background-color: rgba(204, 8, 14, 1);
-    text-align: center;
-    border: 1px solid rgba(204, 8, 14, 1);
-}
-
-.lengend_red_text{
-
-    float: left;
-    width: 60px;
-    height: 17px;
-    line-height: 20px;
-    color: rgba(204, 8, 14, 1);
-    font-size: 14px;
-    text-align: center;
-    font-family: Roboto;
-
-    position: relative;
-    top: -15px;
-    left: 10px;
-}
-
 .lengend_blue
 {
-    width: 8px;
-    height: 12px;
+    width: 5px;
+    height: 10px;
     line-height: 20px;
     background-color: #3F51B5;
     text-align: center;
     border: 1px solid #3F51B5;
-    position: relative;
-    left: 100px;
-    top:-12px;
 }
 
 .lengend_blue_text{
@@ -376,14 +347,15 @@ button{
     height: 17px;
     line-height: 20px;
     color: #3F51B5;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
     font-family: Roboto;
 
     position: relative;
-    top: -27px;
-    left: 50px;
+    top: -15px;
+    left: 4px;
 }
+
 
 .mobilityvalue{
     position: relative;
@@ -405,7 +377,7 @@ button{
     height: 240px;
     position: relative;
     left: 10px;
-    top: -20px;
+    top: -30px;
 }
 
 .info{

@@ -20,24 +20,23 @@
         <!-- transaction板块 -->
         <div class="transactionboard">
             <div class="topinfo">
-                <div class="futurename">IF1706-IF1703</div>
-                <div class="mobility">（流动性：300元/分钟）</div>
+                <div class="futurename" id="futurename0"></div>
                 <button class="redeembutton">赎回</button>
             </div>
 
-
-            <!-- gross & funds boards -->
+            <!-- gross & funds boards & history-->
             <div class="grossfundschoose">
-                <button class="gross" onclick="grossclick()">收益</button>
-                <button class="funds" onclick="fundsclick()">资金占用</button>
+                <button class="gross" onclick="grossclick(0)">收益</button>
+                <button class="funds" onclick="fundsclick(0)">资金占用</button>
+                <button class="history" onclick="historyclick(0)">历史调仓</button>
                 <div class="choose_bottom"></div>
 
-                <div class="gross_bottom" id="gross_bottom"></div>
-                <div class="funds_bottom" id="funds_bottom"></div>
+                <div class="gross_bottom" id="gross_bottom0"></div>
+                <div class="funds_bottom" id="funds_bottom0"></div>
+                <div class="history_bottom" id="history_bottom0"></div>
             </div>
 
-
-            <div class="gorssboard" id="grossboard">
+            <div class="gorssboard" id="grossboard0">
                 <div class="grossinfo">
                     <div class="zoom">缩放：</div>
 
@@ -49,36 +48,27 @@
 
                     <!-- lengend -->
                     <div class="lg">
-                        <div class="lg_red"></div>
-                        <div class="lg_red_text">基准利率</div>
-                        <div class="lg_blue"></div>
-                        <div class="lg_blue_text">回测利率</div>
+                        <div class="lg_red" id="redBottom0"></div>
+                        <div class="lg_red_text" id="redText0">收益</div>
+                        <div class="lg_blue" id="blueBottom0"></div>
+                        <div class="lg_blue_text" id="blueText0">收益</div>
                     </div>
 
                 </div>
-                <div class="grossdiv" id="grossdiv"></div>
+                <div class="graphdiv" id="graphdiv0"></div>
             </div>
 
-            <div class="fundsboard" id="fundsboard">
-                资金占用界面
-            </div>
-
-
-
-            <!-- 当前持仓，最新调仓 -->
-
-            <!-- current & newest boards -->
+            <!-- 当前持仓 -->
+            <!-- current-->
             <div class="currentnewestchoose">
                 <button class="current" onclick="currentclick()">当前持仓</button>
-                <button class="newest" onclick="newestclick()">最新调仓</button>
                 <div class="choose_bottom2"></div>
 
-                <div class="current_bottom" id="current_bottom"></div>
-                <div class="newest_bottom" id="newest_bottom"></div>
+                <div class="current_bottom" id="current_bottom0"></div>
             </div>
 
 
-            <div class="currentboard" id="currentboard">
+            <div class="currentboard" id="currentboard0">
 
                 <table class="layui-table" >
                     <colgroup >
@@ -90,39 +80,91 @@
                     <tbody>
                     <tr>
                         <td>合约标的</td>
-                        <td>IF1730</td>
-                        <td>IF1706</td>
+                        <td id="nearName0"></td>
+                        <td id="backName0"></td>
                     </tr>
                     <tr>
                         <td>数量</td>
-                        <td>+3</td>
-                        <td>-3</td>
+                        <td id="nearPosition0"></td>
+                        <td id="backPosition0"></td>
                     </tr>
                     <tr>
                         <td>市值</td>
-                        <td class="marketvalue1">10000</td>
-                        <td class="marketvalue2">9978</td>
+                        <td class="marketvalue1" id="nearPrice0"></td>
+                        <td class="marketvalue2" id="backPrice0"></td>
                     </tr>
                     <tr>
                         <td>仓位</td>
-                        <td colspan="2">88%</td>
+                        <td colspan="2" id="position0"></td>
                     </tr>
                     <tr>
                         <td>当日赢亏</td>
-                        <td colspan="2">880</td>
+                        <td colspan="2" id="today0"></td>
                     </tr>
                     <tr>
                         <td>盈亏比</td>
-                        <td colspan="2">-0.08%</td>
+                        <td colspan="2" id="todayrate0"></td>
                     </tr>
                     </tbody>
                 </table>
-
             </div>
 
-            <div class="newestboard" id="newestboard">
+        </div>
 
-                <table class="layui-table" style="position: relative;top: -409px;" >
+
+        <div class="transactionboard">
+            <div class="topinfo">
+                <div class="futurename" id="futurename1"></div>
+                <button class="redeembutton">赎回</button>
+            </div>
+
+            <!-- gross & funds boards & history-->
+            <div class="grossfundschoose">
+                <button class="gross" onclick="grossclick(1)">收益</button>
+                <button class="funds" onclick="fundsclick(1)">资金占用</button>
+                <button class="history" onclick="historyclick(1)">历史调仓</button>
+                <div class="choose_bottom"></div>
+
+                <div class="gross_bottom" id="gross_bottom1"></div>
+                <div class="funds_bottom" id="funds_bottom1"></div>
+                <div class="history_bottom" id="history_bottom1"></div>
+            </div>
+
+            <div class="gorssboard" id="grossboard1">
+                <div class="grossinfo">
+                    <div class="zoom">缩放：</div>
+
+                    <button class="zoombutton">1星期</button>
+                    <button class="zoombutton">1个月</button>
+                    <button class="zoombutton">6个月</button>
+                    <button class="zoombutton">半年</button>
+                    <button class="zoombutton">全部</button>
+
+                    <!-- lengend -->
+                    <div class="lg">
+                        <div class="lg_red" id="redBottom1"></div>
+                        <div class="lg_red_text" id="redText1">收益</div>
+                        <div class="lg_blue" id="blueBottom1"></div>
+                        <div class="lg_blue_text" id="blueText1">收益</div>
+                    </div>
+
+                </div>
+                <div class="graphdiv" id="graphdiv1"></div>
+            </div>
+
+            <!-- 当前持仓 -->
+            <!-- current-->
+            <div class="currentnewestchoose">
+                <button class="current" onclick="currentclick()">当前持仓</button>
+                <div class="choose_bottom2"></div>
+
+                <div class="current_bottom" id="current_bottom1"></div>
+            </div>
+
+
+            <div class="currentboard" id="currentboard1">
+
+                <table class="layui-table" >
                     <colgroup >
                         <col width="50">
                         <col width="50">
@@ -132,42 +174,126 @@
                     <tbody>
                     <tr>
                         <td>合约标的</td>
-                        <td>IF1730</td>
-                        <td>IF1706</td>
+                        <td id="nearName1"></td>
+                        <td id="backName1"></td>
                     </tr>
                     <tr>
                         <td>数量</td>
-                        <td>+1</td>
-                        <td>-1</td>
+                        <td id="nearPosition1"></td>
+                        <td id="backPosition1"></td>
                     </tr>
                     <tr>
-                        <td>成交均价</td>
-                        <td>10000</td>
-                        <td>9978</td>
+                        <td>市值</td>
+                        <td class="marketvalue1" id="nearPrice1"></td>
+                        <td class="marketvalue2" id="backPrice1"></td>
                     </tr>
                     <tr>
                         <td>仓位</td>
-                        <td colspan="2">88%</td>
+                        <td colspan="2" id="position1"></td>
                     </tr>
                     <tr>
-                        <td>时间</td>
-                        <td colspan="2">2017-02-09 15:49</td>
+                        <td>当日赢亏</td>
+                        <td colspan="2" id="today1"></td>
                     </tr>
-
+                    <tr>
+                        <td>盈亏比</td>
+                        <td colspan="2" id="todayrate1"></td>
+                    </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
 
+        <div class="transactionboard">
+            <div class="topinfo">
+                <div class="futurename" id="futurename2"></div>
+                <button class="redeembutton">赎回</button>
             </div>
 
-        </div>
+            <!-- gross & funds boards & history-->
+            <div class="grossfundschoose">
+                <button class="gross" onclick="grossclick(2)">收益</button>
+                <button class="funds" onclick="fundsclick(2)">资金占用</button>
+                <button class="history" onclick="historyclick(2)">历史调仓</button>
+                <div class="choose_bottom"></div>
+
+                <div class="gross_bottom" id="gross_bottom2"></div>
+                <div class="funds_bottom" id="funds_bottom2"></div>
+                <div class="history_bottom" id="history_bottom2"></div>
+            </div>
+
+            <div class="gorssboard" id="grossboard2">
+                <div class="grossinfo">
+                    <div class="zoom">缩放：</div>
+
+                    <button class="zoombutton">1星期</button>
+                    <button class="zoombutton">1个月</button>
+                    <button class="zoombutton">6个月</button>
+                    <button class="zoombutton">半年</button>
+                    <button class="zoombutton">全部</button>
+
+                    <!-- lengend -->
+                    <div class="lg">
+                        <div class="lg_red" id="redBottom2"></div>
+                        <div class="lg_red_text" id="redText2">收益</div>
+                        <div class="lg_blue" id="blueBottom2"></div>
+                        <div class="lg_blue_text" id="blueText2">收益</div>
+                    </div>
+
+                </div>
+                <div class="graphdiv" id="graphdiv2"></div>
+            </div>
+
+            <!-- 当前持仓 -->
+            <!-- current-->
+            <div class="currentnewestchoose">
+                <button class="current" onclick="currentclick()">当前持仓</button>
+                <div class="choose_bottom2"></div>
+
+                <div class="current_bottom" id="current_bottom2"></div>
+            </div>
 
 
-        <div class="transactionboard">
-        </div>
+            <div class="currentboard" id="currentboard2">
 
-        <div class="transactionboard">
+                <table class="layui-table" >
+                    <colgroup >
+                        <col width="50">
+                        <col width="50">
+                        <col width="50">
+                    </colgroup>
 
-
+                    <tbody>
+                    <tr>
+                        <td>合约标的</td>
+                        <td id="nearName2"></td>
+                        <td id="backName2"></td>
+                    </tr>
+                    <tr>
+                        <td>数量</td>
+                        <td id="nearPosition2"></td>
+                        <td id="backPosition2"></td>
+                    </tr>
+                    <tr>
+                        <td>市值</td>
+                        <td class="marketvalue1" id="nearPrice2"></td>
+                        <td class="marketvalue2" id="backPrice2"></td>
+                    </tr>
+                    <tr>
+                        <td>仓位</td>
+                        <td colspan="2" id="position2"></td>
+                    </tr>
+                    <tr>
+                        <td>当日赢亏</td>
+                        <td colspan="2" id="today2"></td>
+                    </tr>
+                    <tr>
+                        <td>盈亏比</td>
+                        <td colspan="2" id="todayrate2"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -184,44 +310,373 @@
 
     $("tr").css("height","50px");
 
-    function grossclick(){
-        $("#funds_bottom").css("visibility","hidden");
-        $("#gross_bottom").css("visibility","visible");
-
-        $("#fundsboard").css("visibility","hidden");
-        $("#grossboard").css("visibility","visible");
-
+    function grossclick(id){
+        $("#funds_bottom"+id).css("visibility","hidden");
+        $("#gross_bottom"+id).css("visibility","visible");
+        $("#history_bottom"+id).css("visibility","hidden");
+        insertGross(id);
     }
 
-    function fundsclick(){
-        $("#funds_bottom").css("visibility","visible");
-        $("#gross_bottom").css("visibility","hidden");
+    function fundsclick(id){
+        $("#funds_bottom"+id).css("visibility","visible");
+        $("#gross_bottom"+id).css("visibility","hidden");
+        $("#history_bottom"+id).css("visibility","hidden");
 
-        $("#fundsboard").css("visibility","visible");
-        $("#grossboard").css("visibility","hidden");
+        insertFunds(id);
     }
 
-
-    function currentclick(){
-        $("#newest_bottom").css("visibility","hidden");
-        $("#current_bottom").css("visibility","visible");
-
-        $("#newestboard").css("visibility","hidden");
-        $("#currentboard").css("visibility","visible");
-
-    }
-
-    function newestclick(){
-        $("#newest_bottom").css("visibility","visible");
-        $("#current_bottom").css("visibility","hidden");
-
-        $("#newestboard").css("visibility","visible");
-        $("#currentboard").css("visibility","hidden");
+    function historyclick(id){
+        $("#funds_bottom"+id).css("visibility","hidden");
+        $("#gross_bottom"+id).css("visibility","hidden");
+        $("#history_bottom"+id).css("visibility","visible");
+        insertHistory(id);
     }
 
 
 
-    var myChart = echarts.init(document.getElementById('grossdiv'));
+    var PAGENUM = 3;
+    var tradeFilterInfo = {
+        "userId":1,
+        "page":0,
+        "pageNum":PAGENUM
+    };
+
+    var tradeList;
+
+    function getTradeList(){
+        $.ajax({
+            url:"http://localhost:8080/api/contract/getMyTradeList",
+            async:false,
+            type:"POST",
+            data:tradeFilterInfo,
+            dataType: "JSON",
+            success: function (data){
+                tradeList = data;
+            },
+            error: function (data){
+                alert("Please try again latar,");
+            }
+        });
+
+        initTables();
+    }
+
+    function sign(num){
+        if(num>0){
+            return "+"+num;
+        }else if(num<0){
+            return "-"+num;
+        }else{
+            return num;
+        }
+    }
+
+
+
+    function initTables(){
+        for(var i=0;i<tradeList.length;i++){
+            var trade = tradeList[i];
+
+            $("#futurename"+i).html(sign(trade.contractName));
+            $("#nearName"+i).html(sign(trade.nearbyFuturesName));
+            $("#backName"+i).html(sign(trade.backFuturesName));
+            $("#nearPosition"+i).html(trade.nearbyFuturesPosition);
+            $("#backPosition"+i).html(trade.backFuturesPosition);
+            $("#nearPrice"+i).html(trade.nearbyFuturesPrice);
+            $("#backPrice"+i).html(trade.backFuturesPrice);
+            $("#position"+i).html(parseFloat((trade.position*100).toFixed(2))+"%");
+            $("#today"+i).html(trade.todayProfitLoss);
+            $("#todayrate"+i).html(parseFloat((trade.profitLossRatio*100).toFixed(2))+"%");
+        }
+    }
+
+    $(document).ready(function(){
+        getTradeList();
+        insertGross();
+    });
+
+
+
+    function format(list){
+        var res = [];
+        for(var i=0;i<list.length;i++){
+            res.push(list[i].substring(0,19));
+        }
+        return res;
+    }
+
+    function insertGross(id){
+        $("#redText"+id).css("visibility","hidden");
+        $("#redBottom"+id).css("visibility","hidden");
+        $("#blueText"+id).html("收益");
+
+        var myChart = echarts.init(document.getElementById('graphdiv'+id));
+        option = {
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '4%',
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    start: 0,
+                    end: 100,
+                    height: 30,
+                },
+                {
+                    type: 'inside',
+                    realtime: true,
+                    start: 0,
+                    end: 100
+
+                }
+            ],
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: format(tradeList[i].updateTimes)
+            },
+            yAxis: {
+                position: 'right',
+                type: 'value'
+            },
+            series: [
+                {
+                    name: "收益",
+                    data: tradeList[i].yields,
+                    type: 'line',
+                    sampling: 'average',
+                    areaStyle: {
+                        normal: {
+                            color: "#DAE4F4"
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: '#4577C8'
+                        }
+                    },
+                }
+            ]
+        };
+        myChart.setOption(option,true);
+    }
+
+
+
+    function insertFunds(id){
+        $("#redText"+id).css("visibility","hidden");
+        $("#redBottom"+id).css("visibility","hidden");
+        $("#blueText"+id).html("资金占用");
+
+        var myChart = echarts.init(document.getElementById('graphdiv'+id));
+        option = {
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '4%',
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    start: 0,
+                    end: 100,
+                    height: 30,
+                },
+                {
+                    type: 'inside',
+                    realtime: true,
+                    start: 0,
+                    end: 100
+
+                }
+            ],
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: format(tradeList[i].updateTimes)
+            },
+            yAxis: {
+                position: 'right',
+                type: 'value'
+            },
+            series: [
+                {
+                    name: "占用资金",
+                    data: tradeList[i].positions,
+                    type: 'line',
+                    sampling: 'average',
+                    areaStyle: {
+                        normal: {
+                            color: "#DAE4F4"
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: '#4577C8'
+                        }
+                    },
+                }
+            ]
+        };
+        myChart.setOption(option,true);
+    }
+
+
+
+    function insertHistory(id){
+        $("#redText"+id).css("visibility","visible");
+        $("#redBottom"+id).css("visibility","visible");
+        $("#redText"+id).html("近月期货");
+        $("#blueText"+id).html("远月期货");
+
+        var myChart = echarts.init(document.getElementById('graphdiv'+id));
+        option = {
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '4%',
+                containLabel: true
+            },
+            dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    start: 0,
+                    end: 100,
+                    height: 30,
+                },
+                {
+                    type: 'inside',
+                    realtime: true,
+                    start: 0,
+                    end: 100
+
+                }
+            ],
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: format(tradeList[i].updateTimes)
+            },
+            yAxis: {
+                position: 'right',
+                type: 'value'
+            },
+            series: [
+                {
+                    name: "近月期货",
+                    data: tradeList[i].nearbyFuturesPositionOperations,
+                    type: 'line',
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: "#A34240"
+                        }
+                    },
+
+                },
+                {
+                    name: "远月期货",
+                    data: tradeList[i].backFuturesPositionOperations,
+                    type: 'line',
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            color: "#4577C8"
+                        }
+                    },
+                }
+            ]
+        };
+        myChart.setOption(option,true);
+    }
+
+
+
+
+
+    function insertGross(){
+        for(var i=0;i<tradeList.length;i++){
+
+            $("#redText"+i).css("visibility","hidden");
+            $("#redBottom"+i).css("visibility","hidden");
+            $("#blueText"+i).html("收益");
+
+            var trade = tradeList[i];
+
+            var myChart = echarts.init(document.getElementById('graphdiv'+i));
+            option = {
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top: '4%',
+                    containLabel: true
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        start: 0,
+                        end: 100,
+                        height: 30,
+                    },
+                    {
+                        type: 'inside',
+                        realtime: true,
+                        start: 0,
+                        end: 100
+
+                    }
+                ],
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: format(trade.updateTimes)
+                },
+                yAxis: {
+                    position: 'right',
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: "收益",
+                        data: trade.yields,
+                        type: 'line',
+                        sampling: 'average',
+                        areaStyle: {
+                            normal: {
+                                color: "#DAE4F4"
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 3,
+                                color: '#4577C8'
+                            }
+                        },
+                    }
+                ]
+            };
+            myChart.setOption(option,true);
+        }
+
+    }
+
+
+
+    var myChart = echarts.init(document.getElementById('graphdiv'));
   //  var myChart1 = echarts.init(document.getElementById('grossdiv1'));
 
 
@@ -301,7 +756,7 @@
     };
 
 
-    myChart.setOption(option);
+    myChart.setOption(option,true);
    // myChart1.setOption(option);
 
 </script>
