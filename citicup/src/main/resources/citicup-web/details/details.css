@@ -202,9 +202,9 @@
 
 #w6c {
     position: absolute;
-    left: 1225px;
+    left: 1210px;
     top: 40px;
-    width: 113px;
+    width: 140px;
     height: 43px;
     line-height: 41px;
     color: rgba(94, 94, 94, 1);
@@ -1021,4 +1021,18 @@
     text-align: center;
     font-family: Roboto;
     border: 1px solid rgba(187, 187, 187, 1);
+}
+
+.goumai {
+    position: relative;
+    top: 58px;
+    left: 140px;
+    width: 257px;
+    height: 35px;
+    margin-top: 80px;
+    line-height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
 }
