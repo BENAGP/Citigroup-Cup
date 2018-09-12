@@ -57,16 +57,25 @@
                 <button style="float: right">合约：IF706-IF703</button>
                 <img class="line" src="line.png">
             </div>
-            <div class="page">
-                <button>上一页</button>
-                <button id="active">1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>...</button>
-                <button>7</button>
-                <button>下一页</button>
+            <div class="page" id="demo1">
             </div>
         </div>
+        <script>
+            layui.use(['laypage', 'layer'], function(){
+                var laypage = layui.laypage
+                    ,layer = layui.layer;
+
+                var message_num = 70;
+                
+                //总页数大于页码总数
+                laypage({
+                    cont:'demo1',
+                    pages:Math.ceil(message_num/3),
+                });
+            });
+
+
+        </script>
 
         <div class="person_title">个人中心</div>
         <div class="person_board">
