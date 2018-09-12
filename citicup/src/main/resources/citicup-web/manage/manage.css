@@ -127,7 +127,7 @@ button{
     color: #5E5E5E;
     margin-bottom: 15px;
 }
-#idInput {
+#emailInput {
     height: 40px;
     background-color: rgba(244, 244, 244, 1);
     color: rgba(136, 136, 136, 1);
@@ -160,13 +160,17 @@ button{
 #uploadPic {
     width: 232px;
     height: 230px;
-    line-height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     color: rgba(16, 16, 16, 1);
-    font-size: 14px;
     text-align: center;
     font-family: Roboto;
     border: 1px solid rgba(187, 187, 187, 1);
     margin-bottom: 40px;
+}
+#uploadPic:hover {
+    cursor: pointer;
 }
 #submitBtn {
     width: 140px;
@@ -183,8 +187,9 @@ button{
 
 
 
-
-
+#uploadImg {
+    margin-bottom: 40px;
+}
 
 
 

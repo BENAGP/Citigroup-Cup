@@ -18,17 +18,26 @@
         <div class="manage">
             <div class="manageContent">
                 <div id="sectionName">编辑个人资料</div>
-                <div class="itemName">账号</div>
-                <input disabled id="idInput" type="text">
+                <div class="itemName">邮箱</div>
+                <input id="emailInput" type="text">
                 <div class="itemName">昵称</div>
                 <input id="nameInput" type="text">
                 <div class="itemName">偏好风险等级</div>
                 <select id="riskLevel">
                     <option value="1">1</option>
                     <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
                 </select>
-                <div id="uploadPic">上传新头像</div>
-                <button id="submitBtn">提交</button>
+                <div class="itemName">上传新头像</div>
+                <img width="200" height="200" style="display: none; margin-bottom: 30px" id="preview" src="">
+                <input id="uploadImg" type="file" accept="image/*" onchange="uploadPic()" />
+                <button id="submitBtn" onclick="submit()">提交</button>
             </div>
         </div>
 
@@ -54,6 +63,76 @@
 
 <script>
     $("button").css("outline","none");
+    let layer;
+    layui.use(['layer'],function(){
+        layer = layui.layer;
+    });
+    var uid = window.localStorage.getItem("userId");
+    var email = window.localStorage.getItem("email");
+    var nickname = window.localStorage.getItem("nickname");
+    var riskLevel = window.localStorage.getItem("preferRiskLevel");
+    var avatar = window.localStorage.getItem("avatar");
+    $("#emailInput").val(email);
+    $("#nameInput").val(nickname);
+    $("#riskLevel").val(riskLevel);
+    console.log(avatar);
+    if (avatar != 'null') {
+        $("#preview").css("display", "block");
+        $("#preview").attr("src", avatar);
+    }
+    var fileInput = document.getElementById("uploadImg");
+    var previewSrc = '';
+
+    function uploadPic() {
+        var file = fileInput.files[0];
+
+        var formData = new FormData();
+        formData.append("userId", uid);
+        formData.append("file", file);
+        $.ajax({
+            url: '/api/user/postAvatar',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: 'text',
+            success: function (msg) {
+                console.log('ggg');
+                console.log(msg);
+                previewSrc = msg;
+                $("#preview").css("display", "block");
+                $("#preview").attr("src", msg);
+            },
+            error: function (msg) {
+                console.log(msg)
+            }
+        })
+    }
+
+    function submit() {
+        console.log($("#preview")[0].src);
+        console.log($("#riskLevel").val());
+        if ($("#nameInput").val() === '') {
+            layer.msg("请输入昵称！");
+            return;
+        }
+        if ($("#preview")[0].src === '') {
+            layer.msg("请上传头像");
+            return;
+        }
+        $.post('/api/user/perfectInfo', {
+            userId: uid,
+            email: email,
+            nickname: $("#nameInput").val(),
+            preferRiskLevel: $("#riskLevel").val(),
+            avatar: $("#preview")[0].src,
+        }).done(response => {
+            console.log(response);
+            layer.msg("修改成功！");
+        }).fail(err => {
+            layer.msg(err.responseText)
+        })
+    }
 
 </script>
 </html>
