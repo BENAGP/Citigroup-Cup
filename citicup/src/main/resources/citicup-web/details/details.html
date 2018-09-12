@@ -132,22 +132,20 @@
                     e.innerHTML = risk_level;
                 }
                 function risk_up() {
-                    var uid = window.localStorage.getItem("userId");
-                    var cid = window.localStorage.getItem("contractId");
+                    var uid = 1;
+                    var cid = 3;
                     var risk_level=document.getElementById("risk_level").innerHTML;
                     risk_level = parseInt(risk_level)+1;
                     var d = document.getElementById('risk_level');
                     d.innerHTML = risk_level;
-                    alert("uid"+uid+"cid"+cid+"risk"+risk_level)
-                    $.post("/api/contract/getDetailByRiskLevel",{
+                    alert("uid"+uid+"cid"+cid+"risk"+risk_level);
+                    $.post('/api/contract/getDetailByRiskLevel',{
                         userId: uid,
                         contractId: cid,
                         riskLevel: risk_level
                     }).done(function (response) {
                         console.log(response);
-                        }
-
-                    ).fail(function(err){
+                    }).fail(function(err){
                         console.log("err",err);
                         risk_level = parseInt(risk_level)-1;
                         var d = document.getElementById('risk_level');
@@ -272,7 +270,10 @@
                     var uid = window.localStorage.getItem("userId");
                     var cid = 3;
                     var buy = document.getElementById("buy_how_many").value;
-                    console.log("uid:" + uid + "cid:" + cid + "buy:" + buy + "risk_level:" + risk_level);
+                    if(buy<1000){
+                        layer.msg("输入金额小于1000，请重新输入");
+                        return;
+                    }
                     $.post('/api/contract/buy', {
                         userId: uid,
                         contractId: cid,
@@ -308,7 +309,7 @@
                     e.innerHTML = risk_level;
                 }
             </script>
-            <button id="jx"  onClick="buy()" onClick="shu_xin()">购买</button>
+            <button id="jx"  onClick="buy()">购买</button>
             <span id="w7">市场最大承载资金</span>
             <span id="w8"><b>¥10000</b></span>
             <span id="w9">最大回撤：</span>
