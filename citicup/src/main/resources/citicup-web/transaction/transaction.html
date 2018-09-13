@@ -438,7 +438,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[i].updateTimes)
+                data: format(tradeList[id].updateTimes)
             },
             yAxis: {
                 position: 'right',
@@ -447,7 +447,7 @@
             series: [
                 {
                     name: "收益",
-                    data: tradeList[i].yields,
+                    data: tradeList[id].yields,
                     type: 'line',
                     sampling: 'average',
                     areaStyle: {
@@ -502,7 +502,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[i].updateTimes)
+                data: format(tradeList[id].updateTimes)
             },
             yAxis: {
                 position: 'right',
@@ -511,7 +511,7 @@
             series: [
                 {
                     name: "占用资金",
-                    data: tradeList[i].positions,
+                    data: tradeList[id].positions,
                     type: 'line',
                     sampling: 'average',
                     areaStyle: {
@@ -567,7 +567,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[i].updateTimes)
+                data: format(tradeList[id].updateTimes)
             },
             yAxis: {
                 position: 'right',
@@ -576,7 +576,7 @@
             series: [
                 {
                     name: "近月期货",
-                    data: tradeList[i].nearbyFuturesPositionOperations,
+                    data: tradeList[id].nearbyFuturesPositionOperations,
                     type: 'line',
                     lineStyle: {
                         normal: {
@@ -588,7 +588,7 @@
                 },
                 {
                     name: "远月期货",
-                    data: tradeList[i].backFuturesPositionOperations,
+                    data: tradeList[id].backFuturesPositionOperations,
                     type: 'line',
                     lineStyle: {
                         normal: {
@@ -674,90 +674,6 @@
 
     }
 
-
-
-    var myChart = echarts.init(document.getElementById('graphdiv'));
-  //  var myChart1 = echarts.init(document.getElementById('grossdiv1'));
-
-
-    option = {
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top: '4%',
-            containLabel: true
-        },
-
-
-        dataZoom: [
-
-            {
-                show: true,
-                realtime: true,
-                start: 0,
-                end: 100,
-                height: 30,
-            },
-            {
-                type: 'inside',
-                realtime: true,
-                start: 0,
-                end: 100
-
-            }
-
-
-
-        ],
-
-
-
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-            position: 'right',
-            type: 'value'
-        },
-        series: [
-            {
-                name: "回测利率",
-                data: [820, -932, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                sampling: 'average',
-                areaStyle: {
-                    normal: {
-                        color: "#DAE4F4"
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: '#4577C8'
-                    }
-                },
-            },
-            {
-                name: "基准利率",
-                data: [80, 1922, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: "#A34240"
-                    }
-                },
-
-            }
-        ]
-    };
-
-
-    myChart.setOption(option,true);
-   // myChart1.setOption(option);
 
 </script>
 
