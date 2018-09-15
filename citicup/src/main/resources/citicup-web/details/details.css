@@ -2,14 +2,14 @@
     float: left;
     line-height: 40px;
     color: rgba(143, 167, 255, 1);
-    font-size: 28px;
+    font-size: 26px;
     font-family: "Roboto";
 }
 
 #collect_wrapper {
     float: left;
     display: inline;
-    line-height: 40px;
+    line-height: 36px;
     cursor: pointer;
 }
 
@@ -23,7 +23,7 @@
 
 #collect_letter {
 
-    font-size: 18px;
+    font-size: 16px;
     color: #ffac2b;
     line-height: 40px;
 
@@ -40,7 +40,7 @@
     float: left;
     line-height: 40px;
     color: rgba(94, 94, 94, 1);
-    font-size: 18px;
+    font-size: 16px;
     font-family: Roboto;
     margin-left: 16px;
 }
@@ -55,7 +55,7 @@
 
 #risk_level_wrapper span {
     color: rgba(94, 94, 94, 1);
-    font-size: 18px;
+    font-size: 16px;
     font-family: Roboto;
 }
 
@@ -75,7 +75,7 @@
     border-bottom: 2px solid #5e5e5e;
     padding-bottom: 6px;
     color: rgba(94, 94, 94, 1);
-    font-size: 20px;
+    font-size: 16px;
     font-family: Roboto;
 }
 
@@ -88,7 +88,9 @@
 #comment_input {
     width: 100%;
     margin-top: 20px;
-    font-size: 16px;
+    font-size: 14px;
+    min-height: 80px;
+    border-color: #bbb;
 }
 
 .mibtn-primary {
@@ -99,10 +101,98 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
 
 
+.comment-area {
+    margin: 2% auto;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
 
+.avatar-bar {
+    width: 8%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.avatar {
+    width: 98%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.username {
+    color: rgb(63, 81, 181);
+    text-align: center;
+    margin-top: 5px;
+}
+
+.comment-text {
+    float: right;
+    width: 88%;
+    margin-bottom: 10px;
+}
+
+.comment-sub {
+    width: 95%;
+    float: right;
+    background-color: rgb(244, 244, 244);
+    margin-top: 10px;
+    padding: 4px;
+}
+
+.comment-main, .comment-sub {
+    color: #5e5e5e;
+    font-size: 14px;
+}
+
+.comment-time {
+    color: #96979e;
+    font-size: 12px;
+    float: left;
+    margin-top: 10px;
+}
+
+.comment-replay {
+    float: left;
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgb(63, 81, 181);
+}
+
+hr {
+    margin-bottom: 15px;
+}
+
+.comment-replay-container {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.comment-text-area {
+    width: 100%;
+    margin-top: 10px;
+    min-height: 80px;
+    border-color: #bbb;
+}
+
+.mibtn-secondry {
+    width: 120px;
+    height: 32px;
+    background-color: rgb(244, 244, 244);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    margin-left: 20px;
+}
 
 
 
