@@ -21,7 +21,7 @@
         <div class="transactionboard">
             <div class="topinfo">
                 <div class="futurename" id="futurename0"></div>
-                <button class="redeembutton">赎回</button>
+                <button class="redeembutton" onclick="redeemclicked(0)">赎回</button>
             </div>
 
             <!-- gross & funds boards & history-->
@@ -115,7 +115,7 @@
         <div class="transactionboard">
             <div class="topinfo">
                 <div class="futurename" id="futurename1"></div>
-                <button class="redeembutton">赎回</button>
+                <button class="redeembutton"  onclick="redeemclicked(1)">赎回</button>
             </div>
 
             <!-- gross & funds boards & history-->
@@ -207,7 +207,7 @@
         <div class="transactionboard">
             <div class="topinfo">
                 <div class="futurename" id="futurename2"></div>
-                <button class="redeembutton">赎回</button>
+                <button class="redeembutton" onclick="redeemclicked(2)">赎回</button>
             </div>
 
             <!-- gross & funds boards & history-->
@@ -302,6 +302,29 @@
 </body>
 
 <script>
+
+    function redeemclicked(id){
+
+        layui.use('layer', function(){ //独立版的layer无需执行这一句
+            var layer = layui.layer; //独立版的layer无需执行这一句
+
+            layer.open({
+                type: 1
+                ,content: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认后系统将立刻强制平仓，是否确认?'
+                ,btn: ['确认', '取消']
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0 //不显示遮罩
+                ,yes: function(){
+                    layer.closeAll();
+                }
+
+                ,btn2: function(){
+                }
+            });
+        });
+    }
+
+
 
     $("button").css("outline","none");
     $("td").css("font-size","18px");
