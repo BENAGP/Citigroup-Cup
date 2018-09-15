@@ -271,7 +271,7 @@
             <!-- 期货列表 -->
             <div class="futureboard" id="futureboard0">
 
-                <div class="future_name" id = futurename0></div>
+                <div class="future_name" id = 'futurename0' onclick="details(0)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect0">收藏</button>
                 </div>
@@ -311,13 +311,10 @@
 
             </div>
 
-
-
-
             <div class="futureboard" id="futureboard1">
 
 
-                <div class="future_name" id = futurename1></div>
+                <div class="future_name" id = 'futurename1' onclick="details(1)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect1">收藏</button>
                 </div>
@@ -359,7 +356,7 @@
 
             <div class="futureboard" id="futureboard2">
 
-                <div class="future_name" id = futurename2></div>
+                <div class="future_name" id = 'futurename2' onclick="details(2)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect2">收藏</button>
                 </div>
@@ -401,7 +398,7 @@
 
             <div class="futureboard" id="futureboard3">
 
-                <div class="future_name" id = futurename3></div>
+                <div class="future_name" id = 'futurename3' onclick="details(3)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect3">收藏</button>
                 </div>
@@ -443,7 +440,7 @@
 
             <div class="futureboard" id="futureboard4">
 
-                <div class="future_name" id = futurename4></div>
+                <div class="future_name" id = 'futurename4' onclick="details(4)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect4">收藏</button>
                 </div>
@@ -485,7 +482,7 @@
 
             <div class="futureboard" id="futureboard5">
 
-                <div class="future_name" id = futurename5></div>
+                <div class="future_name" id = 'futurename5' onclick="details(5)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect5">收藏</button>
                 </div>
@@ -527,7 +524,7 @@
 
             <div class="futureboard" id="futureboard6">
 
-                <div class="future_name" id = futurename6></div>
+                <div class="future_name" id = 'futurename6' onclick="details(6)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect6">收藏</button>
                 </div>
@@ -569,7 +566,7 @@
 
             <div class="futureboard" id="futureboard7">
 
-                <div class="future_name" id = futurename7></div>
+                <div class="future_name" id = 'futurename7' onclick="details(7)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
                     <button class="collectbutton" id = "collect7">收藏</button>
                 </div>
@@ -652,6 +649,12 @@
 <script src="../components/top-nav.js"></script>
 
 <script>
+
+    function details(id){
+        var tradeId = contractList[id].tradeId;
+        var contractName = contractList[id].contractName;
+        location.href='../details/details.html?tradeId='+tradeId+'&contractName='+contractName;
+    }
 
     var contractList;
 
@@ -910,9 +913,8 @@
                 ,btnAlign: 'c' //按钮居中
                 ,shade: 0 //不显示遮罩
                 ,yes: function(){
-                    var tradeId = currentContract.tradeId;
-                    var contractName = currentContract.contractName;
-                    location.href='../details/details.html?tradeId='+tradeId+'&contractName='+contractName;
+                    layer.closeAll();
+                    buyboardClosed();
                 }
 
                 ,btn2: function(){
