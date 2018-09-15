@@ -1,5 +1,6 @@
 package com.nju.edu.cn.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.nju.edu.cn.entity.ContractBackTestParams;
@@ -123,7 +124,8 @@ public class ContractController {
     @PostMapping("/getList")
     public @ResponseBody List<ContractTradeModel> getList(Long userId,String contractTradeSearch,Integer page,Integer pageNum){
         logger.info("userId:{},contractTradeSearch:{},page:{},pageNum:{}",userId,contractTradeSearch,page,pageNum);
-        ContractTradeSearch contractTradeSearch1 = (ContractTradeSearch)JSONObject.parse(contractTradeSearch);
+        //ContractTradeSearch contractTradeSearch1 = (ContractTradeSearch)JSONObject.toBean(contractTradeSearch,ContractTradeSearch.class);
+        ContractTradeSearch contractTradeSearch1 = JSON.parseObject(contractTradeSearch,ContractTradeSearch.class);
         return contractService.getList(userId,contractTradeSearch1,page,pageNum);
     }
 
