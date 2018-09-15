@@ -650,6 +650,8 @@
 
 <script>
 
+
+    $(".layui-layer-btn0").css("background-color",'rgba(245, 93, 84, 1)');
     function details(id){
         var tradeId = contractList[id].tradeId;
         var contractName = contractList[id].contractName;
@@ -662,7 +664,7 @@
     var PAGENUM = 8;
 
     var contractFilterInfo = {
-        "contractTradeSearch": {
+        "contractTradeSearch":{
             "yieldL":0,
             "maxDrawdownL":0,
             "winRateL":0,
@@ -682,17 +684,31 @@
 
 
     function getContractList(){
+        for(var i=0;i<8;i++){
+            $("#futureboard"+i).css("visibility","hidden");
+        }
+
         $.ajax({
             url:"http://localhost:8080/api/contract/getList",
             async:false,
             type:"POST",
-            data:contractFilterInfo,
+            //data:contractFilterInfo,
+            data:{
+                "contractTradeSearch": JSON.stringify(contractFilterInfo.contractTradeSearch),
+                "userId":contractFilterInfo.userId,
+                "page":contractFilterInfo.page,
+                "pageNum":PAGENUM
+            },
             dataType: "JSON",
             success: function (data){
+
                 if(data.length == 0){
                     totalCount = PAGENUM * contractFilterInfo.page;
-                    alert("已是最后一页！");
+                    alert("没有更多数据！");
                     return ;
+                }
+                for(var i=0;i<data.length;i++){
+                    $("#futureboard"+i).css("visibility","visible");
                 }
                 contractList = data;
                 if(contractList.length == PAGENUM){
@@ -889,7 +905,7 @@
     var currentContract;
 
     function buy(id){
-        currentContract = contractList[id];
+       currentContract = contractList[id];
         $("#buytitle").html("购买"+currentContract.contractName);
         $("#contentdiv").css("opacity","0.4");
         $("#buyBoard").css("visibility","visible");
@@ -908,7 +924,8 @@
 
             layer.open({
                 type: 1
-                ,content: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您购买的金额超过了当前市场最大承载资金，请问是否继续?'
+                ,title: ' '
+                ,content: '<div class="tipbeforebuy">购买的金额超过了当前市场最大承载资金，<br/>请问是否继续?</div>'
                 ,btn: ['继续', '取消']
                 ,btnAlign: 'c' //按钮居中
                 ,shade: 0 //不显示遮罩
