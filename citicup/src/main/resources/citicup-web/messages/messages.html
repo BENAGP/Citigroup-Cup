@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>我的消息</title>
-    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../components/top-nav.css" rel="stylesheet"/>
+    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../components/top-nav.css" rel="stylesheet" />
     <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="collection.css">
     <link rel="stylesheet" href="../components/person_left_nav.css">
@@ -13,114 +14,130 @@
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
     <link rel="stylesheet" href="messages.css">
-    <link rel="icon" href="资源%208.png"/>
+    <link rel="icon" href="资源%208.png" />
 </head>
+
 <body>
-<div class="top-nav"></div>
-<div class="content-wrapper">
-    <div class="content">
-        <div class="row">
-            <div class="col-3">
-                <div class="person_left_nav"></div>
-            </div>
-            <div class="col-9">
-                    <div id="comment-area">
-                            <div class="comment-bar">
-                                <div class="avatar-bar">
-                                    <img src="2434/24343263/raw_1535262247.jpeg" class="avatar" />
-                                    <div class="username">
-                                        adam
+    <div class="top-nav"></div>
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-3">
+                    <div class="person_left_nav"></div>
+                </div>
+                <div class="col-9">
+
+                    <div class="layui-tab layui-tab-brief" style="margin-top: 20px;">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">用户消息</li>
+                            <li>系统消息</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div id="comment-area">
+                                    <div class="comment-bar">
+                                        <div class="avatar-bar">
+                                            <img src="2434/24343263/raw_1535262247.jpeg" class="avatar" />
+                                            <div class="username">
+                                                adam
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="comment-main">
+                                                别进来了，我已经被系统提醒赎回了，你进来就是白白交手续费，去找活跃性偏低但是离最后交易日远的套利合约吧。
+                                            </div>
+                                            <div class="comment-sub">
+                                                @Rhys 这个合约是不是要到期了啊，还能买不？
+                                            </div>
+                                            <div class="comment-time">
+                                                发送于 2018-09-20 18:30:21
+                                            </div>
+                                            <div class="comment-replay">
+                                                回复
+                                            </div>
+                                            <div class="contract-tip">合约：IF706-IF703</div>
+                                        </div>
+                                        <hr/>
+                                    </div>
+
+                                    <div class="comment-bar">
+                                        <div class="avatar-bar">
+                                            <img src="2434/24343266/raw_1535262253.jpeg" class="avatar" />
+                                            <div class="username">
+                                                gaoyang
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="comment-main">
+                                                有量化专业人士在吗，能给这个套利合约评价一下不，我觉得这个品种最近波动性挺大的，套利应该收益不错，但是还是不太放心。
+                                            </div>
+                                            <div class="comment-time">
+                                                发送于 2018-09-20 17:25:10
+                                            </div>
+                                            <div class="comment-replay">
+                                                回复
+                                            </div>
+                                            <div class="contract-tip">合约：IF706-IF703</div>
+                                        </div>
+                                        <hr/>
+                                    </div>
+
+                                    <div class="comment-bar">
+                                        <div class="avatar-bar">
+                                            <img src="2434/24343267/raw_1535262259.jpeg" class="avatar" />
+                                            <div class="username">
+                                                Rhys
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            <div class="comment-main">
+                                                这个合约是不是要到期了啊，还能买不？
+                                            </div>
+                                            <div class="comment-time">
+                                                发送于 2018-09-20 16:25:21
+                                            </div>
+                                            <div class="contract-tip">合约：IF706-IF703</div>
+                                            <div class="comment-replay-container">
+                                                <textarea class='comment-text-area' placeholder="回复@rhys"></textarea>
+                                            </div>
+                                            <button class="mibtn-primary">回复</button>
+                                            <button class="mibtn-secondry">取消</button>
+                                        </div>
+                                        <hr/>
                                     </div>
                                 </div>
-                                <div class="comment-text">
-                                    <div class="comment-main">
-                                        别进来了，我已经被系统提醒赎回了，你进来就是白白交手续费，去找活跃性偏低但是离最后交易日远的套利合约吧。
-                                    </div>
-                                    <div class="comment-sub">
-                                        @Rhys 这个合约是不是要到期了啊，还能买不？
-                                    </div>
-                                    <div class="comment-time">
-                                        发送于 2018-09-20 18:30:21
-                                    </div>
-                                    <div class="comment-replay">
-                                        回复
-                                    </div>
-                                    <div class="contract-tip">合约：IF706-IF703</div>
-                                </div>
-                                <hr/>
                             </div>
-    
-                            <div class="comment-bar">
-                                <div class="avatar-bar">
-                                    <img src="2434/24343266/raw_1535262253.jpeg" class="avatar" />
-                                    <div class="username">
-                                        gaoyang
+                            <div class="layui-tab-item">
+                                <div class="comment-bar">
+                                    <div class="sys-comment-text">
+                                        <div class="comment-main">
+                                            系统消息：您购买的合约1F1706-IF1703还有三天到最后交易日，请尽快赎回，逾期系统将自动为您赎回
+                                        </div>
+                                        <div class="comment-time">
+                                            发送于 2018-09-20 17:25:10
+                                        </div>
+                                        <div class="contract-tip">合约：IF706-IF703</div>
                                     </div>
+                                    <hr/>
                                 </div>
-                                <div class="comment-text">
-                                    <div class="comment-main">
-                                        有量化专业人士在吗，能给这个套利合约评价一下不，我觉得这个品种最近波动性挺大的，套利应该收益不错，但是还是不太放心。
-                                    </div>
-                                    <div class="comment-time">
-                                        发送于 2018-09-20 17:25:10
-                                    </div>
-                                    <div class="comment-replay">
-                                        回复
-                                    </div>
-                                    <div class="contract-tip">合约：IF706-IF703</div>
-                                </div>
-                                <hr/>
-                            </div>
-    
-                            <div class="comment-bar">
-                                <div class="avatar-bar">
-                                    <img src="2434/24343267/raw_1535262259.jpeg" class="avatar" />
-                                    <div class="username">
-                                        Rhys
-                                    </div>
-                                </div>
-                                <div class="comment-text">
-                                    <div class="comment-main">
-                                        这个合约是不是要到期了啊，还能买不？
-                                    </div>
-                                    <div class="comment-time">
-                                        发送于 2018-09-20 16:25:21
-                                    </div>
-                                    <div class="comment-replay-container">
-                                        <textarea class='comment-text-area' placeholder="回复@rhys"></textarea>
-                                    </div>
-                                    <button class="mibtn-primary">回复</button>
-                                    <button class="mibtn-secondry">取消</button>
-                                </div>
-                                <hr/>
                             </div>
                         </div>
-            </div>
-        </div>
+                    </div>
 
+
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
-<div class="footer"></div>
+    <div class="footer"></div>
 </body>
 <script src="../components/top-nav.js"></script>
 <script src="../components/person_left_nav.js"></script>
 <script src="../util/href-helper.js"></script>
 
 <script>
-    layui.use(['laypage', 'layer'], function(){
-        var laypage = layui.laypage
-            ,layer = layui.layer;
-
-        var message_num = 70;
-
-        //总页数大于页码总数
-        laypage({
-            cont:'demo1',
-            pages:Math.ceil(message_num/3),
-        });
-    });
-
-
+    layui.use('element');
 </script>
 
 </html>
