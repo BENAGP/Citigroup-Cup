@@ -464,11 +464,16 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[id].updateTimes)
+                data: format(tradeList[id].formatDates)
             },
             yAxis: {
                 position: 'right',
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    formatter: function(value,index){
+                        return (value*100).toFixed(0)+'%';
+                    },
+                }
             },
             series: [
                 {
@@ -528,11 +533,16 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[id].updateTimes)
+                data: format(tradeList[id].formatDates)
             },
             yAxis: {
                 position: 'right',
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    formatter: function(value,index){
+                        return (value*100).toFixed(0)+'%';
+                    },
+                }
             },
             series: [
                 {
@@ -593,11 +603,16 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: format(tradeList[id].updateTimes)
+                data: format(tradeList[id].formatDates)
             },
             yAxis: {
                 position: 'right',
-                type: 'value'
+                type: 'value',
+                axisLabel: {
+                    formatter: function(value,index){
+                        return (value*100).toFixed(0)+'%';
+                    },
+                }
             },
             series: [
                 {
@@ -670,11 +685,16 @@
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: format(trade.updateTimes)
+                    data: format(trade.formatDates)
                 },
                 yAxis: {
                     position: 'right',
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: {
+                        formatter: function(value,index){
+                            return (value*100).toFixed(0)+'%';
+                        },
+                    }
                 },
                 series: [
                     {
