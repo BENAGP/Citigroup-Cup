@@ -159,6 +159,11 @@
     margin-bottom: 10px;
 }
 
+.sys-comment-text {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
 .comment-sub {
     width: 95%;
     float: right;
@@ -221,4 +226,12 @@ hr {
     margin-top: 1%;
     margin-bottom: 2%;
     margin-left: 20px;
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this {
+    color: #46ACE3;
+}
+
+.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after {
+    border-bottom: 2px solid #46ACE3 !important;
 }
