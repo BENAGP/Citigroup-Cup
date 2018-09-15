@@ -649,6 +649,238 @@
 </body>
 
 
+<script src="../components/top-nav.js"></script>
+
+<script>
+
+    var contractList;
+
+    var totalCount = 0;
+    var PAGENUM = 8;
+
+    var contractFilterInfo = {
+        "contractTradeSearch": {
+            "yieldL":0,
+            "maxDrawdownL":0,
+            "winRateL":0,
+            "profitLossRatioL":0,
+            "marketCapitalCapacityL":0,
+            "yieldR":100,
+            "maxDrawdownR":100,
+            "winRateR":100,
+            "profitRossRatioR":100,
+            "marketCapitalCapacityR":100000,
+            "type":0
+        },
+        "userId":1,
+        "page":0,
+        "pageNum":PAGENUM
+    };
+
+
+    function getContractList(){
+        $.ajax({
+            url:"http://localhost:8080/api/contract/getList",
+            async:false,
+            type:"POST",
+            data:contractFilterInfo,
+            dataType: "JSON",
+            success: function (data){
+                if(data.length == 0){
+                    totalCount = PAGENUM * contractFilterInfo.page;
+                    alert("已是最后一页！");
+                    return ;
+                }
+                contractList = data;
+                if(contractList.length == PAGENUM){
+                    totalCount = PAGENUM * (contractFilterInfo.page+2);
+                }else{
+                    totalCount = PAGENUM * (contractFilterInfo.page+1);
+                }
+
+            },
+            error: function (data){
+                alert("Please try again latar,");
+            }
+        });
+    }
+
+    var option = {
+        grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            top: "4%",
+            containLabel: true
+        },
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 0,
+                end: 100,
+                height: 30,
+                y: 215
+            },
+            {
+                type: "inside",
+                realtime: true,
+                start: 0,
+                end: 100
+            }
+        ],
+        xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: [10,70]
+        },
+        yAxis: {
+            type: "value"
+        },
+        series: [
+            {
+                name: "回测利率",
+                data: [10,70],
+                type: "line",
+                sampling: "average",
+                areaStyle: {
+                    normal: {
+                        color: "#DAE4F4"
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3,
+                        color: "#4577C8"
+                    }
+                },
+            },
+            {
+                name: "基准利率",
+                data:[10,70],
+                type: "line",
+                lineStyle: {
+                    normal: {
+                        width: 3,
+                        color: "#A34240"
+                    }
+                },
+            }
+        ]
+    };
+
+    function format(list){
+        var res = [];
+        for(var i=0;i<list.length;i++){
+           // res.push(list[i].format('YYYY-MM-DD HH:mm:ss'));
+            res.push(list[i].substring(0,19));
+        }
+        return res;
+    }
+
+
+    function draw(){
+
+        for(var i = 0; i < contractList.length ; i++){
+            var info = contractList[i];
+
+            $("#futurename"+i).html(info.contractName);
+            $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
+            $("#retracementtext"+i).html(parseFloat((info.maxDrawdown*100).toFixed(2))+"%");
+            $("#carrytext"+i).html("￥"+parseInt(info.marketCapitalCapacity));
+            $("#wintext"+i).html(parseFloat((info.winRate*100).toFixed(2))+"%");
+            $("#losstext"+i).html(parseFloat((info.profitLossRatio*100).toFixed(2))+"%");
+
+            var option = {
+                grid: {
+                    left: "3%",
+                    right: "4%",
+                    bottom: "3%",
+                    top: "4%",
+                    containLabel: true
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        start: 0,
+                        end: 100,
+                        height: 30,
+                        y: 215
+                    },
+                    {
+                        type: "inside",
+                        realtime: true,
+                        start: 0,
+                        end: 100
+                    }
+                ],
+                xAxis: {
+                    type: "category",
+                    boundaryGap: false,
+                    data: format(info.updateTimes)
+                },
+                yAxis: {
+                    type: "value"
+                },
+                series: [
+                    {
+                        name: "回测利率",
+                        data: info.yields,
+                        type: "line",
+                        sampling: "average",
+                        areaStyle: {
+                            normal: {
+                                color: "#DAE4F4"
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 3,
+                                color: "#4577C8"
+                            }
+                        },
+                    },
+                ]
+            };
+
+            var myChart = echarts.init(document.getElementById("graphdiv"+i));
+            myChart.setOption(option);
+        }
+    }
+
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+        //总页数大于页码总数
+        laypage.render({
+            elem: 'paging'
+            ,count: totalCount //数据总数
+            ,limit: PAGENUM
+            ,layout:['prev', 'next']
+            ,jump: function(obj,first){
+                contractFilterInfo.page = obj.curr-1;
+                getContractList();
+                obj.count = totalCount;
+
+                draw();
+
+            }
+            ,theme: '#FD6857'
+        });
+
+    });
+
+
+
+
+
+</script>
+
+
+
+
 <script>
 
     var currentContract;
@@ -692,14 +924,30 @@
 
     $("#profittext0").innerHTML = "hihi";
 
-    var futuretype = "all";
 
     function ftclicked(id){
         closeftbottom();
-        futuretype = id+"";
+        var type = 0;
+
+        if(id=='financial'){
+            type = 1;
+        }else if(id=='agriculture'){
+            type = 2;
+        }else if(id=='metal'){
+            type = 3;
+        }else if(id=='energy'){
+            type = 4;
+        }else if(id=='chemical'){
+            type = 5;
+        }
+
+        contractFilterInfo.contractTradeSearch.type = type;
         var name = id+"_bottom";
         $("#"+id).css("color","#FD6857");
         $("#"+name).css("visibility","visible");
+
+        getContractList();
+        draw();
     }
 
     function closeftbottom(){
@@ -1075,232 +1323,6 @@
 
 </script>
 
-
-<script src="../util/href-helper.js"></script>
-<script src="../components/top-nav.js"></script>
-
-<script>
-
-    var contractList;
-
-    var totalCount = 0;
-    var PAGENUM = 8;
-
-    var contractFilterInfo = {
-        "contractTradeSearch": {
-            "yieldL":0,
-            "maxDrawdownL":0,
-            "winRateL":0,
-            "profitLossRatioL":0,
-            "marketCapitalCapacityL":0,
-            "yieldR":100,
-            "maxDrawdownR":100,
-            "winRateR":100,
-            "profitRossRatioR":100,
-            "marketCapitalCapacityR":100000,
-            "type":1
-        },
-        "userId":1,
-        "page":0,
-        "pageNum":PAGENUM
-    };
-
-
-    function getContractList(){
-        $.ajax({
-            url:"http://localhost:8080/api/contract/getList",
-            async:false,
-            type:"POST",
-            data:contractFilterInfo,
-            dataType: "JSON",
-            success: function (data){
-                if(data.length == 0){
-                    totalCount = PAGENUM * contractFilterInfo.page;
-                    alert("已是最后一页！");
-                    return ;
-                }
-                contractList = data;
-                if(contractList.length == PAGENUM){
-                    totalCount = PAGENUM * (contractFilterInfo.page+2);
-                }else{
-                    totalCount = PAGENUM * (contractFilterInfo.page+1);
-                }
-
-                for(var i=0;i<data.length;i++){
-                    drawer(i);
-                }
-            },
-            error: function (data){
-                alert("Please try again latar,");
-            }
-        });
-    }
-
-    var option = {
-        grid: {
-            left: "3%",
-            right: "4%",
-            bottom: "3%",
-            top: "4%",
-            containLabel: true
-        },
-        dataZoom: [
-            {
-                show: true,
-                realtime: true,
-                start: 0,
-                end: 100,
-                height: 30,
-                y: 215
-            },
-            {
-                type: "inside",
-                realtime: true,
-                start: 0,
-                end: 100
-            }
-        ],
-        xAxis: {
-            type: "category",
-            boundaryGap: false,
-            data: [10,70]
-        },
-        yAxis: {
-            type: "value"
-        },
-        series: [
-            {
-                name: "回测利率",
-                data: [10,70],
-                type: "line",
-                sampling: "average",
-                areaStyle: {
-                    normal: {
-                        color: "#DAE4F4"
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: "#4577C8"
-                    }
-                },
-            },
-            {
-                name: "基准利率",
-                data:[10,70],
-                type: "line",
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: "#A34240"
-                    }
-                },
-            }
-        ]
-    };
-
-    function format(list){
-        var res = [];
-        for(var i=0;i<list.length;i++){
-           // res.push(list[i].format('YYYY-MM-DD HH:mm:ss'));
-            res.push(list[i].substring(0,19));
-        }
-        return res;
-    }
-
-    layui.use(['laypage', 'layer'], function(){
-        var laypage = layui.laypage
-            ,layer = layui.layer;
-
-        //总页数大于页码总数
-        laypage.render({
-            elem: 'paging'
-            ,count: totalCount //数据总数
-            ,limit: PAGENUM
-            ,layout:['prev', 'next']
-            ,jump: function(obj,first){
-                contractFilterInfo.page = obj.curr-1;
-                getContractList();
-                obj.count = totalCount;
-
-                for(var i = 0; i < contractList.length ; i++){
-                    var info = contractList[i];
-
-                    $("#futurename"+i).html(info.contractName);
-                    $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
-                    $("#retracementtext"+i).html(parseFloat((info.maxDrawdown*100).toFixed(2))+"%");
-                    $("#carrytext"+i).html("￥"+parseInt(info.marketCapitalCapacity));
-                    $("#wintext"+i).html(parseFloat((info.winRate*100).toFixed(2))+"%");
-                    $("#losstext"+i).html(parseFloat((info.profitLossRatio*100).toFixed(2))+"%");
-
-                    var option = {
-                        grid: {
-                            left: "3%",
-                            right: "4%",
-                            bottom: "3%",
-                            top: "4%",
-                            containLabel: true
-                        },
-                        dataZoom: [
-                            {
-                                show: true,
-                                realtime: true,
-                                start: 0,
-                                end: 100,
-                                height: 30,
-                                y: 215
-                            },
-                            {
-                                type: "inside",
-                                realtime: true,
-                                start: 0,
-                                end: 100
-                            }
-                        ],
-                        xAxis: {
-                            type: "category",
-                            boundaryGap: false,
-                            data: format(info.updateTimes)
-                        },
-                        yAxis: {
-                            type: "value"
-                        },
-                        series: [
-                            {
-                                name: "回测利率",
-                                data: info.yields,
-                                type: "line",
-                                sampling: "average",
-                                areaStyle: {
-                                    normal: {
-                                        color: "#DAE4F4"
-                                    }
-                                },
-                                lineStyle: {
-                                    normal: {
-                                        width: 3,
-                                        color: "#4577C8"
-                                    }
-                                },
-                            },
-                        ]
-                    };
-
-                    var myChart = echarts.init(document.getElementById("graphdiv"+i));
-                    myChart.setOption(option);
-                }
-            }
-            ,theme: '#FD6857'
-        });
-
-    });
-
-
-
-
-
-</script>
 
 </html>
 
