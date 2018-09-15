@@ -58,7 +58,7 @@
 </div>
 <div class="footer"></div>
 </body>
-<script src="../person/collection-top-nav.js"></script>
+<script src="../components/top-nav.js"></script>
 
 
 <script>
@@ -83,31 +83,7 @@
     var fileInput = document.getElementById("uploadImg");
     var previewSrc = '';
 
-    function uploadPic() {
-        var file = fileInput.files[0];
 
-        var formData = new FormData();
-        formData.append("userId", uid);
-        formData.append("file", file);
-        $.ajax({
-            url: '/api/user/postAvatar',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: 'text',
-            success: function (msg) {
-                console.log('ggg');
-                console.log(msg);
-                previewSrc = msg;
-                $("#preview").css("display", "block");
-                $("#preview").attr("src", msg);
-            },
-            error: function (msg) {
-                console.log(msg)
-            }
-        })
-    }
 
     function submit() {
         console.log($("#preview")[0].src);

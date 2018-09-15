@@ -8,5 +8,5 @@ public class Constant {
     public static final String secret = "T5gC5fG6iJ1iE7dS7dG6pV4jC4kM3hU1xA2qT5yJ4mP1uW1tU7";
 
     public static final int MINUTES_PER_WEEK = 1200;
-    public static final int WEEKS_PER_YEER = 52;
+    public static final int WEEKS_PER_YEER = 48;
 }

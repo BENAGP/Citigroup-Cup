@@ -14,4 +14,5 @@ public interface FuturesUpdatingRepository extends JpaRepository<FuturesUpdating
     List<FuturesUpdating> findByFutures_FuturesId(Long futuresId);
 
     FuturesUpdating findTopByFutures_FuturesIdOrderByUpdateTimeDesc(Long futuresId);
+    FuturesUpdating findTopByFutures_FuturesId(Long futuresId);
 }

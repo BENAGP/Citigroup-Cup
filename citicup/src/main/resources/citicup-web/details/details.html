@@ -4,377 +4,155 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../components/top-nav.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
     <script src="../lib/jquery-3.3.1.js"></script>
-    <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js" charset="UTF-8"></script>
     <script src="../util/href-helper.js"></script>
     <link rel="stylesheet" href="details.css" type="text/css">
+    <link href="../components/top-nav.css" rel="stylesheet"/>
     <meta name="S">
     <title>合约详情</title>
-    <link rel="icon" href="资源%208.png"/>
-    <script src="echarts.min.js"></script>
-    <style type="text/css">
-        ul {transform: scale(0.8)}
-        button:active{
-            transform:scale(0.95);
-        }
-        button{
-            border:0;
-            background-color: #ffffff;
-        }
-    </style>
+    <link rel="icon" href="../imgs/logo_title.png"/>
+    <script src="../lib/echarts.min.js"></script>
 </head>
 <body>
 <div class="top-nav"></div>
-<ul class="content-wrapper">
-    <div class="content" style="height: 2307px;">
-        <div style="position: relative; top: -300px;height: 2307px;left: -181px;">
-            <b id="w1">IF1706－IF1703</b>
-            <span id="w6">（流动性：300元／分钟）</span>
-            <script>
-                layui.use(['layer'],function(){
-                    layer = layui.layer;
-                });
-                function change_pic(){
-                    var imgObj = document.getElementById("收藏_pic");
-                    var Flag=(imgObj.getAttribute("src",2)==="收藏.png");
-                    imgObj.src=Flag?"已收藏.png":"收藏.png";
-                }
-                function collect() {
-                    var uid = window.localStorage.getItem("userId");
-                    var cid = 3;
-                    if(uid===null){
-                        layer.msg("请登录");
-                        setTimeout("forward(\"/home/login.html\");",2000);
-                        return;
-                    }
-                    $.post("/api/contract/collect", {
-                        userId: uid,
-                        contractId: cid
-                    }).done(function(response){
-                        console.log(response);
-                        change_pic();
-                        layer.msg("收藏成功");
-                    }).fail(function (err) {
-                        console.log("err",err);
-                    })
-                }
-                function cancel_collect() {
-                    var uid = window.localStorage.getItem("userId");
-                    var cid = 3;
-                    $.post('/api/contract/cancelCollect', {
-                        userId: uid,
-                        contractId: cid
-                    }).done(function(response){
-                        console.log(response);
-                        change_pic();
-                        layer.msg("取消收藏");
-                    }).fail(function (err) {
-                        console.log("err",err);
-                    })
-                }
-                function collection() {
-                    var imgObj = document.getElementById("收藏_pic");
-                    if(imgObj.getAttribute("src")==="收藏.png"){
-                        collect();
-                        return;
-                    }
-                    else {
-                        cancel_collect();
-                        return;
-                    }
-                }
-            </script>
-            <button style="outline:none;" id="t1">
-                <img src="收藏.png" id="收藏_pic" onClick="collection()">
-            </button>
-            <button style="outline:none;" id="w5" onClick="collection()">收藏</button>
-            <span id="w3">风险等级</span>
-            <script>
-                window.onload=function(){
-                    var risk_level = 1;
-                    var d = document.getElementById('risk_level');
-                    d.innerHTML = risk_level;
-                }
-                function risk_down() {
-                    var uid = window.localStorage.getItem("userId");
-                    var cid = window.localStorage.getItem("contractId");
-                    var risk_level=document.getElementById("risk_level").innerHTML;
-                    if(risk_level>>1){
-                        risk_level = parseInt(risk_level)-1;
-                    }
-                    var d = document.getElementById('risk_level');
-                    d.innerHTML = risk_level;
-                    $.post('/api/contract/getDetailByRiskLevel',{
-                        userId: uid,
-                        contractId: cid,
-                        riskLevel: risk_level
-                    }).done(function (response) {
-                        console.log(response);
-                        }
-                    ).fail(function(err){
-                        console.log("err",err);
-                        if(parseInt(risk_level)>>1){
-                            risk_level = parseInt(risk_level)+1;
-                            var d = document.getElementById('risk_level');
-                            d.innerHTML = risk_level;
-                        }
-                    })
-                }
-                function risk_down_2() {
-                    var risk_level=document.getElementById("risk_level_2").innerHTML;
-                    if(risk_level>>1){
-                        risk_level = parseInt(risk_level)-1;
-                    }
-                    var e = document.getElementById('risk_level_2');
-                    e.innerHTML = risk_level;
-                }
-                function risk_up() {
-                    var uid = 1;
-                    var cid = 3;
-                    var risk_level=document.getElementById("risk_level").innerHTML;
-                    risk_level = parseInt(risk_level)+1;
-                    var d = document.getElementById('risk_level');
-                    d.innerHTML = risk_level;
-                    alert("uid"+uid+"cid"+cid+"risk"+risk_level);
-                    $.post('/api/contract/getDetailByRiskLevel',{
-                        userId: uid,
-                        contractId: cid,
-                        riskLevel: risk_level
-                    }).done(function (response) {
-                        console.log(response);
-                    }).fail(function(err){
-                        console.log("err",err);
-                        risk_level = parseInt(risk_level)-1;
-                        var d = document.getElementById('risk_level');
-                        d.innerHTML = risk_level;
-                    })
-                }
-                function risk_up_2() {
-                    var risk_level=document.getElementById("risk_level_2").innerHTML;
-                    risk_level = parseInt(risk_level)+1;
-                    var d = document.getElementById('risk_level_2');
-                    d.innerHTML = risk_level;
-                }
-            </script>
-            <div id="ds">
-                <span style="position: relative;top: 6px;left: 23px;" id="risk_level"></span>
+<div class="content-wrapper">
+    <div class="content" style="margin-top: 40px">
+        <div class="row">
+            <div class="col-9">
+                <div style="overflow: auto">
+                    <span id="contract_name">IF1706－IF1703</span>
+                    <span id="liquidity">（流动性：300元／分钟）</span>
+
+                    <div id="collect_wrapper" onclick="collection()">
+                        <img src="../imgs/star.png" id="collect_pic">
+                        <span id="collect_letter" style="">收藏</span>
+                    </div>
+
+                    <div id="risk_level_wrapper">
+                        <span>风险等级</span>
+                        <input id="risk_level" type="number" onchange="getDetailByRiskLevel()">
+                    </div>
+
+                </div>
+                <div>
+                    <div class="tab_line"><b class="tab_title">收益</b></div>
+                    <div class="detail_chart" id="yield_chart"></div>
+                </div>
+                <div>
+                    <div class="tab_line">
+                        <b class="tab_title">历史行情</b>
+                    </div>
+                    <div class="detail_chart" id="market_price_chart"></div>
+                    <div class="detail_chart" style="height: 100px" id="market_trading_chart"></div>
+                </div>
+                <div>
+                    <div class="tab_line"><b class="tab_title">讨论区</b></div>
+                </div>
+
+
+                <textarea rows="3" id="comment_input" placeholder="输入你想说的吧。。。"></textarea>
+                <button class="mibtn-primary">发送</button>
+
+
+                <!--<img src="2434/24343263/raw_1535262247.jpeg" id="yh1"/>-->
+                <!--<span id="yh1name">rhys</span>-->
+                <!--<span id="yh1nr">你好，老师！我是金丘集团微型金平台的，我们平台有高净值的投资客户，你出技术，我们募集资金，要请你操盘，赚盈利部分30%佣金，亏损不用承担。望详聊加微信号是我名字</span>-->
+                <!--<span id="yh1time">发布于 2018-08-09 12:50:40</span>-->
+                <!--<div id="yh1hf"><span style="position: relative;left: 5px;">回复@Rhys</span></div>-->
+                <!--<div id="yh1hfjx"><span style="position: relative;top:6px;">回复</span></div>-->
+                <!--<div id="yh1hfjx2"><span style="position: relative;top:6px;">取消</span></div>-->
+
+                <!--<img src="2434/24343266/raw_1535262253.jpeg" id="yh2"/>-->
+                <!--<span id="yh2name">adam</span>-->
+                <!--<span id="yh2nr">请教下楼主，你的代码我仔细看了，却始终看不明白！ returns = (current_price-bottom_price)/bottom_price 这句代码，returns总是等于0的啊，我克隆你的代码之后，加了log.info打印出来证实了这一点，所以下面买入和卖出的两段if代码都是不会成立的。但是程序运行中又确实有买入操作，我看了半天也不知道是在哪句代码买入的。楼主能否解释一下？谢谢！</span>-->
+                <!--<span id="yh2time">发布于 2018-08-09 12:50:40</span>-->
+                <!--<span id="yh2hf">@Rhys 你好，老师！我是金丘集团微型金平台的，我们平台有高净值的投资客户，你出技术，我们募集资金，要请你操盘，赚盈利部分30%佣金，亏损不用承担。望详聊加微信号是我名字</span>-->
+                <!--<div id="yh2hfjx"><span style="position: relative;top:6px;">回复</span></div>-->
+
+                <!--<img src="2434/24343267/raw_1535262259.jpeg" id="yh3"/>-->
+                <!--<span id="yh3name">高阳</span>-->
+                <!--<span id="yh3nr">提个建议,既然是网格交易,底仓就应该是策略启动时候的现价.</span>-->
+                <!--<span id="yh3time">发布于 2018-08-09 12:50:40</span>-->
+                <!--<span id="yh3hfjx">回复</span>-->
+
+                <!--<img src="2434/24343268/raw_1535262263.jpeg" id="yh4"/>-->
+                <!--<span id="yh4name">袁勇</span>-->
+                <!--<span id="yh4nr">请问哪里提到了每次换仓时候的初始建仓和对旧仓平仓的语句啊，感觉并没有</span>-->
+                <!--<span id="yh4time">发布于 2018-08-09 12:50:40</span>-->
+                <!--<span id="yh4hf">@adam 请教下楼主，你的代码我仔细看了，却始终看不明白！ returns = (current_price-bottom_price)/bottom_price 这句代码，returns总是等于0的啊，我克隆你的代码之后，加了log.info打印出来证实了这一点，所以下面买入和卖出的两段if代码都是不会成立的。但是程序运行中又确实有买入操作，我看了半天也不知道是在哪句代码买入的。楼主能否解释一下？谢谢！</span>-->
+                <!--<div id="yh4hf2"><span style="position: relative;left: 5px;">回复@袁勇</span></div>-->
+                <!--<div id="yh4hfjx"><span style="position: relative;top:6px;">回复</span></div>-->
+                <!--<div id="yh4hfjx2"><span style="position: relative;top:6px;">取消</span></div>-->
+
+                <!--<img src="横线%20(1).png" id="xx" style="top: 1769px;">-->
+                <!--<img src="横线%20(1).png" id="xx" style="top: 2089px;">-->
+                <!--<img src="横线%20(1).png" id="xx" style="top: 2300px;">-->
+                <!--<img src="横线%20(1).png" id="xx" style="top: 2799px;">-->
+
+                <!--<div id="ym"><span style="position: relative;top: 6px;">上一页</span></div>-->
+                <!--<div id="ym1"><span style="position: relative;top: 6px;">1</span></div>-->
+                <!--<div id="ym2"><span style="position: relative;top: 6px;">2</span></div>-->
+                <!--<div id="ym3"><span style="position: relative;top: 6px;">3</span></div>-->
+                <!--<div id="ym4"><span style="position: relative;top: 6px;">...</span></div>-->
+                <!--<div id="ym7"><span style="position: relative;top: 6px;">7</span></div>-->
+                <!--<div id="yme"><span style="position: relative;top: 6px;">下一页</span></div>-->
+            <!--</div>-->
+        </div>
+            <div class="col-3" style="padding-left: 30px">
+                <div style="border-bottom: 1px solid #f4f4f4;padding-bottom: 4px">
+                    <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">年华收益率</div>
+                    <div style="color: red;font-weight: 600;font-size: 42px;margin-left: 12px;text-align: center;margin-top: 8px" id="year_yield">70.89%</div>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
+                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近1周</div>
+                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_1_week_yield">43.25%</div>
+
+                    </div>
+                    <div class="col-6" style=";border-bottom: 1px solid #f4f4f4">
+                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近3周</div>
+                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_3_week_yield">43.25%</div>
+
+                    </div>
+                    <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
+                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近6周</div>
+                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_6_week_yield">43.25%</div>
+
+                    </div>
+                    <div class="col-6" style="border-bottom: 1px solid #f4f4f4">
+                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近12周</div>
+                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_12_week_yield">43.25%</div>
+                    </div>
+                </div>
+                <button class="mibtn-primary" style="width: 100%;background-color:#F55D54;height: 40px;font-size: 16px;margin-top: 30px ">购买</button>
+                <div style="text-align: center;font-size: 14px;color: #5e5e5e;" >最后交易日:<span id="ddl">2018-09-20 09:00:00 </span>></div>
+
+                <div style="margin-top: 80px">
+                    <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">市场最大承载资金</div>
+                    <div style="color: red;font-weight: 600;font-size:26px;text-align: center;margin-top: 8px" id="market_capital_capacity">¥100000</div>
+                </div>
+                <div style="margin-top: 40px;padding-left: 10px;padding-right: 10px;font-size: 18px;color: #5E5E5E">
+                    <div><span>最大回撤：</span><span style="float: right;font-weight: 600" id="max_drawdown">80.79%</span></div>
+                    <div style="margin-top: 20px"><span>胜率：</span><span style="float: right;font-weight: 600" id="win_rate">80.79%</span></div>
+                    <div style="margin-top: 20px"><span>盈亏比：</span><span style="float: right;font-weight: 600" id="profit_loss_ratio">80.79%</span></div>
+                </div>
             </div>
-            <button style="outline:none;" id="t2" onClick="risk_up()">
-                <img src="上.png">
-            </button>
-            <button style="outline:none;" id="t2c" onClick="risk_down()">
-                <img src="下.png">
-            </button>
-            <b id="w">收益</b>
-            <img src="横线.png" id="x1">
-            <img src="横线%20(1).png" id="x2">
-            <img src="横线%20(1).png" id="x2c">
-            <img src="横线.png" id="x1c">
-            <div id="main" style="position: relative;
-    left: 64px;
-    top: 20px;
-    width: 1058px;
-    height: 460px;"></div>
-            <script type="text/javascript">
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('main'));
 
-                // 指定图表的配置项和数据
-                var option = {
-                    title: {
-                        text: '收益'
-                    },
-                    tooltip: {},
-                    legend: {
-                        data:['销量']
-                    },
-                    xAxis: {
-                        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                    },
-                    yAxis: {},
-                    series: [{
-                        name: '销量',
-                        type: 'bar',
-                        data: [5, 20, 36, 10, 10, 20]
-                    }]
-                };
+        <div>
 
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
-            </script>
-            <b id="wc">历史行情</b>
-            <img src="横线.png" id="xc1">
-            <img src="横线%20(1).png" id="xc2">
-            <img src="横线%20(1).png" id="xc2c">
-            <img src="横线.png" id="xc1c">
-            <img src="横线.png" id="xc1cc">
-            <div id="main2" style="  position: relative;
-    left: 65px;
-    top: 55px;
-    width: 1058px;
-    height: 460px;"></div>
-            <script type="text/javascript">
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('main2'));
-
-                // 指定图表的配置项和数据
-                var option = {
-                    title: {
-                        text: '历史行情'
-                    },
-                    tooltip: {},
-                    legend: {
-                        data:['销量']
-                    },
-                    xAxis: {
-                        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                    },
-                    yAxis: {},
-                    series: [{
-                        name: '销量',
-                        type: 'bar',
-                        data: [5, 20, 36, 10, 10, 20]
-                    }]
-                };
-
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
-            </script>
-            <span id="w6c">
-                年华收益率
-            </span>
-            <b id="w4c">70.89%</b>
-            <img src="横线%20(1).png" id="x3">
-            <img src="横线%20(1).png" id="x3c">
-            <img src="横线%20(1).png" id="x3cc">
-            <img src="竖线.png" id="x4">
-            <span id="j1">近1周</span>
-            <span id="j3">近3周</span>
-            <span id="j6">近6周</span>
-            <span id="j12">近12周</span>
-            <span id="j1s"><b>70.89%</b></span>
-            <span id="j3s"><b>30.56%</b></span>
-            <span id="j6s"><b>70.89%</b></span>
-            <span id="j12s"><b>30.56%</b></span>
-            <span id="w3c">适合资金：</span>
-            <b id="w4cc">一万元以下</b>
-            <script>
-                layui.use(['layer'],function(){
-                    layer = layui.layer;
-                });
-                function buy_how_many() {
-                    var risk_level = document.getElementById("risk_level_2").innerHTML;
-                    var uid = window.localStorage.getItem("userId");
-                    var cid = 3;
-                    var buy = document.getElementById("buy_how_many").value;
-                    if(buy<1000){
-                        layer.msg("输入金额小于1000，请重新输入");
-                        return;
-                    }
-                    $.post('/api/contract/buy', {
-                        userId: uid,
-                        contractId: cid,
-                        investment: buy,
-                        riskLevel: risk_level
-                    }).done(function (response) {
-                        console.log(response);
-                        layer.closeAll();
-                        layer.msg("购买成功");
-                    }).fail(function (err) {
-                        console.log("err",err);
-                        layer.closeAll();
-                        layer.msg("网络超时，请稍后再操作");
-                    })
-                }
-            </script>
-            <script>
-                layui.use(['layer'],function(){
-                    layer = layui.layer;
-                });
-                function buy(){
-                    layer.open({
-                        type: 1,
-                        title: false,
-                        area: ['600px','400px'],
-                        closeBtn: 0,
-                        shadeClose: true,
-                        skin: 'yourclass',
-                        content: '<div ><b class="goumai">购买（IF1706-IF1703）</b><span class="mairu">买入金额</span><span class="riskLv">风险等级</span><div class="mairurisk"><span style="position: relative;top: 10px;left: 23px;" id="risk_level_2"></span></div><button class="up" style="outline:none;" onClick="risk_up_2()"><img src="上.png"></button><button class="down" style="outline:none;"  onClick="risk_down_2()"><img src="下.png"></button><input class="buy" id="buy_how_many" type="text" placeholder="最低金额1000元"><button onClick="buy_how_many()" class="buy_button">确认购买</button></div>'
-                    });
-                    var risk_level=document.getElementById("risk_level").innerHTML;
-                    var e = document.getElementById('risk_level_2');
-                    e.innerHTML = risk_level;
-                }
-            </script>
-            <button id="jx"  onClick="buy()">购买</button>
-            <span id="w7">市场最大承载资金</span>
-            <span id="w8"><b>¥10000</b></span>
-            <span id="w9">最大回撤：</span>
-            <b id="w10">80.29%</b>
-            <span id="w11">胜率：</span>
-            <b id="w12">53.79%</b>
-            <span id="w13">盈亏比：</span>
-            <b id="w14">75.17%</b>
-
-
-            <b id="w15">讨论区</b>
-            <img src="横线.png" id="x5">
-            <img src="横线%20(1).png" id="x6">
-            <img src="横线%20(1).png" id="x6c">
-            <img src="横线.png" id="x5c">
-            <div id="dhsr"><span>输入你想说的吧。。。</span></div>
-            <div id="jx2"><span style="position: relative;top:6px;">发送</span></div>
-
-            <img src="2434/24343263/raw_1535262247.jpeg" id="yh1"/>
-            <span id="yh1name">rhys</span>
-            <span id="yh1nr">你好，老师！我是金丘集团微型金平台的，我们平台有高净值的投资客户，你出技术，我们募集资金，要请你操盘，赚盈利部分30%佣金，亏损不用承担。望详聊加微信号是我名字</span>
-            <span id="yh1time">发布于 2018-08-09 12:50:40</span>
-            <div id="yh1hf"><span style="position: relative;left: 5px;">回复@Rhys</span></div>
-            <div id="yh1hfjx"><span style="position: relative;top:6px;">回复</span></div>
-            <div id="yh1hfjx2"><span style="position: relative;top:6px;">取消</span></div>
-
-            <img src="2434/24343266/raw_1535262253.jpeg" id="yh2"/>
-            <span id="yh2name">adam</span>
-            <span id="yh2nr">请教下楼主，你的代码我仔细看了，却始终看不明白！ returns = (current_price-bottom_price)/bottom_price 这句代码，returns总是等于0的啊，我克隆你的代码之后，加了log.info打印出来证实了这一点，所以下面买入和卖出的两段if代码都是不会成立的。但是程序运行中又确实有买入操作，我看了半天也不知道是在哪句代码买入的。楼主能否解释一下？谢谢！</span>
-            <span id="yh2time">发布于 2018-08-09 12:50:40</span>
-            <span id="yh2hf">@Rhys 你好，老师！我是金丘集团微型金平台的，我们平台有高净值的投资客户，你出技术，我们募集资金，要请你操盘，赚盈利部分30%佣金，亏损不用承担。望详聊加微信号是我名字</span>
-            <div id="yh2hfjx"><span style="position: relative;top:6px;">回复</span></div>
-
-            <img src="2434/24343267/raw_1535262259.jpeg" id="yh3"/>
-            <span id="yh3name">高阳</span>
-            <span id="yh3nr">提个建议,既然是网格交易,底仓就应该是策略启动时候的现价.</span>
-            <span id="yh3time">发布于 2018-08-09 12:50:40</span>
-            <span id="yh3hfjx">回复</span>
-
-            <img src="2434/24343268/raw_1535262263.jpeg" id="yh4"/>
-            <span id="yh4name">袁勇</span>
-            <span id="yh4nr">请问哪里提到了每次换仓时候的初始建仓和对旧仓平仓的语句啊，感觉并没有</span>
-            <span id="yh4time">发布于 2018-08-09 12:50:40</span>
-            <span id="yh4hf">@adam 请教下楼主，你的代码我仔细看了，却始终看不明白！ returns = (current_price-bottom_price)/bottom_price 这句代码，returns总是等于0的啊，我克隆你的代码之后，加了log.info打印出来证实了这一点，所以下面买入和卖出的两段if代码都是不会成立的。但是程序运行中又确实有买入操作，我看了半天也不知道是在哪句代码买入的。楼主能否解释一下？谢谢！</span>
-            <div id="yh4hf2"><span style="position: relative;left: 5px;">回复@袁勇</span></div>
-            <div id="yh4hfjx"><span style="position: relative;top:6px;">回复</span></div>
-            <div id="yh4hfjx2"><span style="position: relative;top:6px;">取消</span></div>
-
-            <img src="横线%20(1).png" id="xx" style="top: 1769px;">
-            <img src="横线%20(1).png" id="xx" style="top: 2089px;">
-            <img src="横线%20(1).png" id="xx" style="top: 2300px;">
-            <img src="横线%20(1).png" id="xx" style="top: 2799px;">
-
-            <div id="ym"><span style="position: relative;top: 6px;">上一页</span></div>
-            <div id="ym1"><span style="position: relative;top: 6px;">1</span></div>
-            <div id="ym2"><span style="position: relative;top: 6px;">2</span></div>
-            <div id="ym3"><span style="position: relative;top: 6px;">3</span></div>
-            <div id="ym4"><span style="position: relative;top: 6px;">...</span></div>
-            <div id="ym7"><span style="position: relative;top: 6px;">7</span></div>
-            <div id="yme"><span style="position: relative;top: 6px;">下一页</span></div>
 
         </div>
     </div>
-</ul>
+</div>
 <div class="footer"></div>
 </body>
+<script>
+    layui.use(['layer'], function () {
+        layer = layui.layer;
+    });
+</script>
 <script src="../components/top-nav.js"></script>
+<script src="./details.js"></script>
 </html>

@@ -1,5 +1,6 @@
 package com.nju.edu.cn.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.nju.edu.cn.model.UserModel;
 import com.nju.edu.cn.service.UserService;
@@ -109,7 +110,10 @@ public class UserController {
     @PostMapping("/postAvatar")
     public @ResponseBody String postAvatar(Long userId, MultipartFile file){
         logger.info("userId:{},file:{}",userId,file);
-        return userService.postAvatar(userId,file);
+        String url =  userService.postAvatar(userId,file);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("url",url);
+        return JSON.toJSONString(jsonObject);
     }
 
     /**

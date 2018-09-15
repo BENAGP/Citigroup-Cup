@@ -11,8 +11,11 @@ public class HistoryMarket {
     public Long contractId;
     public Long nearbyFuturesId;
     public Long backFuturesId;
+    public String nearbyFuturesName;
+    public String backFuturesName;
 
     public List<Date> updateTimes;
+    public List<String> formatDates;
 
     public List<Float> nearbyPrices;
     public List<Float> backPrices;

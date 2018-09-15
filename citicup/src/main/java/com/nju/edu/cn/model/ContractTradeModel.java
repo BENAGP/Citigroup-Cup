@@ -61,6 +61,8 @@ public class ContractTradeModel {
      */
     public List<Date> updateTimes;
 
+    public List<String> formatDates;
+
     /**
      * 收益率纵轴
      */

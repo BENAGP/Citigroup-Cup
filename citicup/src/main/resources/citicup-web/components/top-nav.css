@@ -53,6 +53,87 @@
     font-size: 16px;
 }
 
+
+/*login*/
+.registerpad{
+    /*margin-left: 300px;*/
+    /*margin-top: 100px;*/
+    /*margin-bottom: 121px;*/
+    width: 450px;
+    height: 500px;
+    position: relative;
+    text-align: center;
+    /*border: 1px solid rgba(187, 187, 187, 1);*/
+}
+.login{
+    /*margin-left: 200px;*/
+    margin-top: 80px;
+    /*width: 49px;*/
+    height: 35px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 24px;
+    text-align: center;
+    font-family: Roboto;
+}
+.usrname{
+    margin-left: 0px;
+    margin-top: 30px;
+    width: 300px;
+    height: 50px;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    text-align: left;
+    font-family: Microsoft Yahei;
+    border: 1px solid rgba(187, 187, 187, 1);
+    text-indent: 10px;
+}
+.password{
+    margin-left: 0px;
+    margin-top: 0px;
+    width: 300px;
+    height: 50px;
+    color: rgba(136, 136, 136, 1);
+    font-size: 18px;
+    text-align: left;
+    font-family: Microsoft Yahei;
+    border: 1px solid rgba(187, 187, 187, 1);
+    text-indent: 10px;
+    border-top: none;
+}
+.submit{
+    margin-left: 52px;
+    margin-right: 52px;
+    margin-top: 30px;
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: rgba(70, 172, 227, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    border:none;
+}
+.text01{
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 78px;
+    height: 23px;
+    color: black;
+    font-size: 15px;
+    font-family: Roboto;
+}
+.text02,.text02:hover{
+    margin-left: 0px;
+    margin-right: 160px;
+    width: 78px;
+    height: 23px;
+    color: rgba(70, 172, 227, 1);
+    font-size: 16px;
+    font-family: Roboto;
+}
+
+
+
+
 .row {
     margin-left: 0;
     margin-right: 0;
@@ -60,5 +141,18 @@
 .row>div {
     padding-left: 0;
     padding-right: 0;
+}
+
+input {
+    text-indent: 6px;
+}
+
+textarea {
+    padding: 6px;
+}
+
+button:focus {
+    outline: none;
+    cursor: pointer;
 }
 

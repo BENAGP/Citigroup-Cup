@@ -25,6 +25,7 @@ public class FileServiceImpl implements FileService {
     private int count2 = 0;
     private int count3 = 0;
     private int count4 = 0;
+    private int count5 = 0;
     @Autowired
     private SpotGoodsRepository spotGoodsRepository;
     @Autowired
@@ -304,5 +305,37 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void resetYield() {
+        if(count5==1)return;
+        count5++;
+        List<Contract> contracts = contractRepository.findAll();
+        contracts.forEach(contract -> {
+//            double sum = nearbyUpdating.getPrice()+backUpdating.getPrice();
+            List<Trade> trades = tradeRepository.findByContract_ContractId(contract.getContractId());
+            trades.forEach(trade -> {
+                List<ContractBackTest> contractBackTests = contractBackTestRepository.findByTrade_TradeId(trade.getTradeId());
+                if(contractBackTests.size()==0){
+                    logger.info(trade.getTradeId()+"");
+                }else {
+                    ContractBackTest first = null;
+                    for (ContractBackTest test:contractBackTests) {
+                        if(test.getPosition()!=0){
+                            first = test;
+                            break;
+                        }
+                    }
+                    double capital = first.getAverageTradingPrice()*2/first.getPosition()*0.16;
+                    contractBackTests.forEach(contractBackTest -> {
+                        contractBackTest.setYield(contractBackTest.getYield()/capital);
+                    });
+                    trade.setYield(contractBackTests.get(contractBackTests.size()-1).getYield());
+                }
+                contractBackTestRepository.saveAll(contractBackTests);
+            });
+            tradeRepository.saveAll(trades);
+        });
     }
 }

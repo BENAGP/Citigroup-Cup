@@ -17,28 +17,34 @@ import java.util.UUID;
 public class FileController {
     private static Logger logger = LoggerFactory.getLogger(FileController.class);
     @Autowired
-    private FileService futuresService;
+    private FileService fileService;
 
     @GetMapping("/initFuturesUpdating")
-    public void initFuturesUpdating(){
+    public void initFuturesUpdating() {
         logger.info("initFuturesUpdating");
 //        futuresService.initFuturesUpdating("/Users/shea/Downloads/futures_updating.csv");
 //        futuresService.initFuturesUpdating("/Users/shea/Downloads/updating.csv");
     }
 
     @GetMapping("/initParams")
-    public void initParams(){
+    public void initParams() {
         logger.info("initParams");
 //        futuresService.initParams("/Users/shea/Downloads/params.csv");
 //        futuresService.initParams("/Users/shea/Downloads/params2.csv");
     }
 
     @GetMapping("/initTrade")
-    public void initTrade(){
+    public void initTrade() {
         logger.info("initTrade");
 //        futuresService.initTrade("/Users/shea/Downloads/trade_xu.csv");
 //        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test_xu.csv");
 //        futuresService.initTrade("/Users/shea/Downloads/trade_li.csv");
 //        futuresService.initContractBackTest("/Users/shea/Downloads/contract_back_test_li.csv");
+    }
+
+    @GetMapping("/resetYield")
+    public void resetYield() {
+        logger.info("resetYield");
+        fileService.resetYield();
     }
 }

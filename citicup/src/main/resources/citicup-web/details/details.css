@@ -1,67 +1,130 @@
-#w1 {
-    position: relative;
-    left: 50px;
-    top: 40px;
-    width: 201px;
-    height: 41px;
-    line-height: 41px;
+#contract_name {
+    float: left;
+    line-height: 40px;
     color: rgba(143, 167, 255, 1);
     font-size: 28px;
-    text-align: center;
     font-family: "Roboto";
 }
 
-#w6 {
-    position: relative;
-    left: 95px;
-    top: 38px;
-    width: 258px;
-    height: 41px;
-    line-height: 32px;
+#collect_wrapper {
+    float: left;
+    display: inline;
+    line-height: 40px;
+    cursor: pointer;
+}
+
+#collect_pic{
+    height: 28px;
+    width: 28px;
+    margin-top: 4px;
+    margin-left: 16px;
+    float: left;
+}
+
+#collect_letter {
+
+    font-size: 18px;
+    color: #ffac2b;
+    line-height: 40px;
+
+    cursor: pointer;
+    float: left;
+    display: inline;
+    /*width: 30px;*/
+    /*height: 30px;*/
+    color: rgba(255, 152, 0, 1);
+
+}
+
+#liquidity {
+    float: left;
+    line-height: 40px;
     color: rgba(94, 94, 94, 1);
     font-size: 18px;
-    text-align: center;
+    font-family: Roboto;
+    margin-left: 16px;
+}
+
+
+
+#risk_level_wrapper {
+    display: inline;
+    line-height: 40px;
+    float: right;
+}
+
+#risk_level_wrapper span {
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
     font-family: Roboto;
 }
 
-#t1 {
-    position: relative;
-    left: 130px;
-    top: 33px;
-    width: 30px;
-    height: 30px;
+#risk_level {
+    height: 26px;
+    width: 48px;
+    margin-left: 6px;
 }
+
+.tab_line {
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 6px;
+    margin-top: 20px;
+}
+
+.tab_title {
+    border-bottom: 2px solid #5e5e5e;
+    padding-bottom: 6px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 20px;
+    font-family: Roboto;
+}
+
+.detail_chart {
+    width: 100%;
+    height: 380px;
+    margin-top: 20px;
+}
+
+#comment_input {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.mibtn-primary {
+    width: 120px;
+    height: 32px;
+    background-color: #46ACE3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+
+
 
 #w5 {
-    position: relative;
-    left: 127px;
-    top: 38px;
-    width: 41px;
-    height: 32px;
-    line-height: 29px;
+    /*//   position: relative;*/
+    /*left: 127px;*/
+    /*top: 38px;*/
+    /*width: 41px;*/
+    /*height: 32px;*/
+    /*line-height: 29px;*/
     color: rgba(255, 152, 0, 1);
     font-size: 20px;
-    text-align: center;
+    /*text-align: center;*/
     font-family: Roboto;
 }
 
-#w3 {
-    position: relative;
-    left: 435px;
-    top: 37px;
-    width: 79px;
-    height: 35px;
-    line-height: 26px;
-    color: rgba(94, 94, 94, 1);
-    font-size: 18px;
-    text-align: center;
-    font-family: Roboto;
-}
+
 
 #ds {
-    position: relative;
-    left: 1016px;
-    top: 1px;
+    //   position: relative;
+  //   left: 1016px;
+  //   top: 1px;
     width: 70px;
     height: 35px;
     color: rgba(136, 136, 136, 1);
@@ -71,152 +134,149 @@
 }
 
 #t2 {
-    position: relative;
-    left: 1068px;
-    top: -40px;
+    //   position: relative;
+  //   left: 1068px;
+  //   top: -40px;
     width: 16px;
     height: 16px;
 }
 
 #t2c {
-    position: relative;
-    left: 1048px;
-    top: -24px;
+    //   position: relative;
+  //   left: 1048px;
+  //   top: -24px;
     width: 16px;
     height: 16px;
 }
 
 #w {
-    position: relative;
-    left: 8px;
-    top: 33px;
-    width: 41px;
-    height: 29px;
-    line-height: 29px;
+    /*//   position: relative;*/
+    /*left: 8px;*/
+    /*top: 33px;*/
+    /*width: 41px;*/
+    /*height: 29px;*/
+    /*line-height: 29px;*/
     color: rgba(94, 94, 94, 1);
     font-size: 20px;
-    text-align: center;
+    /*text-align: center;*/
     font-family: Roboto;
 }
 
 #x1 {
-    position: relative;
-    left: -44px;
-    top: 47px;
+    /*//   position: relative;*/
+    /*left: -44px;*/
+    /*top: 47px;*/
     width: 47px;
     height: 24px;
 }
 
 #x1c {
-    position: relative;
-    left: -755px;
-    top: 23px;
+    /*//   position: relative;*/
+    /*left: -755px;*/
+    /*top: 23px;*/
     width: 47px;
     height: 24px;
 }
 
 #x2 {
-    position: relative;
-    left: 264px;
-    top:47px;
+    /*//   position: relative;*/
+    /*left: 264px;*/
+    /*top:47px;*/
     width: 800px;
     height: 14px;
 }
 
 #x2c {
-    position: relative;
-    left: -40px;
-    top: 23px;
+    /*//   position: relative;*/
+    /*left: -40px;*/
+    /*top: 23px;*/
     width: 800px;
     height: 14px;
 }
 
 #t3 {
-    position: relative;
-    left: 64px;
-    top: 20px;
+    /*//   position: relative;*/
+    /*left: 64px;*/
+    /*top: 20px;*/
     width: 1058px;
     height: 460px;
 }
 
 #wc {
-    position: absolute;
-    left: 52px;
-    top: 647px;
-    width: 81px;
-    height: 29px;
-    line-height: 29px;
+    /*//   position: absolute;*/
+    /*left: 52px;*/
+    /*top: 647px;*/
+    /*width: 81px;*/
+    /*height: 29px;*/
+    /*line-height: 29px;*/
     color: rgba(94, 94, 94, 1);
     font-size: 20px;
-    text-align: center;
+    /*text-align: center;*/
     font-family: Roboto;
 }
 
 #xc1 {
-    position: relative;
-    left: 92px;
-    top: 81px;
+    /*//   position: relative;*/
+    /*left: 92px;*/
+    /*top: 81px;*/
     width: 47px;
     height: 24px;
 }
 
 #xc1c {
-     position: relative;
-     left: -730px;
-     top: 57px;
+     /*//   position: relative;*/
+     /*left: -730px;*/
+     /*top: 57px;*/
      width: 47px;
      height: 24px;
  }
 
 #xc1cc {
-    position: relative;
-    left:-810px;
-    top:57px;
+    //   position: relative;
+  //   left:-810px;
+  //   top:57px;
     width: 47px;
     height: 24px;
 }
 
 #xc2 {
-    position: relative;
-    left: -40px;
-    top: 81px;
+    //   position: relative;
+  //   left: -40px;
+  //   top: 81px;
     width: 800px;
     height: 14px;
 }
 
 #xc2c {
-    position: relative;
-    left: 400px;
-    top: 57px;
+    //   position: relative;
+  //   left: 400px;
+  //   top: 57px;
     width: 800px;
     height: 14px;
 }
 
 #t4 {
-    position: relative;
-    left: 65px;
-    top: 55px;
+    //   position: relative;
+  //   left: 65px;
+  //   top: 55px;
     width: 1058px;
     height: 460px;
 }
 
 #w6c {
-    position: absolute;
-    left: 1210px;
-    top: 40px;
+    //   position: absolute;
+  //   left: 1210px;
+  //   top: 40px;
     width: 140px;
     height: 43px;
     line-height: 41px;
-    color: rgba(94, 94, 94, 1);
-    font-size: 28px;
-    text-align: center;
-    font-family: Roboto;
+
 }
 
 #w4c {
-    position: absolute;
-    left: 1200px;
-    top: 86px;
+    //   position: absolute;
+  //   left: 1200px;
+  //   top: 86px;
     width: 174px;
     height: 79px;
     line-height: 75px;
@@ -227,41 +287,41 @@
 }
 
 #x3 {
-    position: relative;
-    left: 1110px;
-    top: -924px;
+    //   position: relative;
+  //   left: 1110px;
+  //   top: -924px;
     width: 350px;
     height: 11px;
 }
 
 #x3c {
-    position: relative;
-    left: 758px;
-    top: -750px;
+    //   position: relative;
+  //   left: 758px;
+  //   top: -750px;
     width: 350px;
     height: 11px;
 }
 
 #x3cc {
-    position: relative;
-    left: 403px;
-    top: -590px;
+    //   position: relative;
+  //   left: 403px;
+  //   top: -590px;
     width: 350px;
     height: 11px;
 }
 
 #x4 {
-    position: absolute;
-    left: 1280px;
-    top: 168px;
+    //   position: absolute;
+  //   left: 1280px;
+  //   top: 168px;
     width: 10px;
     height: 390px;
 }
 
 #j1 {
-    position: absolute;
-    left: 1180px;
-    top: 250px;
+    //   position: absolute;
+  //   left: 1180px;
+  //   top: 250px;
     width: 57px;
     height: 34px;
     line-height: 32px;
@@ -272,9 +332,9 @@
 }
 
 #j3 {
-    position: absolute;
-    left: 1325px;
-    top: 250px;
+    //   position: absolute;
+  //   left: 1325px;
+  //   top: 250px;
     width: 57px;
     height: 34px;
     line-height: 32px;
@@ -285,9 +345,9 @@
 }
 
 #j6 {
-    position: absolute;
-    left: 1180px;
-    top: 415px;
+    //   position: absolute;
+  //   left: 1180px;
+  //   top: 415px;
     width: 57px;
     height: 34px;
     line-height: 32px;
@@ -298,9 +358,9 @@
 }
 
 #j12 {
-    position: absolute;
-    left: 1318px;
-    top: 415px;
+    //   position: absolute;
+  //   left: 1318px;
+  //   top: 415px;
     width: 70px;
     height: 34px;
     line-height: 32px;
@@ -311,9 +371,9 @@
 }
 
 #j1s {
-    position: absolute;
-    left: 1164px;
-    top: 298px;
+    //   position: absolute;
+  //   left: 1164px;
+  //   top: 298px;
     width: 94px;
     height: 49px;
     line-height: 41px;
@@ -324,9 +384,9 @@
 }
 
 #j3s {
-    position: absolute;
-    left: 1310px;
-    top: 298px;
+    //   position: absolute;
+  //   left: 1310px;
+  //   top: 298px;
     width: 94px;
     height: 49px;
     line-height: 41px;
@@ -337,9 +397,9 @@
 }
 
 #j6s {
-    position: absolute;
-    left: 1164px;
-    top: 458px;
+    //   position: absolute;
+  //   left: 1164px;
+  //   top: 458px;
     width: 94px;
     height: 49px;
     line-height: 41px;
@@ -350,9 +410,9 @@
 }
 
 #j12s {
-    position: absolute;
-    left: 1310px;
-    top: 458px;
+    //   position: absolute;
+  //   left: 1310px;
+  //   top: 458px;
     width: 94px;
     height: 49px;
     line-height: 41px;
@@ -363,9 +423,9 @@
 }
 
 #w3c {
-    position: absolute;
-    left: 1170px;
-    top: 573px;
+    //   position: absolute;
+  //   left: 1170px;
+  //   top: 573px;
     width: 111px;
     height: 38px;
     line-height: 32px;
@@ -376,9 +436,9 @@
 }
 
 #w4cc {
-    position: absolute;
-    left: 1300px;
-    top: 573px;
+    //   position: absolute;
+  //   left: 1300px;
+  //   top: 573px;
     width: 111px;
     height: 42px;
     line-height: 32px;
@@ -389,9 +449,9 @@
 }
 
 #jx {
-    position: absolute;
-    left: 1157px;
-    top: 639px;
+    //   position: absolute;
+  //   left: 1157px;
+  //   top: 639px;
     width: 257px;
     height: 54px;
     line-height: 32px;
@@ -406,9 +466,9 @@
 }
 
 #w7 {
-    position: absolute;
-    left: 1196px;
-    top: 797px;
+    //   position: absolute;
+  //   left: 1196px;
+  //   top: 797px;
     width: 193px;
     height: 40px;
     line-height: 35px;
@@ -419,9 +479,9 @@
 }
 
 #w8 {
-    position: absolute;
-    left: 1231px;
-    top: 843px;
+    //   position: absolute;
+  //   left: 1231px;
+  //   top: 843px;
     width: 114px;
     height: 47px;
     line-height: 46px;
@@ -432,9 +492,9 @@
 }
 
 #w9 {
-    position: absolute;
-    left: 1174px;
-    top: 957px;
+    //   position: absolute;
+  //   left: 1174px;
+  //   top: 957px;
     width: 111px;
     height: 38px;
     line-height: 32px;
@@ -445,9 +505,9 @@
 }
 
 #w10 {
-    position: absolute;
-    left: 1337px;
-    top: 955px;
+    //   position: absolute;
+  //   left: 1337px;
+  //   top: 955px;
     width: 74px;
     height: 41px;
     line-height: 32px;
@@ -458,9 +518,9 @@
 }
 
 #w11 {
-    position: absolute;
-    left: 1175px;
-    top: 1030px;
+    //   position: absolute;
+  //   left: 1175px;
+  //   top: 1030px;
     width: 67px;
     height: 38px;
     line-height: 32px;
@@ -471,9 +531,9 @@
 }
 
 #w12 {
-    position: absolute;
-    left: 1337px;
-    top: 1026px;
+    //   position: absolute;
+  //   left: 1337px;
+  //   top: 1026px;
     width: 74px;
     height: 41px;
     line-height: 32px;
@@ -484,9 +544,9 @@
 }
 
 #w13 {
-    position: absolute;
-    left: 1177px;
-    top: 1102px;
+    //   position: absolute;
+  //   left: 1177px;
+  //   top: 1102px;
     width: 89px;
     height: 38px;
     line-height: 32px;
@@ -497,9 +557,9 @@
 }
 
 #w14 {
-    position: absolute;
-    left: 1337px;
-    top: 1099px;
+    //   position: absolute;
+  //   left: 1337px;
+  //   top: 1099px;
     width: 74px;
     height: 41px;
     line-height: 32px;
@@ -510,9 +570,9 @@
 }
 
 #w15 {
-    position: absolute;
-    left: 55px;
-    top: 1209px;
+    //   position: absolute;
+  //   left: 55px;
+  //   top: 1209px;
     width: 61px;
     height: 29px;
     line-height: 29px;
@@ -523,41 +583,41 @@
 }
 
 #x5 {
-    position: absolute;
-    left: 46px;
-    top: 1234px;
+    //   position: absolute;
+  //   left: 46px;
+  //   top: 1234px;
     width: 67px;
     height: 22px;
 }
 
 #x5c {
-    position: absolute;
-    left: 60px;
-    top: 1234px;
+    //   position: absolute;
+  //   left: 60px;
+  //   top: 1234px;
     width: 67px;
     height: 22px;
 }
 
 #x6 {
-    position: absolute;
-    left: -28px;
-    top: 1240px;
+    //   position: absolute;
+  //   left: -28px;
+  //   top: 1240px;
     width: 1042px;
     height: 10px;
 }
 
 #x6c {
-    position: absolute;
-    left: 188px;
-    top: 1240px;
+    //   position: absolute;
+  //   left: 188px;
+  //   top: 1240px;
     width: 1042px;
     height: 10px;
 }
 
 #dhsr {
-    position: absolute;
-    left: 58px;
-    top: 1270px;
+    //   position: absolute;
+  //   left: 58px;
+  //   top: 1270px;
     width: 1025px;
     height: 100px;
     line-height: 29px;
@@ -569,9 +629,9 @@
 }
 
 #jx2 {
-    position: absolute;
-    left: 70px;
-    top: 1385px;
+    //   position: absolute;
+  //   left: 70px;
+  //   top: 1385px;
     width: 152px;
     height: 40px;
     line-height: 29px;
@@ -584,45 +644,45 @@
 }
 
 #yh1 {
-    position: absolute;
-    left: 67px;
-    top: 1470px;
+    //   position: absolute;
+  //   left: 67px;
+  //   top: 1470px;
     width: 80px;
     height: 80px;
     border-radius: 60px;
 }
 
 #yh2 {
-    position: absolute;
-    left: 68px;
-    top: 1810px;
+    //   position: absolute;
+  //   left: 68px;
+  //   top: 1810px;
     width: 80px;
     height: 79px;
     border-radius: 60px;
 }
 
 #yh3 {
-    position: absolute;
-    left: 68px;
-    top: 2140px;
+    //   position: absolute;
+  //   left: 68px;
+  //   top: 2140px;
     width: 80px;
     height: 80px;
     border-radius: 60px;
 }
 
 #yh4 {
-    position: absolute;
-    left: 72px;
-    top: 2350px;
+    //   position: absolute;
+  //   left: 72px;
+  //   top: 2350px;
     width: 80px;
     height: 80px;
     border-radius: 60px;
 }
 
 #yh1name {
-     position: absolute;
-     left: 86px;
-     top: 1570px;
+     //   position: absolute;
+   //   left: 86px;
+   //   top: 1570px;
      width: 42px;
      height: 32px;
      line-height: 32px;
@@ -633,9 +693,9 @@
  }
 
 #yh1nr {
-    position: absolute;
-    left: 177px;
-    top: 1470px;
+    //   position: absolute;
+  //   left: 177px;
+  //   top: 1470px;
     width: 942px;
     height: 60px;
     line-height: 26px;
@@ -646,9 +706,9 @@
 }
 
 #yh1time {
-    position: absolute;
-    left: 177px;
-    top: 1538px;
+    //   position: absolute;
+  //   left: 177px;
+  //   top: 1538px;
     width: 224px;
     height: 32px;
     line-height: 26px;
@@ -659,9 +719,9 @@
 }
 
 #yh1hf {
-    position: absolute;
-    left: 178px;
-    top: 1580px;
+    //   position: absolute;
+  //   left: 178px;
+  //   top: 1580px;
     width: 943px;
     height: 100px;
     line-height: 29px;
@@ -673,9 +733,9 @@
 }
 
 #yh1hfjx {
-    position: absolute;
-    left: 177px;
-    top: 1690px;
+    //   position: absolute;
+  //   left: 177px;
+  //   top: 1690px;
     width: 140px;
     height: 40px;
     line-height: 29px;
@@ -688,9 +748,9 @@
 }
 
 #yh1hfjx2 {
-    position: absolute;
-    left: 323px;
-    top: 1690px;
+    //   position: absolute;
+  //   left: 323px;
+  //   top: 1690px;
     width: 140px;
     height: 40px;
     line-height: 29px;
@@ -703,9 +763,9 @@
 }
 
 #yh2name {
-    position: absolute;
-    left: 80px;
-    top: 1909px;
+    //   position: absolute;
+  //   left: 80px;
+  //   top: 1909px;
     width: 57px;
     height: 32px;
     line-height: 32px;
@@ -716,9 +776,9 @@
 }
 
 #yh2nr {
-    position: absolute;
-    left: 177px;
-    top: 1810px;
+    //   position: absolute;
+  //   left: 177px;
+  //   top: 1810px;
     width: 942px;
     height: 109px;
     line-height: 26px;
@@ -729,9 +789,9 @@
 }
 
 #yh2time {
-    position: absolute;
-    left: 177px;
-    top: 2028px;
+    //   position: absolute;
+  //   left: 177px;
+  //   top: 2028px;
     width: 224px;
     height: 32px;
     line-height: 26px;
@@ -742,9 +802,9 @@
 }
 
 #yh2hf {
-    position: absolute;
-    left: 226px;
-    top: 1929px;
+    //   position: absolute;
+  //   left: 226px;
+  //   top: 1929px;
     width: 896px;
     height: 79px;
     line-height: 32px;
@@ -756,9 +816,9 @@
 }
 
 #yh2hfjx {
-    position: absolute;
-    left: 433px;
-    top: 2028px;
+    //   position: absolute;
+  //   left: 433px;
+  //   top: 2028px;
     width: 37px;
     height: 32px;
     line-height: 26px;
@@ -769,9 +829,9 @@
 }
 
 #yh3name {
-    position: absolute;
-    left: 86px;
-    top: 2242px;
+    //   position: absolute;
+  //   left: 86px;
+  //   top: 2242px;
     width: 45px;
     height: 32px;
     line-height: 32px;
@@ -782,9 +842,9 @@
 }
 
 #yh3nr {
-    position: absolute;
-    left: 182px;
-    top: 2148px;
+    //   position: absolute;
+  //   left: 182px;
+  //   top: 2148px;
     width: 942px;
     height: 32px;
     line-height: 26px;
@@ -795,9 +855,9 @@
 }
 
 #yh3time {
-    position: absolute;
-    left: 182px;
-    top: 2198px;
+    //   position: absolute;
+  //   left: 182px;
+  //   top: 2198px;
     width: 224px;
     height: 32px;
     line-height: 26px;
@@ -808,9 +868,9 @@
 }
 
 #yh3hfjx {
-    position: absolute;
-    left: 453px;
-    top: 2198px;
+    //   position: absolute;
+  //   left: 453px;
+  //   top: 2198px;
     width: 37px;
     height: 32px;
     line-height: 26px;
@@ -821,9 +881,9 @@
 }
 
 #yh4name {
-    position: absolute;
-    left: 86px;
-    top: 2448px;
+    //   position: absolute;
+  //   left: 86px;
+  //   top: 2448px;
     width: 45px;
     height: 32px;
     line-height: 32px;
@@ -834,9 +894,9 @@
 }
 
 #yh4nr {
-    position: absolute;
-    left: 182px;
-    top: 2358px;
+    //   position: absolute;
+  //   left: 182px;
+  //   top: 2358px;
     width: 942px;
     height: 32px;
     line-height: 26px;
@@ -847,9 +907,9 @@
 }
 
 #yh4hf {
-    position: absolute;
-    left: 222px;
-    top: 2410px;
+    //   position: absolute;
+  //   left: 222px;
+  //   top: 2410px;
     width: 897px;
     height: 140px;
     line-height: 32px;
@@ -861,9 +921,9 @@
 }
 
 #yh4time {
-    position: absolute;
-    left: 178px;
-    top: 2578px;
+    //   position: absolute;
+  //   left: 178px;
+  //   top: 2578px;
     width: 224px;
     height: 32px;
     line-height: 26px;
@@ -874,9 +934,9 @@
 }
 
 #yh4hfjx {
-    position: absolute;
-    left: 170px;
-    top: 2730px;
+    //   position: absolute;
+  //   left: 170px;
+  //   top: 2730px;
     width: 140px;
     height: 40px;
     line-height: 29px;
@@ -889,9 +949,9 @@
 }
 
 #yh4hfjx2 {
-    position: absolute;
-    left: 310px;
-    top: 2730px;
+    //   position: absolute;
+  //   left: 310px;
+  //   top: 2730px;
     width: 140px;
     height: 40px;
     line-height: 29px;
@@ -904,9 +964,9 @@
 }
 
 #yh4hf2 {
-    position: absolute;
-    left: 171px;
-    top: 2620px;
+    //   position: absolute;
+  //   left: 171px;
+  //   top: 2620px;
     width: 943px;
     height: 100px;
     line-height: 29px;
@@ -918,16 +978,16 @@
 }
 
 #xx {
-    position: absolute;
-    left: -150px;
+    //   position: absolute;
+  //   left: -150px;
     width: 1500px;
     height: 11px;
 }
 
 #ym {
-    position: absolute;
-    left: 73px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 73px;
+  //   top: 2830px;
     width: 80px;
     height: 40px;
     line-height: 26px;
@@ -939,9 +999,9 @@
 }
 
 #ym1 {
-    position: absolute;
-    left: 152px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 152px;
+  //   top: 2830px;
     width: 44px;
     height: 40px;
     line-height: 26px;
@@ -954,9 +1014,9 @@
 }
 
 #ym2 {
-    position: absolute;
-    left: 196px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 196px;
+  //   top: 2830px;
     width: 44px;
     height: 40px;
     line-height: 26px;
@@ -968,9 +1028,9 @@
 }
 
 #ym3 {
-    position: absolute;
-    left: 240px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 240px;
+  //   top: 2830px;
     width: 44px;
     height: 40px;
     line-height: 26px;
@@ -982,9 +1042,9 @@
 }
 
 #ym4 {
-    position: absolute;
-    left: 284px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 284px;
+  //   top: 2830px;
     width: 44px;
     height: 40px;
     line-height: 26px;
@@ -996,9 +1056,9 @@
 }
 
 #ym7 {
-    position: absolute;
-    left: 328px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 328px;
+  //   top: 2830px;
     width: 44px;
     height: 40px;
     line-height: 26px;
@@ -1010,9 +1070,9 @@
 }
 
 #yme {
-    position: absolute;
-    left: 371px;
-    top: 2830px;
+    //   position: absolute;
+  //   left: 371px;
+  //   top: 2830px;
     width: 80px;
     height: 40px;
     line-height: 26px;
@@ -1024,9 +1084,9 @@
 }
 
 .goumai {
-    position: relative;
-    top: 70px;
-    left: 180px;
+    //   position: relative;
+  //   top: 70px;
+  //   left: 180px;
     width: 257px;
     height: 35px;
     margin-top: 80px;
@@ -1038,9 +1098,9 @@
 }
 
 .mairu {
-    position: absolute;
-    left: 65px;
-    top: 150px;
+    //   position: absolute;
+  //   left: 65px;
+  //   top: 150px;
     width: 73px;
     height: 35px;
     line-height: 26px;
@@ -1051,9 +1111,9 @@
 }
 
 .riskLv {
-    position: absolute;
-    left: 468px;
-    top: 150px;
+    //   position: absolute;
+  //   left: 468px;
+  //   top: 150px;
     width: 73px;
     height: 35px;
     line-height: 26px;
@@ -1064,9 +1124,9 @@
 }
 
 .mairurisk {
-    position: absolute;
-    left: 468px;
-    top: 190px;
+    //   position: absolute;
+  //   left: 468px;
+  //   top: 190px;
     width: 73px;
     height: 43px;
     color: rgba(136, 136, 136, 1);
@@ -1077,23 +1137,23 @@
 }
 
 .up {
-    position: absolute;
-    left: 520px;
-    top: 194px;
+    //   position: absolute;
+  //   left: 520px;
+  //   top: 194px;
     background-color: rgb(255, 255, 255);
 }
 
 .down {
-    position: absolute;
-    left: 520px;
-    top: 213px;
+    //   position: absolute;
+  //   left: 520px;
+  //   top: 213px;
     background-color: rgb(255, 255, 255);
 }
 
 .buy {
-    position: absolute;
-    left: 65px;
-    top: 190px;
+    //   position: absolute;
+  //   left: 65px;
+  //   top: 190px;
     width: 370px;
     height: 43px;
     color: rgba(136, 136, 136, 1);
@@ -1104,9 +1164,9 @@
 }
 
 .buy_button {
-    position: absolute;
-    left: 65px;
-    top: 270px;
+    //   position: absolute;
+  //   left: 65px;
+  //   top: 270px;
     width: 475px;
     height: 50px;
     line-height: 29px;

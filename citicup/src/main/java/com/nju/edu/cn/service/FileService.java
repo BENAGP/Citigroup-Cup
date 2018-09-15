@@ -8,4 +8,5 @@ public interface FileService {
     public void initParams(String path);
     public void initTrade(String path);
     public void initContractBackTest(String path);
+    public void resetYield();
 }

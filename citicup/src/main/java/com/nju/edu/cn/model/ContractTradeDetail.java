@@ -73,6 +73,7 @@ public class ContractTradeDetail {
      * 时间横轴
      */
     public List<Date> updateTimes;
+    public List<String> formatDates;
 
     /**
      * 收益率纵轴
@@ -93,7 +94,7 @@ public class ContractTradeDetail {
      * 合约交易截止日
      * 收藏列表提醒用户到期 取消收藏
      */
-    public Date ddl;
+    public String ddl;
 
     /**
      * 是否过期
@@ -175,9 +176,7 @@ public class ContractTradeDetail {
         this.createTime = createTime;
     }
 
-    public void setDdl(Date ddl) {
-        this.ddl = ddl;
-    }
+
 
     public void setIsEnd(Boolean isEnd) {
         isEnd = isEnd;

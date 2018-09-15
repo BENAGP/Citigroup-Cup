@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,7 @@ public class ContractServiceImpl implements ContractService {
     private FuturesUpdatingRepository futuresUpdatingRepository;
 
     private static Logger logger = LoggerFactory.getLogger(ContractServiceImpl.class);
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     //比较器，回测数据按更新时间排序
     private Comparator<ContractBackTest> comparator = new Comparator<ContractBackTest>() {
@@ -75,11 +77,14 @@ public class ContractServiceImpl implements ContractService {
             copyProperties(trade, contractTradeModel);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
+            List<String> formatDates = new ArrayList<>();//时间横轴
             contractBackTests.forEach(contractBackTest -> {
                 yields.add(contractBackTest.getYield());
                 updateTimes.add(contractBackTest.getCreateTime());
+                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
             });
             contractTradeModel.updateTimes = updateTimes;
+            contractTradeModel.formatDates = formatDates;
             contractTradeModel.yields = yields;
             contractTradeModel.computeYield();
             contractTradeModel.ddl = ddl;
@@ -122,6 +127,7 @@ public class ContractServiceImpl implements ContractService {
             copyProperties(trade, contractTradeModel);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
+            List<String> formatDates = new ArrayList<>();//时间横轴
             List<Double> positions = new ArrayList<>();//资金占用纵轴
             List<Integer> nearbyFuturesPositionOperations = new ArrayList<>();
             List<Integer> backFuturesPositionOperations = new ArrayList<>();
@@ -129,6 +135,7 @@ public class ContractServiceImpl implements ContractService {
                 ContractBackTest contractBackTest = contractBackTests.get(i);
                 yields.add(contractBackTest.getYield());
                 updateTimes.add(contractBackTest.getCreateTime());
+                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
                 positions.add(contractBackTest.getPosition());
                 if(i>0){
                     ContractBackTest pre = contractBackTests.get(i-1);
@@ -140,6 +147,7 @@ public class ContractServiceImpl implements ContractService {
                 }
             }
             contractTradeModel.updateTimes = updateTimes;
+            contractTradeModel.formatDates = formatDates;
             contractTradeModel.yields = yields;
             contractTradeModel.computeYield();
             contractTradeModel.positions = positions;
@@ -205,11 +213,14 @@ public class ContractServiceImpl implements ContractService {
             copyProperties(trade, contractTradeModel);
             List<Double> yields = new ArrayList<>();//收益率纵轴
             List<Date> updateTimes = new ArrayList<>();// 时间横轴
+            List<String> formatDates = new ArrayList<>();// 时间横轴
             contractBackTests.forEach(contractBackTest -> {
                 yields.add(contractBackTest.getYield());
                 updateTimes.add(contractBackTest.getCreateTime());
+                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
             });
             contractTradeModel.updateTimes = updateTimes;
+            contractTradeModel.formatDates = formatDates;
             contractTradeModel.yields = yields;
             contractTradeModel.computeYield();
             contractTradeModels.add(contractTradeModel);
@@ -296,6 +307,8 @@ public class ContractServiceImpl implements ContractService {
         Futures nearbyFutures = contract.getNearbyFutures();
         Futures backFutures = contract.getBackFutures();
         historyMarket.nearbyFuturesId = nearbyFutures.getFuturesId();
+        historyMarket.nearbyFuturesName = nearbyFutures.getName();
+        historyMarket.backFuturesName = backFutures.getName();
         historyMarket.backFuturesId = backFutures.getFuturesId();
         Comparator<FuturesUpdating> comparator = new Comparator<FuturesUpdating>() {
             @Override
@@ -308,6 +321,7 @@ public class ContractServiceImpl implements ContractService {
         Collections.sort(nearbyFuturesUpdating, comparator);
         Collections.sort(backFuturesUpdating, comparator);
         List<Date> updateTimes = new ArrayList<>();
+        List<String> formatDates = new ArrayList<>();
         List<Float> nearbyPrices = new ArrayList<>();
         List<Float> backPrices = new ArrayList<>();
 
@@ -316,6 +330,7 @@ public class ContractServiceImpl implements ContractService {
 
         nearbyFuturesUpdating.forEach(futuresUpdating -> {
             updateTimes.add(futuresUpdating.getUpdateTime());
+            formatDates.add(simpleDateFormat.format(futuresUpdating.getUpdateTime()));
             nearbyPrices.add(futuresUpdating.getPrice());
             nearbyTradings.add(futuresUpdating.getTrading());
         });
@@ -324,6 +339,7 @@ public class ContractServiceImpl implements ContractService {
             backTradings.add(futuresUpdating.getTrading());
         });
         historyMarket.updateTimes = updateTimes;
+        historyMarket.formatDates = formatDates;
         historyMarket.nearbyPrices = nearbyPrices;
         historyMarket.nearbyTradings = nearbyTradings;
         historyMarket.backPrices = backPrices;
@@ -358,14 +374,17 @@ public class ContractServiceImpl implements ContractService {
         copyProperties(trade, contractTradeDetail);
         List<Double> yields = new ArrayList<>();//收益率纵轴
         List<Date> updateTimes = new ArrayList<>();// 时间横轴
+        List<String> formatDates = new ArrayList<>();// 时间横轴
         contractBackTests.forEach(contractBackTest -> {
             yields.add(contractBackTest.getYield());
             updateTimes.add(contractBackTest.getCreateTime());
+            formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
         });
         contractTradeDetail.updateTimes = updateTimes;
+        contractTradeDetail.formatDates = formatDates;
         contractTradeDetail.yields = yields;
         contractTradeDetail.computeYield();
-        contractTradeDetail.ddl = ddl;
+        contractTradeDetail.ddl = simpleDateFormat.format(ddl);
         contractTradeDetail.isEnd = (ddl.getTime() < now);
 //        //todo 重新查
 //        List<Comment> comments = contract.getComments();

@@ -12,6 +12,8 @@ import java.util.List;
  */
 @Repository
 public interface ContractBackTestRepository extends JpaRepository<ContractBackTest,Long>{
+    List<ContractBackTest> findByTrade_TradeId(Long tradeId);
+
     List<ContractBackTest> findByTrade_User_UserIdAndTrade_RiskLevelAndTrade_Contract_ContractIdAndCreateTimeAfterAndCreateTimeBefore(Long userId, Integer riskLevel, Long contractId, Date left,Date right);
     List<ContractBackTest> findByTrade_User_UserIdAndTrade_RiskLevelAndTrade_Contract_ContractIdOrderByCreateTime(Long userId, Integer riskLevel, Long contractId);
 }
