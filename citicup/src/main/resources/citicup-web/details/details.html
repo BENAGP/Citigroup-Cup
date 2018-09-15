@@ -1,134 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/layui/layui.js" charset="UTF-8"></script>
     <script src="../util/href-helper.js"></script>
     <link rel="stylesheet" href="details.css" type="text/css">
-    <link href="../components/top-nav.css" rel="stylesheet"/>
+    <link href="../components/top-nav.css" rel="stylesheet" />
     <meta name="S">
     <title>合约详情</title>
-    <link rel="icon" href="../imgs/logo_title.png"/>
+    <link rel="icon" href="../imgs/logo_title.png" />
     <script src="../lib/echarts.min.js"></script>
 </head>
+
 <body>
-<div class="top-nav"></div>
-<div class="content-wrapper">
-    <div class="content" style="margin-top: 40px">
-        <div class="row">
-            <div class="col-9">
-                <div style="overflow: auto">
-                    <span id="contract_name">IF1706－IF1703</span>
-                    <span id="liquidity">（流动性：300元／分钟）</span>
+    <div class="top-nav"></div>
+    <div class="content-wrapper">
+        <div class="content" style="margin-top: 40px">
+            <div class="row">
+                <div class="col-9">
+                    <div style="overflow: auto">
+                        <span id="contract_name">IF1706－IF1703</span>
+                        <span id="liquidity">（流动性：300元／分钟）</span>
 
-                    <div id="collect_wrapper" onclick="collection()">
-                        <img src="../imgs/star.png" id="collect_pic">
-                        <span id="collect_letter" style="">收藏</span>
-                    </div>
-
-                    <div id="risk_level_wrapper">
-                        <span>风险等级</span>
-                        <input id="risk_level" type="number" onchange="getDetailByRiskLevel()">
-                    </div>
-
-                </div>
-                <div>
-                    <div class="tab_line"><b class="tab_title">收益</b></div>
-                    <div class="detail_chart" id="yield_chart"></div>
-                </div>
-                <div>
-                    <div class="tab_line">
-                        <b class="tab_title">历史行情</b>
-                    </div>
-                    <div class="detail_chart" id="market_price_chart"></div>
-                    <div class="detail_chart" style="height: 100px" id="market_trading_chart"></div>
-                </div>
-                <div>
-                    <div class="tab_line"><b class="tab_title">讨论区</b></div>
-                </div>
-
-
-                <textarea rows="3" id="comment_input" placeholder="输入你想说的吧。。。"></textarea>
-                <button class="mibtn-primary">发送</button>
-
-                <div class="comment-area">
-                    <div class="comment-bar">
-                        <div class="avatar-bar">
-                            <img src="2434/24343263/raw_1535262247.jpeg" class="avatar" />
-                            <div class="username">
-                                adam
-                            </div>
+                        <div id="collect_wrapper" onclick="collection()">
+                            <img src="../imgs/star.png" id="collect_pic">
+                            <span id="collect_letter" style="">收藏</span>
                         </div>
-                        <div class="comment-text">
-                            <div class="comment-main">
-                                请教下楼主，你的代码我仔细看了，却始终看不明白！ returns = (current_price-bottom_price)/bottom_price 这句代码，returns总是等于0的啊，我克隆你的代码之后，加了log.info打印出来证实了这一点，所以下面买入和卖出的两段if代码都是不会成立的。但是程序运行中又确实有买入操作，我看了半天也不知道是在哪句代码买入的。楼主能否解释一下？谢谢！
-                            </div>
-                            <div class="comment-sub">
-                                @Rhys 你好，老师！我是金丘集团微型金平台的，我们平台有高净值的投资客户，你出技术，我们募集资金，要请你操盘，赚盈利部分30%佣金，亏损不用承担。望详聊加微信号是我名字
-                            </div>
-                            <div class="comment-time">
-                                发送于 2018-09-20 18:30:21
-                            </div>
-                            <div class="comment-replay">
-                                回复
-                            </div>
+
+                        <div id="risk_level_wrapper">
+                            <span>风险等级</span>
+                            <input id="risk_level" type="number" onchange="getDetailByRiskLevel()">
                         </div>
-                        <hr/>
-                    </div>
-                </div>
-                
-        </div>
-            <div class="col-3" style="padding-left: 30px">
-                <div style="border-bottom: 1px solid #f4f4f4;padding-bottom: 4px">
-                    <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">年华收益率</div>
-                    <div style="color: red;font-weight: 600;font-size: 42px;margin-left: 12px;text-align: center;margin-top: 8px" id="year_yield">70.89%</div>
-                </div>
-                <div class="row">
-                    <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
-                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近1周</div>
-                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_1_week_yield">43.25%</div>
 
                     </div>
-                    <div class="col-6" style=";border-bottom: 1px solid #f4f4f4">
-                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近3周</div>
-                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_3_week_yield">43.25%</div>
-
+                    <div>
+                        <div class="tab_line"><b class="tab_title">收益</b></div>
+                        <div class="detail_chart" id="yield_chart"></div>
                     </div>
-                    <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
-                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近6周</div>
-                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_6_week_yield">43.25%</div>
-
+                    <div>
+                        <div class="tab_line">
+                            <b class="tab_title">历史行情</b>
+                        </div>
+                        <div class="detail_chart" id="market_price_chart"></div>
+                        <div class="detail_chart" style="height: 100px" id="market_trading_chart"></div>
                     </div>
-                    <div class="col-6" style="border-bottom: 1px solid #f4f4f4">
-                        <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近12周</div>
-                        <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_12_week_yield">43.25%</div>
+                    <div>
+                        <div class="tab_line"><b class="tab_title">讨论区</b></div>
+                    </div>
+
+
+                    <textarea rows="3" id="comment_input" placeholder="输入你想说的吧。。。"></textarea>
+                    <button class="mibtn-primary">发送</button>
+
+                    <div id="comment-area">
+                        <div class="comment-bar">
+                            <div class="avatar-bar">
+                                <img src="2434/24343263/raw_1535262247.jpeg" class="avatar" />
+                                <div class="username">
+                                    adam
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                <div class="comment-main">
+                                    别进来了，我已经被系统提醒赎回了，你进来就是白白交手续费，去找活跃性偏低但是离最后交易日远的套利合约吧。
+                                </div>
+                                <div class="comment-sub">
+                                    @Rhys 这个合约是不是要到期了啊，还能买不？
+                                </div>
+                                <div class="comment-time">
+                                    发送于 2018-09-20 18:30:21
+                                </div>
+                                <div class="comment-replay">
+                                    回复
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+
+                        <div class="comment-bar">
+                            <div class="avatar-bar">
+                                <img src="2434/24343266/raw_1535262253.jpeg" class="avatar" />
+                                <div class="username">
+                                    gaoyang
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                <div class="comment-main">
+                                    有量化专业人士在吗，能给这个套利合约评价一下不，我觉得这个品种最近波动性挺大的，套利应该收益不错，但是还是不太放心。
+                                </div>
+                                <div class="comment-time">
+                                    发送于 2018-09-20 17:25:10
+                                </div>
+                                <div class="comment-replay">
+                                    回复
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+
+                        <div class="comment-bar">
+                            <div class="avatar-bar">
+                                <img src="2434/24343267/raw_1535262259.jpeg" class="avatar" />
+                                <div class="username">
+                                    Rhys
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                <div class="comment-main">
+                                    这个合约是不是要到期了啊，还能买不？
+                                </div>
+                                <div class="comment-time">
+                                    发送于 2018-09-20 18:25:21
+                                </div>
+                                <div class="comment-replay-container">
+                                    <textarea class='comment-text-area' placeholder="回复@rhys"></textarea>
+                                </div>
+                                <button class="mibtn-primary">回复</button>
+                                <button class="mibtn-secondry">取消</button>
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-3" style="padding-left: 30px">
+                    <div style="border-bottom: 1px solid #f4f4f4;padding-bottom: 4px">
+                        <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">年华收益率</div>
+                        <div style="color: red;font-weight: 600;font-size: 42px;margin-left: 12px;text-align: center;margin-top: 8px" id="year_yield">70.89%</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
+                            <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近1周</div>
+                            <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_1_week_yield">43.25%</div>
+
+                        </div>
+                        <div class="col-6" style=";border-bottom: 1px solid #f4f4f4">
+                            <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近3周</div>
+                            <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_3_week_yield">43.25%</div>
+
+                        </div>
+                        <div class="col-6" style="border-right: 1px solid #f4f4f4;border-bottom: 1px solid #f4f4f4">
+                            <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近6周</div>
+                            <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_6_week_yield">43.25%</div>
+
+                        </div>
+                        <div class="col-6" style="border-bottom: 1px solid #f4f4f4">
+                            <div style="font-size: 18px;text-align: center;color: #5e5e5e;margin-top: 36px">近12周</div>
+                            <div style="font-size: 22px;text-align: center;margin-bottom: 36px;font-weight: 600;margin-top: 12px" id="near_12_week_yield">43.25%</div>
+                        </div>
+                    </div>
+                    <button class="mibtn-primary" style="width: 100%;background-color:#F55D54;height: 40px;font-size: 16px;margin-top: 30px ">购买</button>
+                    <div style="text-align: center;font-size: 14px;color: #5e5e5e;">最后交易日:<span id="ddl">2018-09-20 09:00:00
+                        </span>></div>
+
+                    <div style="margin-top: 80px">
+                        <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">市场最大承载资金</div>
+                        <div style="color: red;font-weight: 600;font-size:26px;text-align: center;margin-top: 8px" id="market_capital_capacity">¥100000</div>
+                    </div>
+                    <div style="margin-top: 40px;padding-left: 10px;padding-right: 10px;font-size: 18px;color: #5E5E5E">
+                        <div><span>最大回撤：</span><span style="float: right;font-weight: 600" id="max_drawdown">80.79%</span></div>
+                        <div style="margin-top: 20px"><span>胜率：</span><span style="float: right;font-weight: 600" id="win_rate">80.79%</span></div>
+                        <div style="margin-top: 20px"><span>盈亏比：</span><span style="float: right;font-weight: 600" id="profit_loss_ratio">80.79%</span></div>
                     </div>
                 </div>
-                <button class="mibtn-primary" style="width: 100%;background-color:#F55D54;height: 40px;font-size: 16px;margin-top: 30px ">购买</button>
-                <div style="text-align: center;font-size: 14px;color: #5e5e5e;" >最后交易日:<span id="ddl">2018-09-20 09:00:00 </span>></div>
 
-                <div style="margin-top: 80px">
-                    <div style="font-size: 20px;text-align: center;color: #5e5e5e;margin-top: 4px">市场最大承载资金</div>
-                    <div style="color: red;font-weight: 600;font-size:26px;text-align: center;margin-top: 8px" id="market_capital_capacity">¥100000</div>
-                </div>
-                <div style="margin-top: 40px;padding-left: 10px;padding-right: 10px;font-size: 18px;color: #5E5E5E">
-                    <div><span>最大回撤：</span><span style="float: right;font-weight: 600" id="max_drawdown">80.79%</span></div>
-                    <div style="margin-top: 20px"><span>胜率：</span><span style="float: right;font-weight: 600" id="win_rate">80.79%</span></div>
-                    <div style="margin-top: 20px"><span>盈亏比：</span><span style="float: right;font-weight: 600" id="profit_loss_ratio">80.79%</span></div>
+                <div>
+
+
                 </div>
             </div>
-
-        <div>
-
-
         </div>
-    </div>
-</div>
-<div class="footer"></div>
+        <div class="footer"></div>
 </body>
 <script>
     layui.use(['layer'], function () {
@@ -137,4 +184,5 @@
 </script>
 <script src="../components/top-nav.js"></script>
 <script src="./details.js"></script>
+
 </html>
