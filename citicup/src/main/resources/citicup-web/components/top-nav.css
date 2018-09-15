@@ -41,6 +41,7 @@
     display: inline-block;
     width: 1080px;
     text-align: left;
+    min-height: 850px;
     min-width: 1080px;
 }
 .footer>div {
@@ -154,5 +155,9 @@ textarea {
 button:focus {
     outline: none;
     cursor: pointer;
+}
+
+body {
+    min-height: 900px;
 }
 

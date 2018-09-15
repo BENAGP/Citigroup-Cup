@@ -1,18 +1,18 @@
 /**
  * Created by shea on 2018/8/9.
  */
-let top_nav_islogin;
-if (window.localStorage.getItem("userId")) {
-    top_nav_islogin = true;
-} else {
-    top_nav_islogin = false;
-}
+let top_nav_islogin = true;
+// if (window.localStorage.getItem("userId")) {
+//     top_nav_islogin = true;
+// } else {
+//     top_nav_islogin = false;
+// }
 let login_index = 0;
 let info_index = 0;
 let person_nav_tab =
     top_nav_islogin ?
         "<div class='tab' topage='/person/collection.html'>个人中心</div> " :
-        "<div class='tab' onclick='login()'>登录</div>";
+        "<div class='tab' onclick='showLogin()'>登录</div>";
 
 const nav =
     "<div>" +
@@ -67,7 +67,42 @@ function showLogin() {
 }
 
 function login() {
-    // layer.close(login_index);
+if($("#usrname").val() === '')
+    {
+        layer.msg("请输入用户名！");
+        return;
+    }
+    if($("#password").val() === '')
+    {
+        layer.msg("请输入密码！");
+        return;
+    }
+    $.post('/api/user/login',{
+        email:$("#usrname").val(),
+        psw:$("#password").val()
+    }).done(response=>{
+        console.log(response);
+        setUser(response);
+
+        if(!response.isCompleted)
+        {
+            layer.close(login_index);
+            layer.alert("用户信息不完整,请补完信息！",function (index) {
+                layer.close(index);
+                showInfo();
+            });
+        }else {
+            forward("/home/home.html");
+        }
+
+    }).fail(err=>{
+        layer.msg(err.responseText);
+    })
+
+
+};
+
+function showInfo() {
     info_index = layer.open({
         type: 1,
         title: false,
@@ -126,37 +161,8 @@ function login() {
             }
         });
     });
-    // if($("#usrname").val() === '')
-    // {
-    //     layer.msg("请输入用户名！");
-    //     return;
-    // }
-    // if($("#password").val() === '')
-    // {
-    //     layer.msg("请输入密码！");
-    //     return;
-    // }
-    // $.post('/api/user/login',{
-    //     email:$("#usrname").val(),
-    //     psw:$("#password").val()
-    // }).done(response=>{
-    //     console.log(response);
-    //     setUser(response);
-    //
-    //     if(!response.isCompleted)
-    //     {
-    //         layer.alert("用户信息不完整,请补完信息！",function (index) {
-    //             layer.close(index);
-    //             forward("/home/home.html");
-    //         });
-    //     }else {
-    //         forward("/home/home.html");
-    //     }
-    //
-    // }).fail(err=>{
-    //     layer.msg(err.responseText);
-    // })
-};
+
+}
 
 function closeInfo() {
     layer.close(info_index)

@@ -112,16 +112,26 @@ public class ContractTradeSearch {
     public void checkNullValue(){
         Double minF = Double.MIN_VALUE;
         Double maxF = Double.MAX_VALUE;
-        yieldL = yieldL==null?minF:yieldL;
-        yieldR = yieldR==null?maxF:yieldR;
-        maxDrawdownL = maxDrawdownL==null?minF:maxDrawdownL;
-        maxDrawdownR = maxDrawdownR==null?maxF:maxDrawdownR;
-        winRateL = winRateL==null?minF:winRateL;
-        winRateR = winRateR==null?maxF:winRateR;
-        profitLossRatioL = profitLossRatioL==null?minF:profitLossRatioL;
-        profitRossRatioR = profitRossRatioR==null?maxF:profitRossRatioR;
-        marketCapitalCapacityL = marketCapitalCapacityL==null?minF:marketCapitalCapacityL;
-        marketCapitalCapacityR = marketCapitalCapacityR==null?maxF:marketCapitalCapacityR;
+//        yieldL = yieldL==null?minF:yieldL;
+//        yieldR = yieldR==null?maxF:yieldR;
+//        maxDrawdownL = maxDrawdownL==null?minF:maxDrawdownL;
+//        maxDrawdownR = maxDrawdownR==null?maxF:maxDrawdownR;
+//        winRateL = winRateL==null?minF:winRateL;
+//        winRateR = winRateR==null?maxF:winRateR;
+//        profitLossRatioL = profitLossRatioL==null?minF:profitLossRatioL;
+//        profitRossRatioR = profitRossRatioR==null?maxF:profitRossRatioR;
+//        marketCapitalCapacityL = marketCapitalCapacityL==null?minF:marketCapitalCapacityL;
+//        marketCapitalCapacityR = marketCapitalCapacityR==null?maxF:marketCapitalCapacityR;
+        yieldL = minF;
+        yieldR = maxF;
+        maxDrawdownL = minF;
+        maxDrawdownR = maxF;
+        winRateL = minF;
+        winRateR = maxF;
+        profitLossRatioL = minF;
+        profitRossRatioR = maxF;
+        marketCapitalCapacityL = minF;
+        marketCapitalCapacityR = maxF;
         type = type==null? FuturesType.ALL:type;
     }
 

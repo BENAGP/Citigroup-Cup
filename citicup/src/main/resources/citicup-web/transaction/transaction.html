@@ -312,8 +312,11 @@
             layer.open({
                 type: 1
                 ,title:' '
-                ,content: '<div class = "tipbeforeredeem">确认后系统将立刻强制平仓，是否确认?</div>'
-                ,btn: ['确认', '取消']
+                    ,content: '<div style="text-align: center;margin-top: 10px;margin-bottom: 10px" class="tipbeforeredeem">确认后系统将立刻强制平仓，是否确认?</div>'+
+                    "<div style='text-align: center;padding-bottom: 30px'>" +
+                    "<button style='width: 60px;height: 32px;border-radius: 2px;border:1px solid #ff5a5f;color: white;background-color: #ff5a5f'>确认</button>" +
+                    "<button style='width: 60px;height: 32px;border-radius: 2px;margin-left: 6px;color:#5e5e5e;border: 1px solid #cdcdcd'>取消</button></div>"
+//                ,btn: ['继续', '取消']
                 ,btnAlign: 'c' //按钮居中
                 ,shade: 0 //不显示遮罩
                 ,yes: function(){

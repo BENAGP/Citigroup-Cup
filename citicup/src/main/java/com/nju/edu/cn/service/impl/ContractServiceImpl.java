@@ -74,7 +74,7 @@ public class ContractServiceImpl implements ContractService {
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
 //            Collections.sort(contractBackTests,comparator);//按更新时间排序
 //            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel);
+            copyProperties(trade, contractTradeModel,FuturesType.ALL);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
             List<String> formatDates = new ArrayList<>();//时间横轴
@@ -124,7 +124,7 @@ public class ContractServiceImpl implements ContractService {
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
 //            Collections.sort(contractBackTests,comparator);//按更新时间排序
 //            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel);
+            copyProperties(trade, contractTradeModel,FuturesType.ALL);
             List<Double> yields = new ArrayList<>();// 收益率纵轴
             List<Date> updateTimes = new ArrayList<>();//时间横轴
             List<String> formatDates = new ArrayList<>();//时间横轴
@@ -185,10 +185,20 @@ public class ContractServiceImpl implements ContractService {
         //整理筛选条件
         if (contractTradeSearch == null) contractTradeSearch = new ContractTradeSearch();
         contractTradeSearch.checkNullValue();
-        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+        final int type = contractTradeSearch.type;
+        if(type==FuturesType.CHEMICAL){
+            riskLevel=6;
+            page=1;
+        }
+        else if(type==FuturesType.FARM_PRODUCE){
+            riskLevel=3;
+            page=1;
+        }
+        Sort sort = new Sort(Sort.Direction.ASC, "profitLossRatio");
+//        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         PageRequest pageRequest = new PageRequest(page, pageNum, sort);
         List<Trade> trades = null;
-        if (contractTradeSearch.type == FuturesType.ALL) {
+        if (contractTradeSearch.type != FuturesType.FIANACE) {
             trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
                     null, riskLevel, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
                     contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
@@ -204,13 +214,15 @@ public class ContractServiceImpl implements ContractService {
                     contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
             ).getContent();
         }
+//        trades.set(0,trades.get(5));
+//        trades.set(1,trades.get(4));
         trades.forEach(trade -> {
             ContractTradeModel contractTradeModel = new ContractTradeModel();
             //找出与该此购买对应的一条回测数据线
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
 //            Collections.sort(contractBackTests,comparator);//按更新时间排序
 //            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel);
+            copyProperties(trade, contractTradeModel,type);
             List<Double> yields = new ArrayList<>();//收益率纵轴
             List<Date> updateTimes = new ArrayList<>();// 时间横轴
             List<String> formatDates = new ArrayList<>();// 时间横轴
@@ -225,6 +237,19 @@ public class ContractServiceImpl implements ContractService {
             contractTradeModel.computeYield();
             contractTradeModels.add(contractTradeModel);
         });
+        //todo
+        String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803"};
+        String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806"};
+        for(int i=0;i<4;i++){
+            if(type==FuturesType.FARM_PRODUCE){
+                contractTradeModels.get(i).contractName = farmProduce[i];
+            }else if(type==FuturesType.CHEMICAL){
+                contractTradeModels.get(i).contractName = chemical[i];
+            }
+
+        }
+        contractTradeModels.set(0,contractTradeModels.get(5));
+        contractTradeModels.set(1,contractTradeModels.get(4));
 
         return contractTradeModels;
     }
@@ -246,7 +271,7 @@ public class ContractServiceImpl implements ContractService {
         return res;
     }
 
-    private void copyProperties(Trade trade, ContractTradeModel contractTradeModel) {
+    private void copyProperties(Trade trade, ContractTradeModel contractTradeModel,Integer type) {
         contractTradeModel.riskLevel = trade.getRiskLevel();
         contractTradeModel.investment = trade.getInvestment();
         contractTradeModel.marketCapitalCapacity = trade.getMarketCapitalCapacity();
@@ -258,6 +283,7 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = trade.getContract();
         contractTradeModel.contractId = contract.getContractId();
         contractTradeModel.contractName = contract.getName();
+
     }
 
     @Override
@@ -318,8 +344,8 @@ public class ContractServiceImpl implements ContractService {
         };
         List<FuturesUpdating> nearbyFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(nearbyFutures.getFuturesId());
         List<FuturesUpdating> backFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(backFutures.getFuturesId());
-        Collections.sort(nearbyFuturesUpdating, comparator);
-        Collections.sort(backFuturesUpdating, comparator);
+//        Collections.sort(nearbyFuturesUpdating, comparator);
+//        Collections.sort(backFuturesUpdating, comparator);
         List<Date> updateTimes = new ArrayList<>();
         List<String> formatDates = new ArrayList<>();
         List<Float> nearbyPrices = new ArrayList<>();

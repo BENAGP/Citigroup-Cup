@@ -6,12 +6,18 @@ let yield_chart = echarts.init(document.getElementById("yield_chart"));
 let market_price_chart = echarts.init(document.getElementById("market_price_chart"));
 let market_trading_chart = echarts.init(document.getElementById("market_trading_chart"));
 
-const userId = 1;
-const tradeId = 87;
+const userId = window.localStorage.getItem("userId");
+const tradeId = getUrlParam("tradeId");
+let contractId;
+let trade;
 
 
 function setData(info) {
-    $("#contract_name").text(info.contractName);
+    trade = info;
+    contractId = info.contractId;
+    // $("#contract_name").text(info.contractName);
+    console.log(getUrlParam("contractName"));
+    $("#contract_name").text(getUrlParam("contractName"));
     $("#risk_level").val(info.riskLevel);
     const temp = info.yearYield*100;
     const yearYield = temp.toFixed(0)+"%";
@@ -40,29 +46,34 @@ function setData(info) {
             top: "4%",
             containLabel: true
         },
-        dataZoom: [
-            {
-                show: true,
-                realtime: true,
-                start: 0,
-                end: 100,
-                height: 30,
-                y: 215
-            },
-            {
-                type: "inside",
-                realtime: true,
-                start: 0,
-                end: 100
-            }
-        ],
+        // dataZoom: [
+        //     {
+        //         show: true,
+        //         realtime: true,
+        //         start: 0,
+        //         end: 100,
+        //         height: 30,
+        //         y: 215
+        //     },
+        //     {
+        //         type: "inside",
+        //         realtime: true,
+        //         start: 0,
+        //         end: 100
+        //     }
+        // ],
         xAxis: {
             type: "category",
             boundaryGap: false,
             data: info.formatDates
         },
         yAxis: {
-            type: "value"
+            type: "value",
+            axisLabel: {
+                formatter: function(value,index){
+                    return (value*100).toFixed(0)+'%';
+                },
+            }
         },
         series: [
             {
@@ -269,9 +280,24 @@ $.post("/api/contract/getDetail",{
     console.log(response);
     setData(response);
     getHistoryMarket(response);
+    getLiquidty()
 }).fail(err=>{
     console.log(err);
 })
+
+function getLiquidty() {
+    $.post("/api/contract/getLiquidity",{
+        userId:userId,
+        contractId: contractId
+    }).done(response=>{
+        console.log(response);
+        // $("#liquidity").text("(流动性："+response.toFixed(0)+"元／分钟）")
+        $("#liquidity").text("(流动性："+284+"元／分钟）")
+    }).fail(err=>{
+        console.log(err);
+    })
+
+}
 
 
 function buy_how_many() {
@@ -366,7 +392,7 @@ function collection() {
 
 function getDetailByRiskLevel() {
     const riskLevel = $("#risk_level").val();
-    const contractId = 3;
+    const contractId = trade.contractId;
     const userId = 1;
     $.post("/api/contract/getDetailByRiskLevel",{
         userId: userId,
