@@ -10,6 +10,7 @@
     <script src="layui/layui.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/echarts.min.js"></script>
+    <script src="../util/href-helper.js"></script>
     <script src="mall.js"></script>
     <link rel="stylesheet" type="text/css" href="mall.css">
 </head>
@@ -17,7 +18,7 @@
 </head>
 <body>
 <div class="top-nav"></div>
-<div class="content-wrapper">
+<div class="content-wrapper" id="contentdiv">
     <div class="content" style="">
 
         <div class="ft_board">
@@ -306,7 +307,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy0">购买</button>
+                <button class="buybutton" id="buy0" onclick="buy(0)">购买</button>
 
             </div>
 
@@ -352,7 +353,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy1">购买</button>
+                <button class="buybutton" id="buy1" onclick="buy(1)">购买</button>
 
             </div>
 
@@ -394,7 +395,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy2">购买</button>
+                <button class="buybutton" id="buy2" onclick="buy(2)">购买</button>
 
             </div>
 
@@ -436,7 +437,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy3">购买</button>
+                <button class="buybutton" id="buy3" onclick="buy(3)">购买</button>
 
             </div>
 
@@ -478,7 +479,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy4">购买</button>
+                <button class="buybutton" id="buy4" onclick="buy(4)">购买</button>
 
             </div>
 
@@ -520,7 +521,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy5">购买</button>
+                <button class="buybutton" id="buy5" onclick="buy(5)">购买</button>
 
             </div>
 
@@ -562,7 +563,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy6">购买</button>
+                <button class="buybutton" id="buy6" onclick="buy(6)">购买</button>
 
             </div>
 
@@ -604,7 +605,7 @@
 
                 </div>
 
-                <button class="buybutton" id="buy7">购买</button>
+                <button class="buybutton" id="buy7" onclick="buy(7)">购买</button>
 
             </div>
 
@@ -619,10 +620,74 @@
 
 <div class="footer myfooter" ></div>
 
+<div class="buyboard" id="buyBoard">
+    <div class="buytitle" id="buytitle">购买</div>
+    <br/>
+    <div class="moneytext">买入金额</div>
+    <div class="risktext">风险等级</div>
+    <input type="number" id="moneyinput" autocomplete="off" class="layui-input moneyinput" placeholder="最低金额1000元">
+    <input type="number" id="riskinput" autocomplete="off" class="layui-input riskinput" placeholder="1">
+
+
+    <div class="account">
+        &nbsp;
+        <input type="radio" name="accountradio" id="save">
+        <label class="save-text">储蓄账户（余额：200000￥）</label>
+        <br/>
+        <input type="radio" name="accountradio" id="credit">
+        <label class="credit-text">银行卡账户（余额：3000￥）</label>
+
+    </div>
+
+
+    <button class="confirmbuybutton" id="confirmbuybutton" onclick="finallyClicked()">确认购买</button>
+
+    <div class="closebutton" onclick="buyboardClosed()">x</div>
+    <div id="finally"></div>
+</div>
+
 </body>
 
 
 <script>
+
+    var currentContract;
+
+    function buy(id){
+        currentContract = contractList[id];
+        $("#buytitle").html("购买"+currentContract.contractName);
+        $("#contentdiv").css("opacity","0.4");
+        $("#buyBoard").css("visibility","visible");
+
+    }
+
+    function buyboardClosed(){
+        $("#contentdiv").css("opacity","1");
+        $("#buyBoard").css("visibility","hidden");
+    }
+
+    function finallyClicked(){
+
+        layui.use('layer', function(){ //独立版的layer无需执行这一句
+            var layer = layui.layer; //独立版的layer无需执行这一句
+
+            layer.open({
+                type: 1
+                ,content: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您购买的金额超过了当前市场最大承载资金，请问是否继续?'
+                ,btn: ['继续', '取消']
+                ,btnAlign: 'c' //按钮居中
+                ,shade: 0 //不显示遮罩
+                ,yes: function(){
+                    var tradeId = currentContract.tradeId;
+                    var contractName = currentContract.contractName;
+                    location.href='../details/details.html?tradeId='+tradeId+'&contractName='+contractName;
+                }
+
+                ,btn2: function(){
+                }
+            });
+        });
+    }
 
 
     $("#profittext0").innerHTML = "hihi";
@@ -1134,49 +1199,6 @@
             }
         ]
     };
-    //
-    // $('#futures').on('DOMNodeInserted',function(){
-    //     for(var i =0 ;i<contractList.length;i++){
-    //         var child = contractList[i];
-    //         var myChart = echarts.init(document.getElementById("graphdiv"+i));
-    //         myChart.setOption({
-    //             xAxis: {
-    //                 data: child.updateTimes
-    //             },
-    //             series: [
-    //                 {
-    //                     name: "回测利率",
-    //                     data: child.yields,
-    //                     type: "line",
-    //                     sampling: "average",
-    //                     areaStyle: {
-    //                         normal: {
-    //                             color: "#DAE4F4"
-    //                         }
-    //                     },
-    //                     lineStyle: {
-    //                         normal: {
-    //                             width: 3,
-    //                             color: "#4577C8"
-    //                         }
-    //                     },
-    //                 },
-    //                 {
-    //                     name: "基准利率",
-    //                     data:child.positions,
-    //                     type: "line",
-    //                     lineStyle: {
-    //                         normal: {
-    //                             width: 3,
-    //                             color: "#A34240"
-    //                         }
-    //                     },
-    //                 }
-    //             ]
-    //         });
-    //     }
-    // });
-
 
     function format(list){
         var res = [];
@@ -1268,150 +1290,13 @@
                     var myChart = echarts.init(document.getElementById("graphdiv"+i));
                     myChart.setOption(option);
                 }
-
-
-
-
-
-/*
-                document.getElementById('futures').innerHTML = function(){
-
-
-
-                    var arr = []
-                        ,thisData = contractList.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
-
-                    layui.each(thisData, function(index, item){
-
-                        var text = '<div class="futureboard">\n' +
-                            '                <div class="future_name">'+item.contractName+'</div>\n' +
-                            '                <div><img class="staricon" src="../imgs/star.png" />\n' +
-                            '                    <button class="collectbutton">收藏</button></div>\n' +
-                            '\n' +
-                            '                <!-- lengend -->\n' +
-                            '                <div class="legend">\n' +
-                            '                    <div class="lengend_red"></div>\n' +
-                            '                    <div class="lengend_red_text">基准利率</div>\n' +
-                            '                    <div class="lengend_blue"></div>\n' +
-                            '                    <div class="lengend_blue_text">回测利率</div>\n' +
-                            '                </div>\n' +
-                            '\n' +
-                            '                <div class="graphdiv" id="graphdiv'+index+'">\n' +
-                            '                </div>\n' +
-                            '\n' +
-                            '\n' +
-                            '                <div class="info">\n' +
-                            '                    <div class="profit">年华收益率</div>\n' +
-                            '                    <div class="profittext">'+item.yearYield.toFixed(2)+'</div>\n' +
-                            '\n' +
-                            '                    <div class="divisioner1"></div>\n' +
-                            '\n' +
-                            '                    <div class="retracement">最大回撤</div>\n' +
-                            '                    <div class="retracementtext">'+item.maxDrawdown.toFixed(2)+'</div>\n' +
-                            '\n' +
-                            '                    <div class="divisioner2"></div>\n' +
-                            '\n' +
-                            '                    <div class="carry">市场最大承载资金</div>\n' +
-                            '                    <div class="carrytext"> '+item.marketCapitalCapacity.toFixed(2)+'  </div>\n' +
-                            '\n' +
-                            '                    <div class="win">胜率：</div>\n' +
-                            '                    <div class="wintext">'+item.winRate+'</div>\n' +
-                            '\n' +
-                            '                    <div class="loss">盈亏比：</div>\n' +
-                            '                    <div class="losstext">'+item.profitLossRatio+'</div>\n' +
-                            '\n' +
-                            '                </div>\n' +
-                            '\n' +
-                            '\n' +
-                            '                <button class="buybutton">购买</button>\n' +
-                            '\n' +
-                            '            </div>';
-
-                        arr.push(text);
-
-                    });
-
-
-                    alert("hh");
-                    var option = {
-                        grid: {
-                            left: "3%",
-                            right: "4%",
-                            bottom: "3%",
-                            top: "4%",
-                            containLabel: true
-                        },
-                        dataZoom: [
-                            {
-                                show: true,
-                                realtime: true,
-                                start: 0,
-                                end: 100,
-                                height: 30,
-                                y: 215
-                            },
-                            {
-                                type: "inside",
-                                realtime: true,
-                                start: 0,
-                                end: 100
-                            }
-                        ],
-                        xAxis: {
-                            type: "category",
-                            boundaryGap: false,
-                            data: [10,70]
-                        },
-                        yAxis: {
-                            type: "value"
-                        },
-                        series: [
-                            {
-                                name: "回测利率",
-                                data: [10,70],
-                                type: "line",
-                                sampling: "average",
-                                areaStyle: {
-                                    normal: {
-                                        color: "#DAE4F4"
-                                    }
-                                },
-                                lineStyle: {
-                                    normal: {
-                                        width: 3,
-                                        color: "#4577C8"
-                                    }
-                                },
-                            },
-                            {
-                                name: "基准利率",
-                                data:[10,70],
-                                type: "line",
-                                lineStyle: {
-                                    normal: {
-                                        width: 3,
-                                        color: "#A34240"
-                                    }
-                                },
-                            }
-                        ]
-                    };
-
-
-                    alert(">>>>");
-                    var myChart = echarts.init(document.getElementById("graphdiv0"));
-                    myChart.setOption(option);
-
-
-                    return arr.join('');
-                }();
-
-*/
             }
             ,theme: '#FD6857'
         });
 
     });
+
+
 
 
 
