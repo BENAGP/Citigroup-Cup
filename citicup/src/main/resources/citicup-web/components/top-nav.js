@@ -36,7 +36,7 @@ $(".top-nav .tab").on('click', function () {
     // console.log($(this).attr("topage"));
     const topage = $(this).attr("topage");
     if (topage.split("/")[1] == "transaction" || topage.split("/")[1] == "person") {
-        if (!top_nav_islogin) forward("/home/login.html");
+        if (!top_nav_islogin) showLogin();
         else forward(topage);
     } else {
         forward(topage);

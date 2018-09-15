@@ -7,6 +7,8 @@
     <link href="../components/top-nav.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="collection.css">
+    <link rel="stylesheet" href="../components/top-nav.css">
+    <link rel="stylesheet" href="../components/person_left_nav.css">
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
@@ -19,172 +21,164 @@
 <div class="content-wrapper">
     <div class="content">
         <!--write your code here-->
+        <div class="row">
+            <div class="col-3">
+                <div class="person_left_nav"></div>
+            </div>
+            <div class="col-9">
+                <div class="futures">
 
-        <div class="person_title">个人中心</div>
-        <div class="person_board">
-            <button class="personbutton">账户管理</button>
-            <br/>
-            <button class="personbutton">登录密码</button>
-            <br/>
-            <button class="collectionbutton">我的收藏</button>
-            <br/>
-            <button class="personbutton">我的消息</button>
+                    <div class="futureboard" >
 
-            <div class="red_block"></div>
+                        <div class="future_name">IF1706-IF1703</div>
+                        <div><img class="staricon" src="../imgs/star.png" />
+                            <button class="collectbutton">收藏</button></div>
+
+                        <!-- lengend -->
+                        <div class="legend">
+                            <div class="lengend_red"></div>
+                            <div class="lengend_red_text">基准利率</div>
+                            <div class="lengend_blue"></div>
+                            <div class="lengend_blue_text">回测利率</div>
+                        </div>
+
+                        <div class="mobilityvalue" id="mobilityvalue2">流动性：300元/分钟</div>
+
+                        <div class="graphdiv" id="graphdiv2">
+                        </div>
+
+
+                        <div class="info">
+                            <div class="profit">总收益率</div>
+                            <div class="profittext">50.22%</div>
+
+                            <div class="divisioner1"></div>
+
+                            <div class="retracement">最大回撤</div>
+                            <div class="retracementtext">50.22%</div>
+
+                            <div class="divisioner2"></div>
+
+                            <div class="carry">市场最大承载资金</div>
+                            <div class="carrytext">￥10000</div>
+
+                            <div class="win">胜率：</div>
+                            <div class="wintext">30.99%</div>
+
+                            <div class="loss">盈亏比：</div>
+                            <div class="losstext">47.52%</div>
+
+                        </div>
+
+
+                        <button class="buybutton">购买</button>
+
+
+                    </div>
+
+
+                    <div class="futureboard" >
+
+                        <div class="future_name">IF1706-IF1703</div>
+                        <div><img class="staricon" src="../imgs/star.png" />
+                            <button class="collectbutton">收藏</button></div>
+
+                        <!-- lengend -->
+                        <div class="legend">
+                            <div class="lengend_red"></div>
+                            <div class="lengend_red_text">基准利率</div>
+                            <div class="lengend_blue"></div>
+                            <div class="lengend_blue_text">回测利率</div>
+                        </div>
+
+                        <div class="mobilityvalue" id="mobilityvalue21">流动性：300元/分钟</div>
+
+                        <div class="graphdiv" id="graphdiv21">
+                        </div>
+
+
+                        <div class="info">
+                            <div class="profit">总收益率</div>
+                            <div class="profittext">50.22%</div>
+
+                            <div class="divisioner1"></div>
+
+                            <div class="retracement">最大回撤</div>
+                            <div class="retracementtext">50.22%</div>
+
+                            <div class="divisioner2"></div>
+
+                            <div class="carry">市场最大承载资金</div>
+                            <div class="carrytext">￥10000</div>
+
+                            <div class="win">胜率：</div>
+                            <div class="wintext">30.99%</div>
+
+                            <div class="loss">盈亏比：</div>
+                            <div class="losstext">47.52%</div>
+
+                        </div>
+
+
+                        <button class="buybutton">购买</button>
+
+
+                    </div>
+
+
+
+
+                    <div class="futureboard" >
+
+                        <div class="future_name">IF1706-IF1703</div>
+                        <div><img class="staricon" src="../imgs/star.png" />
+                            <button class="collectbutton">收藏</button></div>
+
+                        <!-- lengend -->
+                        <div class="legend">
+                            <div class="lengend_red"></div>
+                            <div class="lengend_red_text">基准利率</div>
+                            <div class="lengend_blue"></div>
+                            <div class="lengend_blue_text">回测利率</div>
+                        </div>
+
+                        <div class="mobilityvalue" id="mobilityvalue212">流动性：300元/分钟</div>
+
+                        <div class="graphdiv" id="graphdiv212">
+                        </div>
+
+
+                        <div class="info">
+                            <div class="profit">总收益率</div>
+                            <div class="profittext">50.22%</div>
+
+                            <div class="divisioner1"></div>
+
+                            <div class="retracement">最大回撤</div>
+                            <div class="retracementtext">50.22%</div>
+
+                            <div class="divisioner2"></div>
+
+                            <div class="carry">市场最大承载资金</div>
+                            <div class="carrytext">￥10000</div>
+
+                            <div class="win">胜率：</div>
+                            <div class="wintext">30.99%</div>
+
+                            <div class="loss">盈亏比：</div>
+                            <div class="losstext">47.52%</div>
+
+                        </div>
+
+
+                        <button class="buybutton">购买</button>
+
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-
-        <div class="futures">
-
-            <div class="futureboard" >
-
-                <div class="future_name">IF1706-IF1703</div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton">收藏</button></div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_red"></div>
-                    <div class="lengend_red_text">基准利率</div>
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="mobilityvalue" id="mobilityvalue2">流动性：300元/分钟</div>
-
-                <div class="graphdiv" id="graphdiv2">
-                </div>
-
-
-                <div class="info">
-                    <div class="profit">总收益率</div>
-                    <div class="profittext">50.22%</div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext">50.22%</div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext">￥10000</div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext">30.99%</div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext">47.52%</div>
-
-                </div>
-
-
-                <button class="buybutton">购买</button>
-
-
-            </div>
-
-
-            <div class="futureboard" >
-
-                <div class="future_name">IF1706-IF1703</div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton">收藏</button></div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_red"></div>
-                    <div class="lengend_red_text">基准利率</div>
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="mobilityvalue" id="mobilityvalue21">流动性：300元/分钟</div>
-
-                <div class="graphdiv" id="graphdiv21">
-                </div>
-
-
-                <div class="info">
-                    <div class="profit">总收益率</div>
-                    <div class="profittext">50.22%</div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext">50.22%</div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext">￥10000</div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext">30.99%</div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext">47.52%</div>
-
-                </div>
-
-
-                <button class="buybutton">购买</button>
-
-
-            </div>
-
-
-
-
-            <div class="futureboard" >
-
-                <div class="future_name">IF1706-IF1703</div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton">收藏</button></div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_red"></div>
-                    <div class="lengend_red_text">基准利率</div>
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="mobilityvalue" id="mobilityvalue212">流动性：300元/分钟</div>
-
-                <div class="graphdiv" id="graphdiv212">
-                </div>
-
-
-                <div class="info">
-                    <div class="profit">总收益率</div>
-                    <div class="profittext">50.22%</div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext">50.22%</div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext">￥10000</div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext">30.99%</div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext">47.52%</div>
-
-                </div>
-
-
-                <button class="buybutton">购买</button>
-
-
-            </div>
-        </div>
-
 
     </div>
 </div>
@@ -193,6 +187,7 @@
 
 <script src="../util/href-helper.js"></script>
 <script src="../components/top-nav.js"></script>
+<script src="../components/person_left_nav.js"></script>
 
 
 <script>

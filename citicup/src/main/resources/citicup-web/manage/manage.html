@@ -7,6 +7,7 @@
     <link href="../components/top-nav.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="manage.css">
+    <link rel="stylesheet" href="../components/person_left_nav.css">
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
@@ -15,50 +16,57 @@
 <div class="top-nav"></div>
 <div class="content-wrapper">
     <div class="content">
-        <div class="manage">
-            <div class="manageContent">
-                <div id="sectionName">编辑个人资料</div>
-                <div class="itemName">邮箱</div>
-                <input id="emailInput" type="text">
-                <div class="itemName">昵称</div>
-                <input id="nameInput" type="text">
-                <div class="itemName">偏好风险等级</div>
-                <select id="riskLevel">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                </select>
-                <div class="itemName">上传新头像</div>
-                <img width="200" height="200" style="display: none; margin-bottom: 30px" id="preview" src="">
-                <input id="uploadImg" type="file" accept="image/*" onchange="uploadPic()" />
-                <button id="submitBtn" onclick="submit()">提交</button>
+        <div class="row">
+            <div class="col-3">
+                <div class="person_left_nav"></div>
+            </div>
+            <div class="col-9">
+                <div class="manageContent">
+                    <div id="sectionName">编辑个人资料</div>
+                    <div class="itemName">邮箱</div>
+                    <input id="emailInput" type="text">
+                    <div class="itemName">昵称</div>
+                    <input id="nameInput" type="text">
+                    <div class="itemName">偏好风险等级</div>
+                    <select id="riskLevel">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                    <div class="itemName">上传新头像</div>
+                    <img width="200" height="200" style="display: none; margin-bottom: 30px" id="preview" src="">
+                    <input id="uploadImg" type="file" accept="image/*" onchange="uploadPic()" />
+                    <button id="submitBtn" onclick="submit()">提交</button>
+                </div>
             </div>
         </div>
 
 
-        <div class="person_title">个人中心</div>
-        <div class="person_board">
-            <button class="accountManage">账户管理</button>
-            <br/>
-            <button class="accountPassword">登录密码</button>
-            <br/>
-            <button class="collectionbutton">我的收藏</button>
-            <br/>
-            <button class="messagebutton">我的消息</button>
+        <!--<div class="person_title">个人中心</div>-->
+        <!--<div class="person_board">-->
+            <!--<button class="accountManage">账户管理</button>-->
+            <!--<br/>-->
+            <!--<button class="accountPassword">登录密码</button>-->
+            <!--<br/>-->
+            <!--<button class="collectionbutton">我的收藏</button>-->
+            <!--<br/>-->
+            <!--<button class="messagebutton">我的消息</button>-->
 
-            <div class="red_block"></div>
-        </div>
+            <!--<div class="red_block"></div>-->
+        <!--</div>-->
     </div>
 </div>
 <div class="footer"></div>
 </body>
 <script src="../components/top-nav.js"></script>
+<script src="../components/person_left_nav.js"></script>
+<script src="../util/href-helper.js"></script>
 
 
 <script>
