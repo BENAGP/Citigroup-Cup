@@ -237,10 +237,10 @@ public class ContractServiceImpl implements ContractService {
             contractTradeModel.computeYield();
             contractTradeModels.add(contractTradeModel);
         });
-        //todo
-        String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803"};
-        String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806"};
-        for(int i=0;i<4;i++){
+        //
+        String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803","A1805-1803","CS1805-1803"};
+        String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806","RU1807-1806","L1807-1806"};
+        for(int i=0;i<6;i++){
             if(type==FuturesType.FARM_PRODUCE){
                 contractTradeModels.get(i).contractName = farmProduce[i];
             }else if(type==FuturesType.CHEMICAL){
@@ -412,7 +412,7 @@ public class ContractServiceImpl implements ContractService {
         contractTradeDetail.computeYield();
         contractTradeDetail.ddl = simpleDateFormat.format(ddl);
         contractTradeDetail.isEnd = (ddl.getTime() < now);
-//        //todo 重新查
+//        //重新查
 //        List<Comment> comments = contract.getComments();
 //        List<CommentModel> commentModels = comments.stream().map(comment -> {
 //            CommentModel commentModel = new CommentModel();

@@ -32,14 +32,14 @@ public class Trade {
 
     /**
      * 投入资金
-     * todo 是否应放到trade表里
+     * 是否应放到trade表里
      */
     @Column(name = "`investment`")
     private Double investment;
 
     /**
      * 风险等级，假如有十个风险等级，那么一个合约初始化的时候，backtest增加十条线，分别对应十个风险等级。然后每增加一个trade，backtest增加一条线
-     * todo 是否应放到trade表里
+     * 是否应放到trade表里
      */
     @Column(name = "`risk_level`")
     private Integer riskLevel;
