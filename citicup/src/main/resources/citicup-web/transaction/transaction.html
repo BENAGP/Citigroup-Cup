@@ -375,19 +375,20 @@
     function getTradeList(){
         $.ajax({
             url:"http://localhost:8080/api/contract/getMyTradeList",
-            async:false,
             type:"POST",
             data:tradeFilterInfo,
             dataType: "JSON",
             success: function (data){
                 tradeList = data;
+                initTables();
+                insertGross();
             },
             error: function (data){
                 alert("Please try again latar,");
             }
         });
 
-        initTables();
+
     }
 
     function sign(num){
@@ -421,7 +422,6 @@
 
     $(document).ready(function(){
         getTradeList();
-        insertGross();
     });
 
 

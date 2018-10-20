@@ -690,7 +690,6 @@
 
         $.ajax({
             url:"http://localhost:8080/api/contract/getList",
-            async:false,
             type:"POST",
             //data:contractFilterInfo,
             data:{
@@ -716,6 +715,9 @@
                 }else{
                     totalCount = PAGENUM * (contractFilterInfo.page+1);
                 }
+
+                draw();
+
 
             },
             error: function (data){
