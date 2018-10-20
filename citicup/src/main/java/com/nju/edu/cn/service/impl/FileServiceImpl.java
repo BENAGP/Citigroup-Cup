@@ -4,6 +4,8 @@ import com.nju.edu.cn.constant.ContractBackTestHead;
 import com.nju.edu.cn.constant.TradeHead;
 import com.nju.edu.cn.dao.*;
 import com.nju.edu.cn.entity.*;
+import com.nju.edu.cn.model.FuturesUpdatingBean;
+import com.nju.edu.cn.model.SpotGoodsUpdatingBean;
 import com.nju.edu.cn.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,8 @@ public class FileServiceImpl implements FileService {
     private int count3 = 0;
     private int count4 = 0;
     private int count5 = 0;
+    private int count6 = 0;
+    private int count7 = 0;
     @Autowired
     private SpotGoodsRepository spotGoodsRepository;
     @Autowired
@@ -42,6 +46,9 @@ public class FileServiceImpl implements FileService {
     private TradeRepository tradeRepository;
     @Autowired
     private ContractBackTestRepository contractBackTestRepository;
+
+    private SpotGoodsUpdatingDao spotGoodsUpdatingDao = new SpotGoodsUpdatingDaoImpl();
+    private FuturesUpdatingDao futuresUpdatingDao = new FuturesUpdatingDaoImpl();
 
     @Override
     public void initFuturesUpdating(String path) {
@@ -125,6 +132,157 @@ public class FileServiceImpl implements FileService {
         {
             e.printStackTrace();
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateFuturesUpdating(String path,Long futuresId){
+        if(count7==1)return;
+        count7++;
+        logger.info("--------------"+count7);
+        File csv = new File(path);  // CSV文件路径
+        BufferedReader br = null;
+        try
+        {
+            br = new BufferedReader(new FileReader(csv));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        String line = "";
+        try {
+            br.readLine();
+            String[] strings;
+            int interestRate = 0;
+            int updateTime = 3;
+            List<FuturesUpdatingBean> futuresUpdatingBeans = futuresUpdatingDao.selectByFuturesId(futuresId);
+            int count = 0;
+            System.out.println("found");
+            while ((line = br.readLine()) != null)  //读取到的内容给line变量
+            {
+                FuturesUpdatingBean futuresUpdatingBean = futuresUpdatingBeans.get(count);
+                strings = line.split(",");
+                futuresUpdatingBean.setInterestRate(strings[interestRate].equals("NaN")?null:Double.valueOf(strings[interestRate]));
+//                futuresUpdatingBean.setFuturesId(27l);
+//                futuresUpdatingBean.setTimeStr(strings[updateTime]);
+                count++;
+            }
+            futuresUpdatingDao.updateList(futuresUpdatingBeans);
+
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void insertFuturesUpdating(String path) {
+        if(count7==1)return;
+        count7++;
+        logger.info("--------------"+count7);
+        File csv = new File(path);  // CSV文件路径
+        BufferedReader br = null;
+        try
+        {
+            br = new BufferedReader(new FileReader(csv));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        String line = "";
+        try {
+            br.readLine();
+            String[] strings;
+            int price = 0;
+            int trading = 1;
+            int interestRate = 2;
+            int updateTime = 3;
+            int futuresId = 4;
+            List<FuturesUpdatingBean> futuresUpdatingBeans = new ArrayList<>();
+            String trade;
+            while ((line = br.readLine()) != null)  //读取到的内容给line变量
+            {
+                FuturesUpdatingBean futuresUpdatingBean = new FuturesUpdatingBean();
+                strings = line.split(",");
+                futuresUpdatingBean.setInterestRate(strings[interestRate].equals("NaN")?null:Double.valueOf(strings[interestRate]));
+                futuresUpdatingBean.setPrice(strings[price].equals("NaN")?null:Float.valueOf(strings[price]));
+                futuresUpdatingBean.setTimeStr(strings[updateTime]);
+                trade = strings[trading];
+                if(trade.contains(".")){
+//                    System.out.println(trade);
+                    trade = trade.substring(0,trade.indexOf("."));
+//                    System.out.println(trade);
+                }
+                futuresUpdatingBean.setTrading(trade.equals("NaN")?null:Integer.valueOf(trade));
+                futuresUpdatingBean.setFuturesId(Long.valueOf(strings[futuresId]));
+                futuresUpdatingBeans.add(futuresUpdatingBean);
+            }
+            futuresUpdatingDao.insertList(futuresUpdatingBeans);
+
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initSpotUpdating(String path) {
+        if(count6==1)return;
+        count6++;
+        logger.info("--------------"+count6);
+        File csv = new File(path);  // CSV文件路径
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        BufferedReader br = null;
+        try
+        {
+            br = new BufferedReader(new FileReader(csv));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        String line = "";
+        String everyLine = "";
+        try {
+            List<String> allString = new ArrayList<>();
+            String[] strings;
+            int updating_time = 0;
+            int price = 1;
+            int trading = 2;
+            int spot_goods_id = 3;
+            List<SpotGoodsUpdatingBean> spotGoodsUpdatings = new ArrayList<>();
+            List<SpotGoods> spotGoods = spotGoodsRepository.findAll();
+            Map<Long,SpotGoods> map = new TreeMap<>();
+            spotGoods.forEach(spotGood -> {
+                map.put(spotGood.getSpotGoodsId(),spotGood);
+            });
+            boolean isNaN = false;
+            br.readLine();
+            while ((line = br.readLine()) != null)  //读取到的内容给line变量
+            {
+//                logger.info(line);
+                strings = line.split(",");
+                SpotGoodsUpdatingBean spotGoodsUpdating = new SpotGoodsUpdatingBean();
+                spotGoodsUpdating.setPrice(strings[price].equals("NaN")?null:Float.valueOf(strings[price]));
+                spotGoodsUpdating.setTimeStr(strings[updating_time]);
+//                spotGoodsUpdating.setUpdateTime(sdf.parse(strings[updating_time].substring(1,19)));
+                String trade = strings[trading];
+                if(trade.contains(".")){
+//                    System.out.println(trade);
+                    trade = trade.substring(0,trade.indexOf("."));
+//                    System.out.println(trade);
+                }
+                spotGoodsUpdating.setTrading(trade.equals("NaN")?null:Integer.valueOf(trade));
+                spotGoodsUpdating.setSpotGoods(map.get(Long.valueOf(strings[spot_goods_id])));
+                spotGoodsUpdatings.add(spotGoodsUpdating);
+
+            }
+            spotGoodsUpdatingDao.insertAll(spotGoodsUpdatings);
+
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
     }
