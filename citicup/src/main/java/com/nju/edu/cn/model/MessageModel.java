@@ -60,6 +60,8 @@ public class MessageModel {
      */
     public Date createTime;
 
+    public Long commentId;
+
     public MessageModel() {
     }
 

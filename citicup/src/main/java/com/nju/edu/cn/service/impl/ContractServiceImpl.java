@@ -198,6 +198,7 @@ public class ContractServiceImpl implements ContractService {
 //        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         PageRequest pageRequest = new PageRequest(page, pageNum, sort);
         List<Trade> trades = null;
+        System.out.println("=====================phrase0==========================");
         if (contractTradeSearch.type != FuturesType.FIANACE) {
             trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
                     null, riskLevel, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
@@ -214,12 +215,15 @@ public class ContractServiceImpl implements ContractService {
                     contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
             ).getContent();
         }
+        System.out.println("=====================phrase1==========================");
 //        trades.set(0,trades.get(5));
 //        trades.set(1,trades.get(4));
         trades.forEach(trade -> {
             ContractTradeModel contractTradeModel = new ContractTradeModel();
             //找出与该此购买对应的一条回测数据线
+            System.out.println("=====================phrase1-0==========================");
             List<ContractBackTest> contractBackTests = trade.getContractBackTests();
+            System.out.println("=====================phrase1-1==========================");
 //            Collections.sort(contractBackTests,comparator);//按更新时间排序
 //            BeanUtils.copyProperties(trade,contractTradeModel);
             copyProperties(trade, contractTradeModel,type);
@@ -237,6 +241,7 @@ public class ContractServiceImpl implements ContractService {
             contractTradeModel.computeYield();
             contractTradeModels.add(contractTradeModel);
         });
+        System.out.println("=====================phrase2==========================");
         //
         String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803","A1805-1803","CS1805-1803"};
         String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806","RU1807-1806","L1807-1806"};
