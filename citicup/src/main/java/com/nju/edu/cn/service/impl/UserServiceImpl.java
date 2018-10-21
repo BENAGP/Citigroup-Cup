@@ -39,9 +39,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel login(String email, String psw) {
-        User user = userRepository.findByEmail(email);
-        if(user==null||!user.getPassword().equals(psw))throw new InvalidRequestException("用户名或密码错误");
+    public UserModel login(String username, String nickname) {
+        User user = userRepository.findByUsername(username);
+        if(user==null){
+            user = new User();
+            user.setUsername(username);
+            user.setNickname(nickname);
+            user = userRepository.save(user);
+        }
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
         userModel.setIsCompleted();
@@ -80,6 +85,7 @@ public class UserServiceImpl implements UserService {
         if(user==null)throw new InvalidRequestException("用户名错误");
         if(nickname!=null)user.setNickname(nickname);
         if(avatar!=null)user.setAvatar(avatar);
+        if(email!=null)user.setEmail(email);
         if(preferRiskLevel!=null)user.setPreferRiskLevel(preferRiskLevel);
         userRepository.save(user);
         UserModel userModel = new UserModel();

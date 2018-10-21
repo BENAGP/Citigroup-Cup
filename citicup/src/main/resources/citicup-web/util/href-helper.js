@@ -2,6 +2,7 @@
  * Created by shea on 2018/2/13.
  */
 const prefix = "http://localhost:8080";
+const NOT_LOGIN = "请先登录";
 
 function forward(page) {
     window.location.href = prefix+page;

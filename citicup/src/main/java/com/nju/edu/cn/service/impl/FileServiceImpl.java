@@ -199,7 +199,7 @@ public class FileServiceImpl implements FileService {
             int trading = 1;
             int interestRate = 2;
             int updateTime = 3;
-            int futuresId = 4;
+            int futuresId = 5;
             List<FuturesUpdatingBean> futuresUpdatingBeans = new ArrayList<>();
             String trade;
             while ((line = br.readLine()) != null)  //读取到的内容给line变量

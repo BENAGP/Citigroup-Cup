@@ -37,7 +37,12 @@ public class FileController {
     @GetMapping("/insertFuturesUpdating")
     public void insertFuturesUpdating() {
         logger.info("insertFuturesUpdating");
-        fileService.insertFuturesUpdating("/Users/shea/Downloads/30.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/54.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/51.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/48.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/45.csv");
+        fileService.insertFuturesUpdating("/Users/shea/Downloads/42.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/30.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/24.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/36.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/39.csv");

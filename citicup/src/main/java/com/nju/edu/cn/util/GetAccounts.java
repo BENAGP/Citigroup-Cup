@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSON;
 import com.nju.edu.cn.constant.APIConstant;
 import com.nju.edu.cn.model.APIContext;
+import com.nju.edu.cn.model.CustomerBasic;
+import com.nju.edu.cn.model.CustomerParticular;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -26,12 +29,10 @@ import javax.servlet.ServletContext;
 public class GetAccounts {
 
 	private static Logger logger = LoggerFactory.getLogger(GetAccounts.class);
-	
-	public static void getBizToken(ServletContext context) throws IOException{
+
+	public static void getBizToken(APIContext context) throws IOException{
 		step1GetAccessToken(context);
-		if(context.getAttribute("access_token")!=null){
-			step2GetBizToken(context);
-		}
+		step2GetBizToken(context);
 	}
 
 	public static String getAccounts(String username, String password, APIContext context) throws IOException {
@@ -47,7 +48,7 @@ public class GetAccounts {
 		}
 		return accounts;
 	}
-	
+
 	public static String getAccountDetail(String accountId, APIContext context) throws IOException {
 		context.setAccountId(accountId);
 		String accountDetail = step5GetAccountDetails(context);
@@ -56,7 +57,7 @@ public class GetAccounts {
 		}
 		return accountDetail;
 	}
-	
+
 	public static String getTransactions(String accountId, APIContext context) throws IOException {
 		context.setAccountId(accountId);
 		String transaction = step6GetTransaction(context);
@@ -65,8 +66,8 @@ public class GetAccounts {
 		}
 		return transaction;
 	}
-	
-	public static void step1GetAccessToken(ServletContext context) throws IOException {
+
+	public static String step1GetAccessToken(APIContext context) throws IOException {
 		OkHttpClient client = new OkHttpClient();
 		String client_id = APIConstant.CLIENT_ID;
 		String client_scrent = APIConstant.CLIENT_SCRENT;
@@ -84,14 +85,17 @@ public class GetAccounts {
 		Response response = client.newCall(request).execute();
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(response.body().string());
 		String accessToken = (String) jsonObject.get("access_token");
-		context.setAttribute("access_token",accessToken);
-		logger.info("step1 access_token:{}",accessToken);
+		context.setAccessToken(accessToken);
+		System.out.println("step1 access_token:");
+		System.out.println("\t" + accessToken);
+		return accessToken;
 	}
 
-	public static void step2GetBizToken(ServletContext context) throws IOException {
+	public static void step2GetBizToken(APIContext context) throws IOException {
+//		Map<String, String> map = new HashMap<String, String>();
 		OkHttpClient client = new OkHttpClient();
 		String client_id = APIConstant.CLIENT_ID;
-		String accessToken = context.getAttribute("access_token").toString();
+		String accessToken = context.getAccessToken();
 		String authorization = "Bearer " + accessToken;
 		UUID uuid = UUID.randomUUID();
 		Request request = new Request.Builder()
@@ -114,15 +118,21 @@ public class GetAccounts {
 			Headers headers = response.headers();
 			bizToken = headers.get("bizToken");
 			eventId = headers.get("eventId");
-			context.setAttribute("event_id",eventId);
-			context.setAttribute("biz_token",bizToken);
-			context.setAttribute("modulus",modulus);
-			context.setAttribute("exponent",exponent);
-
+//			map.put("modulus", modulus);
+//			map.put("exponent", exponent);
+//			map.put("bizToken", bizToken);
+//			map.put("eventId", eventId);
+			context.setEventId(eventId);
+			context.setBizToken(bizToken);
+			context.setExponent(exponent);
+			context.setModulus(modulus);
 		}
-		logger.info("step2 modulus:{}, exponent:{}, bizToken:{}, eventId:{}",modulus,exponent,bizToken,eventId);
+		System.out.println("step2 map:");
+//		for (String s : map.keySet()) {
+//			System.out.println("\tkey:" + s + "\tvalues:" + map.get(s));
+//		}
 	}
-	
+
 	public static String step3GetRealAccessToken(APIContext context) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String client_scrent = APIConstant.CLIENT_SCRENT;
@@ -151,10 +161,39 @@ public class GetAccounts {
 		JSONObject jsonObject = (JSONObject) JSONValue.parse(response.body().string());
 		String realAccessToken = (String) jsonObject.get("access_token");
 		context.setRealAccessToken(realAccessToken);
-		logger.info("step3 real_access_token:{}",realAccessToken);
+		System.out.println("step3 real_access_token:");
+		System.out.println("\t" + realAccessToken);
+		step31GetBasic(context);
 		return realAccessToken;
 	}
-	
+
+	public static String step31GetBasic(APIContext context) throws IOException {
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + context.getRealAccessToken();
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/customers/profiles/basic")
+				.get()
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+		Response response = client.newCall(request).execute();
+		String responseBodyString = response.body().string();
+		System.out.println("step31 basic_info:");
+		System.out.println("\t"+responseBodyString);
+		CustomerBasic customerBasic = JSON.parseObject(responseBodyString,CustomerBasic.class);
+		CustomerParticular customerParticular = customerBasic.getCustomerParticulars();
+		String prefix = customerParticular.getPrefix().substring(0,1).toUpperCase()+customerParticular.getPrefix().toLowerCase().substring(1);
+		String lastName = customerParticular.getNames()[0].getLastName().substring(0,1).toUpperCase()+customerParticular.getNames()[0].getLastName().substring(1).toLowerCase();
+		context.setNickname(prefix+"."+lastName);
+		context.setAccounts(responseBodyString);
+		return responseBodyString;
+	}
+
 	public static String step4GetAccounts(APIContext context) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String authorization = "Bearer " + context.getRealAccessToken();
@@ -172,10 +211,11 @@ public class GetAccounts {
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
 		context.setAccounts(responseBodyString);
-		logger.info("step4 accounts:{}",responseBodyString);
+		System.out.println("step4 accounts:");
+		System.out.println("\t"+responseBodyString);
 		return responseBodyString;
 	}
-	
+
 	public static String step5GetAccountDetails(APIContext context) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String authorization = "Bearer " + context.getRealAccessToken();
@@ -194,10 +234,11 @@ public class GetAccounts {
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
 		context.setAccounts(responseBodyString);
-		logger.info("step5 account details:{}",responseBodyString);
+		System.out.println("step5 account details:");
+		System.out.println("\t"+responseBodyString);
 		return responseBodyString;
 	}
-	
+
 	public static String step6GetTransaction(APIContext context) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String authorization = "Bearer " + context.getRealAccessToken();
@@ -216,7 +257,8 @@ public class GetAccounts {
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
 		context.setAccounts(responseBodyString);
-		logger.info("step6 transaction details:{}",responseBodyString);
+		System.out.println("step6 transaction details:");
+		System.out.println("\t"+responseBodyString);
 		return responseBodyString;
 	}
 }

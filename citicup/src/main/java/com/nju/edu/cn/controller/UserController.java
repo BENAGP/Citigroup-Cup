@@ -2,6 +2,8 @@ package com.nju.edu.cn.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.nju.edu.cn.exception.InvalidRequestException;
+import com.nju.edu.cn.model.APIContext;
 import com.nju.edu.cn.model.UserModel;
 import com.nju.edu.cn.service.UserService;
 import com.nju.edu.cn.util.GetAccounts;
@@ -12,18 +14,13 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+
 
 /**
  * Created by shea on 2018/9/1.
@@ -54,22 +51,81 @@ public class UserController {
     }
 
     /**
+     * 用户登陆之前获得加密参数
+     * @return
+     */
+    @ApiOperation(value="preLogin", notes="用户登陆之前获得加密参数")
+    @GetMapping("/preLogin")
+    public @ResponseBody
+    APIContext preLogin(HttpServletRequest request){
+        System.out.println("=======================");
+        APIContext apiContext = new APIContext();
+        try {
+            GetAccounts.getBizToken(apiContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        logger.info(JSON.toJSONString(apiContext));
+        return apiContext;
+    }
+
+    /**
      * 用户登陆
-     * @param email 邮箱
-     * @param psw 密码
+     * @param username 账号
+     * @param password 密码
      * @return
      */
     @ApiOperation(value="login", notes="用户登陆。检查帐号密码是否正确。前端根据返回的UserModel.isCompleted判断信息是否完整，不完整提醒")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "email", value = "邮箱", required = true ,dataType = "string"),
-            @ApiImplicitParam(name = "psw", value = "密码", required = true ,dataType = "string")
+            @ApiImplicitParam(name = "username", value = "账号", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "bizToken", value = "bizToken", required = true ,dataType = "string")
     })
     @PostMapping("/login")
     public @ResponseBody
-    UserModel login(String email, String psw, HttpServletRequest request){
-        logger.info("email:{},psw:{}",email,psw);
-        return userService.login(email,psw);
+    UserModel login(String username, String password,String bizToken, HttpServletRequest request){
+        logger.info("username:{},psw:{}",username,password);
+        APIContext apiContext = new APIContext();
+        apiContext.setUsername(username);
+        apiContext.setPassword(password);
+        apiContext.setBizToken(bizToken);
+        try {
+            GetAccounts.step3GetRealAccessToken(apiContext);
+            if(apiContext.getRealAccessToken()==null){
+                throw new InvalidRequestException("用户名或密码错误");
+            }
+            request.getSession().setAttribute("real_access_token",apiContext.getRealAccessToken());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return userService.login(username,apiContext.getNickname());
     }
+
+    /**
+     * 获得用户的账户信息
+     * @return
+     */
+    @ApiOperation(value="getAccounts", notes="用户登陆。检查帐号密码是否正确。前端根据返回的UserModel.isCompleted判断信息是否完整，不完整提醒")
+    @GetMapping("/getAccounts")
+    public @ResponseBody
+    String getAccounts(HttpServletRequest request){
+        String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
+        logger.info("real_access_token:{} ",realAccessToken);
+        if(realAccessToken==null){
+            throw new InvalidRequestException("请先登录");
+        }
+        String res = "";
+        try {
+            APIContext apiContext = new APIContext();
+            apiContext.setRealAccessToken(realAccessToken);
+            res = GetAccounts.step4GetAccounts(apiContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
 
     /**
      * 获得加密参数
@@ -79,19 +135,19 @@ public class UserController {
     @PostMapping("/getEncryptParams")
     public @ResponseBody
     JSONObject getEncryptParams(HttpServletRequest request){
-        ServletContext context = request.getServletContext();
-        if(context.getAttribute("access_token")==null||context.getAttribute("event_id")==null){
-            try {
-                GetAccounts.getBizToken(context);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        ServletContext context = request.getServletContext();
+//        if(context.getAttribute("access_token")==null||context.getAttribute("event_id")==null){
+//            try {
+//                GetAccounts.getBizToken(context);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("biz_token",context.getAttribute("biz_token"));
-        jsonObject.put("modulus",context.getAttribute("modulus"));
-        jsonObject.put("exponent",context.getAttribute("exponent"));
-        jsonObject.put("event_id",context.getAttribute("event_id"));
+//        jsonObject.put("biz_token",context.getAttribute("biz_token"));
+//        jsonObject.put("modulus",context.getAttribute("modulus"));
+//        jsonObject.put("exponent",context.getAttribute("exponent"));
+//        jsonObject.put("event_id",context.getAttribute("event_id"));
         return jsonObject;
     }
 
