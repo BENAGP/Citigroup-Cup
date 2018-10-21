@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by shea on 2018/9/7.
@@ -56,7 +57,27 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void readMessage(Long userId, String messages) {
+    public void readMessage(Long userId, List<Long> messageIdList) {
+        // pass
+    }
 
+    @Override
+    public List<MessageModel> getList(Long userId, Integer page, Integer pageNum, Boolean isSystemMessage) {
+        Sort sort = new Sort(Sort.Direction.DESC,"createTime");
+        PageRequest pageRequest = PageRequest.of(page,pageNum,sort);
+        Page<Message> messages = isSystemMessage ? messageRepository.findByReceiver_UserIdAndFatherCommentIdNull
+                (userId, pageRequest) : messageRepository.findByReceiver_UserIdAndFatherCommentIdNotNull(userId, pageRequest);
+        return messages.getContent().stream().map(message -> {
+            MessageModel messageModel = new MessageModel();
+            BeanUtils.copyProperties(message, messageModel);
+            messageModel.commentId = message.getComment().getCommentId();
+            return messageModel;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getTotalNum(Long userId, Boolean isSystemMessage) {
+        return isSystemMessage ? messageRepository.countByReceiver_UserIdAndFatherCommentIdNull(userId) :
+                messageRepository.countByReceiver_UserIdAndFatherCommentIdNotNull(userId);
     }
 }

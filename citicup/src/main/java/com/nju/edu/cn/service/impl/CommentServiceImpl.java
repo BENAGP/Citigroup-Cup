@@ -41,14 +41,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentModel> getComments(Long contractId, Long userId, Integer page, Integer pageNum) {
-        Sort sort = new Sort(Sort.Direction.DESC,"createTime");
-        PageRequest pageRequest = new PageRequest(page,pageNum,sort);
-        Page<Comment> commentPage = commentRepository.findByContract_ContractId(contractId,pageRequest);
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
+        Page<Comment> commentPage = commentRepository.findByContract_ContractId(contractId, pageRequest);
         List<Comment> comments = commentPage.getContent();
         List<CommentModel> commentModels = new ArrayList<>();
         comments.forEach(comment -> {
             CommentModel commentModel = new CommentModel();
-            BeanUtils.copyProperties(comment,commentModel);
+            BeanUtils.copyProperties(comment, commentModel);
             commentModels.add(commentModel);
         });
         return commentModels;
@@ -58,15 +58,16 @@ public class CommentServiceImpl implements CommentService {
     public void reply(Long contractId, Long userId, Long commentId, String content) {
         Comment fatherComment = commentRepository.findByCommentId(commentId);
         Contract contract = contractRepository.findByContractId(contractId);
-        if(contract==null)throw new InvalidRequestException("合约不存在");
+        if (contract == null) throw new InvalidRequestException("合约不存在");
         User user = userRepository.findByUserId(userId);
-        if(user==null)throw new InvalidRequestException("评论用户不存在");
-        User fatherCommentUser = userRepository.findByUserId(fatherComment.getFatherCommentUserId());
-        if(fatherCommentUser==null)throw new InvalidRequestException("被回复用户不存在");
+        if (user == null) throw new InvalidRequestException("评论用户不存在");
+        User fatherCommentUser = userRepository.findByUserId(fatherComment.getUserId());
+        if (fatherCommentUser == null) throw new InvalidRequestException("被回复用户不存在");
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setContract(contract);
         comment.setUser(user);
+        comment.setUserId(userId);
         comment.setFatherComment(fatherComment);
         comment.setCreateTime(new Date(System.currentTimeMillis()));
         comment = commentRepository.save(comment);
@@ -74,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
         Message message = new Message();
         message.setComment(comment);
         message.setReceiver(fatherCommentUser);
+        message.setHasRead(false);
         messageRepository.save(message);
 
     }
@@ -81,14 +83,20 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void postComment(Long contractId, Long userId, String content) {
         Contract contract = contractRepository.findByContractId(contractId);
-        if(contract==null)throw new InvalidRequestException("合约不存在");
+        if (contract == null) throw new InvalidRequestException("合约不存在");
         User user = userRepository.findByUserId(userId);
-        if(user==null)throw new InvalidRequestException("评论用户不存在");
+        if (user == null) throw new InvalidRequestException("评论用户不存在");
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setContract(contract);
+        comment.setContractId(contractId);
         comment.setUser(user);
         comment.setCreateTime(new Date(System.currentTimeMillis()));
         commentRepository.save(comment);
+    }
+
+    @Override
+    public Integer getPageNum(Long contractId) {
+        return commentRepository.countByContractId(contractId);
     }
 }

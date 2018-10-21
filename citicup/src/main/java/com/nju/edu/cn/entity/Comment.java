@@ -16,9 +16,9 @@ public class Comment {
     private Long commentId;
 
     /**
-     * 评论者ID
+     * 评论者
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`user_key`")
     private User user;
 
@@ -43,7 +43,7 @@ public class Comment {
     /**
      * 被评论的合约ID
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`contract_key`")
     private Contract contract;
 

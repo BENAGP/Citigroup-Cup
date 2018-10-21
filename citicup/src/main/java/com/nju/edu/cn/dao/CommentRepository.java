@@ -14,4 +14,6 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
     Page<Comment> findByContract_ContractId(Long contractId, Pageable pageable);
 
     Comment findByCommentId(Long commentId);
+
+    Integer countByContractId(Long contractId);
 }

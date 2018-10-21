@@ -126,7 +126,9 @@ public class ContractController {
         logger.info("userId:{},contractTradeSearch:{},page:{},pageNum:{}",userId,contractTradeSearch,page,pageNum);
         //ContractTradeSearch contractTradeSearch1 = (ContractTradeSearch)JSONObject.toBean(contractTradeSearch,ContractTradeSearch.class);
         ContractTradeSearch contractTradeSearch1 = JSON.parseObject(contractTradeSearch,ContractTradeSearch.class);
-        return contractService.getList(userId,contractTradeSearch1,page,pageNum);
+        List<ContractTradeModel> contractTradeModels = contractService.getList(userId,contractTradeSearch1,page,pageNum);
+        logger.info("process now end." + contractTradeModels.toString());
+        return contractTradeModels;
     }
 
     /**

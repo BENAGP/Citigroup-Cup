@@ -11,10 +11,18 @@ const tradeId = getUrlParam("tradeId");
 let contractId;
 let trade;
 
+let layer;
+let laypage;
+
+layui.use(['layer', 'laypage'], function(){
+    layer = layui.layer;
+    laypage = layui.laypage;
+});
 
 function setData(info) {
     trade = info;
     contractId = info.contractId;
+    initComment();
     // $("#contract_name").text(info.contractName);
     console.log(getUrlParam("contractName"));
     $("#contract_name").text(getUrlParam("contractName"));
@@ -283,7 +291,7 @@ $.post("/api/contract/getDetail",{
     getLiquidty()
 }).fail(err=>{
     console.log(err);
-})
+});
 
 function getLiquidty() {
     $.post("/api/contract/getLiquidity",{

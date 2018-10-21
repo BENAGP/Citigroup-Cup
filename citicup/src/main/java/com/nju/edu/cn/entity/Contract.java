@@ -18,14 +18,14 @@ public class Contract {
     /**
      * 近月期货
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`nearby_futures_id`")
     private Futures nearbyFutures;
 
     /**
      * 远月期货
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`back_futures_id`")
     private Futures backFutures;
 
