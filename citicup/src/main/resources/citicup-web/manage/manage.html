@@ -39,9 +39,18 @@
                         <option value="8">8</option>
                         <option value="9">9</option>
                     </select>
-                    <div class="itemName">上传新头像</div>
-                    <img width="200" height="200" style="display: none; margin-bottom: 30px" id="preview" src="">
-                    <input id="uploadImg" type="file" accept="image/*" onchange="uploadPic()" />
+                    <div class='layui-upload' style='text-align: center;margin-top: 30px'>
+                        <div style='text-align: left'>
+                            <div id='uploadAvatarDown'
+                                 style='text-align: center;color: #959595;border: 1px solid #e6e6e6;width: 180px;height: 180px;cursor: pointer'>
+                                <div style='font-size: 72px;margin-top: 30px '>+</div>
+                                <div style='font-size: 14px'>上传头像</div>
+                            </div>
+                            <img src='../imgs/avatar.png' class='layui-upload-img'
+                                 style='width: 180px;height: 180px;background-color: white;border: 1px solid #f4f4f4;display: none'
+                                 id='avatar-pic-down'>
+                        </div>
+                    </div>
                     <button id="submitBtn" onclick="submit()">提交</button>
                 </div>
             </div>
@@ -50,15 +59,15 @@
 
         <!--<div class="person_title">个人中心</div>-->
         <!--<div class="person_board">-->
-            <!--<button class="accountManage">账户管理</button>-->
-            <!--<br/>-->
-            <!--<button class="accountPassword">登录密码</button>-->
-            <!--<br/>-->
-            <!--<button class="collectionbutton">我的收藏</button>-->
-            <!--<br/>-->
-            <!--<button class="messagebutton">我的消息</button>-->
+        <!--<button class="accountManage">账户管理</button>-->
+        <!--<br/>-->
+        <!--<button class="accountPassword">登录密码</button>-->
+        <!--<br/>-->
+        <!--<button class="collectionbutton">我的收藏</button>-->
+        <!--<br/>-->
+        <!--<button class="messagebutton">我的消息</button>-->
 
-            <!--<div class="red_block"></div>-->
+        <!--<div class="red_block"></div>-->
         <!--</div>-->
     </div>
 </div>
@@ -70,9 +79,41 @@
 
 
 <script>
-    $("button").css("outline","none");
+    layui.use('upload', function () {
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#uploadAvatarDown' //绑定元素
+            , url: '/api/user/postAvatar' //上传接口
+            , data: {
+                userId: 1
+            },
+            before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                });
+            }
+
+            , done: function (res) {
+                $('#avatar-pic-down').attr('src', res.url);//图片链接（base64）
+                $('#avatar-pic-down').css('display', 'inline');
+                $('#uploadAvatarDown').css('display', 'none');
+                //上传完毕回调
+                // avatar = res.url;
+                console.log(res);
+            }
+            , error: function (err) {
+                //请求异常回调
+                layer.msg(data.responseText);
+            }
+        });
+    });
+
+
+    $("button").css("outline", "none");
     let layer;
-    layui.use(['layer'],function(){
+    layui.use(['layer'], function () {
         layer = layui.layer;
     });
     var uid = window.localStorage.getItem("userId");
@@ -92,15 +133,13 @@
     var previewSrc = '';
 
 
-
     function submit() {
-        console.log($("#preview")[0].src);
         console.log($("#riskLevel").val());
         if ($("#nameInput").val() === '') {
             layer.msg("请输入昵称！");
             return;
         }
-        if ($("#preview")[0].src === '') {
+        if ($("#avatar-pic-down").attr("src") === '') {
             layer.msg("请上传头像");
             return;
         }
@@ -109,7 +148,7 @@
             email: email,
             nickname: $("#nameInput").val(),
             preferRiskLevel: $("#riskLevel").val(),
-            avatar: $("#preview")[0].src,
+            avatar: $("#avatar-pic-down").attr("src"),
         }).done(response => {
             console.log(response);
             layer.msg("修改成功！");

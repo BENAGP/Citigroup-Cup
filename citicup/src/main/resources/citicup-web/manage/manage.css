@@ -20,12 +20,14 @@ button{
     width: 420px;
     display: flex;
     flex-direction: column;
+
 }
 
 #sectionName {
     font-size: 24px;
     color: #5E5E5E;
     margin-bottom: 23px;
+    margin-top: 20px;
 }
 .itemName {
     font-size: 18px;
@@ -60,7 +62,6 @@ button{
     text-align: left;
     font-family: Roboto;
     border: 1px solid rgba(187, 187, 187, 1);
-    margin-bottom: 42px;
 }
 #uploadPic {
     width: 232px;
@@ -78,7 +79,7 @@ button{
     cursor: pointer;
 }
 #submitBtn {
-    width: 140px;
+    width: 180px;
     height: 40px;
     line-height: 29px;
     border-radius: 5px;
@@ -87,7 +88,7 @@ button{
     font-size: 20px;
     text-align: center;
     font-family: Roboto;
-
+    margin-top: 25px;
 }
 
 
