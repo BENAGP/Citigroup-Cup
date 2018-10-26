@@ -596,7 +596,23 @@ button{
     bottom: 0px;
     margin: auto;
     width: 520px;
-    height: 426px;
+    height: 476px;
+    line-height: 20px;
+    text-align: center;
+    border: 1px solid rgba(187, 187, 187, 1);
+    background-color: white;
+    visibility: hidden;
+}
+
+.orderboard{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    width: 320px;
+    height: 326px;
     line-height: 20px;
     text-align: center;
     border: 1px solid rgba(187, 187, 187, 1);
@@ -634,6 +650,22 @@ button{
 
 }
 
+.ordermoneytext{
+    /*position: relative;*/
+    float: left;
+    text-align: left;
+    left: 10%;
+    top: 50px;
+    width: 200px;
+    height: 35px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+
+}
+
 .risktext{
     position: relative;
     left: -60px;
@@ -650,6 +682,51 @@ button{
 
 }
 
+.orderrisktext{
+    /*position: relative;*/
+    float: left;
+    text-align: left;
+    left: 10%;
+    top: 50px;
+    width: 200px;
+    height: 35px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.orderaccounttext{
+    float: left;
+    text-align: left;
+    left: 10%;
+    top: 50px;
+    width: 200px;
+    height: 35px;
+    line-height: 26px;
+    color: rgba(94, 94, 94, 1);
+    font-size: 18px;
+    text-align: center;
+    font-family: Roboto;
+}
+
+.paybutton{
+    position: relative;
+    left: -0px;
+    top: 30px;
+    width: 120px;
+    height: 50px;
+    line-height: 29px;
+    border-radius: 5px;
+    /*background-color: rgba(70, 172, 227, 1);*/
+    background-color: rgba(245, 93, 84, 1);
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+
+}
 
 
 .moneyinput{
@@ -744,6 +821,14 @@ button{
     top: -230px;
 }
 
+
+.payclosebutton{
+    font-size: 20px;
+    color: rgba(94, 94, 94, 1);
+    position: relative;
+    left: 140px;
+    top: -250px;
+}
 
 .tipbeforebuy{
     position: relative;
