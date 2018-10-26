@@ -116,12 +116,12 @@ public class FuturesUpdatingDaoImpl implements FuturesUpdatingDao {
             connection = SqlConnectUtil.getSqlConnect();
 //            String sql = "INSERT INTO `spot_goods_updating` (`price`,`trading`,`update_time`,`spot_goods_id`)  VALUES ";
             int length = futuresUpdatingBeans.size();
-            int perPacket = length/6;
+            int perPacket = length/24;
 //            System.out.println(futuresUpdatingBeans.size());
             FuturesUpdatingBean futuresUpdatingBean;
 //            int length = 2;
             int i=0,k=0;
-            for(int j=0;j<7&&i<length;j++,i++){
+            for(int j=0;j<25&&i<length;j++,i++){
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.append("insert INTO `futures_updating` (`interest_rate`,`price`,`trading`,`update_time`,`futures_id`)  VALUES ");
                 for(k=0;i<length-1&&k<perPacket-1;i++,k++){

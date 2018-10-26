@@ -4,6 +4,8 @@ import com.nju.edu.cn.constant.ContractBackTestHead;
 import com.nju.edu.cn.constant.TradeHead;
 import com.nju.edu.cn.dao.*;
 import com.nju.edu.cn.entity.*;
+import com.nju.edu.cn.model.ContractBackTestBean;
+import com.nju.edu.cn.model.ContractBackTestParamsBean;
 import com.nju.edu.cn.model.FuturesUpdatingBean;
 import com.nju.edu.cn.model.SpotGoodsUpdatingBean;
 import com.nju.edu.cn.service.FileService;
@@ -49,6 +51,7 @@ public class FileServiceImpl implements FileService {
 
     private SpotGoodsUpdatingDao spotGoodsUpdatingDao = new SpotGoodsUpdatingDaoImpl();
     private FuturesUpdatingDao futuresUpdatingDao = new FuturesUpdatingDaoImpl();
+    private ContractBackTestDao contractBackTestDao = new ContractBackTestDaoImpl();
 
     @Override
     public void initFuturesUpdating(String path) {
@@ -179,7 +182,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void insertFuturesUpdating(String path) {
-        if(count7==1)return;
+        if(count7==4)return;
         count7++;
         logger.info("--------------"+count7);
         File csv = new File(path);  // CSV文件路径
@@ -199,7 +202,7 @@ public class FileServiceImpl implements FileService {
             int trading = 1;
             int interestRate = 2;
             int updateTime = 3;
-            int futuresId = 5;
+            int futuresId = 4;
             List<FuturesUpdatingBean> futuresUpdatingBeans = new ArrayList<>();
             String trade;
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
@@ -289,7 +292,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void initParams(String path) {
-        if(count2==2)return;
+        if(count2==1)return;
         count2++;
         logger.info("--------------"+count2);
         File csv = new File(path);  // CSV文件路径
@@ -305,49 +308,36 @@ public class FileServiceImpl implements FileService {
         String line = "";
         try {
             String[] strings;
-            int liqulity = 0;
-            int interestratediff = 1;
-            int alpha = 2;
-            int beta = 3;
-            int gam = 4;
-            int delta = 5;
-            int contractid,createTime;
-            if(path.split("/")[path.split("/").length-1].equals("params.csv")){
-                contractid = 6;
-                createTime = 7;
-            }else {
-                contractid = 7;
-                createTime = 6;
-            }
-            List<ContractBackTestParams> contractBackTestParamsList = new ArrayList<>();
-            List<Contract> contracts = contractRepository.findAll();
-            Map<Long,Contract> map = new TreeMap<>();
-            contracts.forEach(contract -> {
-                map.put(contract.getContractId(),contract);
-            });
+            //alpha,beta,gam,delta,interest_rate_diff,liquidity,contract_id,create_time
+            int alpha = 0;
+            int beta = 1;
+            int gam = 2;
+            int delta = 3;
+            int interest_rate_diff = 4;
+            int liquidity = 5;
+            int contract_id = 6,create_time=7;
+            List<ContractBackTestParamsBean> contractBackTestParamsList = new ArrayList<>();
+            br.readLine();
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
             {
 //                logger.info(line);
                 strings = line.split(",");
-                ContractBackTestParams contractBackTestParams = new ContractBackTestParams();
-                contractBackTestParams.setAlpha(Double.valueOf(strings[alpha]));
-                contractBackTestParams.setBeta(Double.valueOf(strings[beta]));
-                contractBackTestParams.setContract(map.get(Long.valueOf(strings[contractid])));
-                contractBackTestParams.setCreateTime(sdf.parse(strings[createTime].substring(1,19)));
-                contractBackTestParams.setDelta(Double.valueOf(strings[delta]));
-                contractBackTestParams.setInterestRateDiff(Double.valueOf(strings[interestratediff]));
-                contractBackTestParams.setGam(Double.valueOf(strings[gam]));
-                contractBackTestParams.setLiquidity(Float.valueOf(strings[liqulity]));
+                ContractBackTestParamsBean contractBackTestParams = new ContractBackTestParamsBean();
+                contractBackTestParams.setAlpha(strings[alpha].equals("NaN")?null:Double.valueOf(strings[alpha]));
+                contractBackTestParams.setBeta(strings[beta].equals("NaN")?null:Double.valueOf(strings[beta]));
+                contractBackTestParams.setContractId(strings[contract_id].equals("NaN")?null:Long.valueOf(strings[contract_id]));
+                contractBackTestParams.setCreateTimeStr(strings[create_time]);
+                contractBackTestParams.setDelta(strings[delta].equals("NaN")?null:Double.valueOf(strings[delta]));
+                contractBackTestParams.setInterestRateDiff(strings[interest_rate_diff].equals("NaN")?null:Double.valueOf(strings[interest_rate_diff]));
+                contractBackTestParams.setGam(strings[gam].equals("NaN")?null:Double.valueOf(strings[gam]));
+                contractBackTestParams.setLiquidity(strings[liquidity].equals("NaN")?null:Float.valueOf(strings[liquidity]));
                 contractBackTestParamsList.add(contractBackTestParams);
 
             }
-
-            contractBackTestParamsRepository.saveAll(contractBackTestParamsList);
+            contractBackTestDao.insertParamsList(contractBackTestParamsList);
 
         } catch (IOException e)
         {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
@@ -410,12 +400,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void initContractBackTest(String path) {
-        if(count4==2)return;
+        if(count4==1)return;
         count4++;
         logger.info("--------------"+count4);
         File csv = new File(path);  // CSV文件路径
         ContractBackTestHead head = new ContractBackTestHead(path);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BufferedReader br = null;
         try
         {
@@ -427,39 +416,34 @@ public class FileServiceImpl implements FileService {
         String line = "";
         try {
             String[] data;
-            List<ContractBackTest> contractBackTests = new ArrayList<>();
-            List<Trade> trades = tradeRepository.findAll();
-            Map<Long,Trade> map = new TreeMap<>();
-            trades.forEach(trade -> {
-                map.put(trade.getTradeId()-head.getGap(),trade);
-            });
+            List<ContractBackTestBean> contractBackTests = new ArrayList<>();
             br.readLine();
             while ((line = br.readLine()) != null)  //读取到的内容给line变量
             {
-                if(line.contains("NaN"))continue;
                 data = line.split(",");
 //                logger.info(data[head.getDo_adjust()].trim().equals("1")+"");
-                ContractBackTest contractBackTest = new ContractBackTest();
-                contractBackTest.setYield(Double.valueOf(data[head.getYield()].trim()));
-                contractBackTest.setMaxDrawdown(Double.valueOf(data[head.getMax_drawdown()].trim()));
-                contractBackTest.setWinRate(Double.valueOf(data[head.getWin_rate()].trim()));
-                contractBackTest.setProfitLossRatio(Double.valueOf(data[head.getProfit_loss_ratio()].trim()));
-                contractBackTest.setPosition(Double.valueOf(data[head.getPosition()].trim()));
-                contractBackTest.setTodayProfitLoss(Double.valueOf(data[head.getToday_profitloss()].trim()));
-                contractBackTest.setAverageTradingPrice(Double.valueOf(data[head.getAverage_trading_price()].trim()));
+                ContractBackTestBean contractBackTest = new ContractBackTestBean();
+                contractBackTest.setYield(data[head.getYield()].trim().equals("NaN")?null:Double.valueOf(data[head.getYield()].trim()));
+                contractBackTest.setMaxDrawdown(data[head.getMax_drawdown()].trim().equals("NaN")?null:Double.valueOf(data[head.getMax_drawdown()].trim()));
+                contractBackTest.setWinRate(data[head.getWin_rate()].trim().equals("NaN")?null:Double.valueOf(data[head.getWin_rate()].trim()));
+                contractBackTest.setProfitLossRatio(data[head.getProfit_loss_ratio()].trim().equals("NaN")?null:Double.valueOf(data[head.getProfit_loss_ratio()].trim()));
+                contractBackTest.setPosition(data[head.getPosition()].trim().equals("NaN")?null:Double.valueOf(data[head.getPosition()].trim()));
+                contractBackTest.setTodayProfitLoss(data[head.getToday_profitloss()].trim().equals("NaN")?null:Double.valueOf(data[head.getToday_profitloss()].trim()));
+                contractBackTest.setAverageTradingPrice(data[head.getAverage_trading_price()].trim().equals("NaN")?null:Double.valueOf(data[head.getAverage_trading_price()].trim()));
                 contractBackTest.setDoAdjustWarehouse(data[head.getDo_adjust()].trim().equals("1"));
-                contractBackTest.setTrade(map.get(Long.valueOf(data[head.getTradeid()].trim())));//data[head.getTradeid()].trim()=101,tradeid=109,
-                contractBackTest.setNearbyFuturesPosition(Integer.valueOf(data[head.getNearbyposition()].trim()));
-                contractBackTest.setBackFuturesPosition(Integer.valueOf(data[head.getBackposition()].trim()));
-                contractBackTest.setMarketCapitalCapacity(Double.valueOf(data[head.getMarket_capial_capacity()].trim()));
-                contractBackTest.setCreateTime(sdf.parse(data[head.getCreattime()].substring(1,19)));
+                contractBackTest.setTradeId(Long.valueOf(data[head.getTradeid()].trim()));//data[head.getTradeid()].trim()=101,tradeid=109,
+                contractBackTest.setNearbyFuturesPosition(data[head.getNearbyposition()].trim().equals("NaN")?null:Integer.valueOf(data[head.getNearbyposition()].trim()));
+                contractBackTest.setBackFuturesPosition(data[head.getBackposition()].trim().equals("NaN")?null:Integer.valueOf(data[head.getBackposition()].trim()));
+                contractBackTest.setMarketCapitalCapacity(data[head.getMarket_capial_capacity()].trim().equals("NaN")?null:Double.valueOf(data[head.getMarket_capial_capacity()].trim()));
+                contractBackTest.setCreateTimeStr(data[head.getCreattime()]);
                 contractBackTests.add(contractBackTest);
             }
-            contractBackTestRepository.saveAll(contractBackTests);
+
+            logger.info("size:{}",contractBackTests.size());
+            contractBackTestDao.insertList(contractBackTests);
+
         } catch (IOException e)
         {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
 

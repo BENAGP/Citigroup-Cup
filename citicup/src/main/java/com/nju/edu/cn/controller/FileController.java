@@ -37,11 +37,20 @@ public class FileController {
     @GetMapping("/insertFuturesUpdating")
     public void insertFuturesUpdating() {
         logger.info("insertFuturesUpdating");
+
+//        fileService.insertFuturesUpdating("/Users/shea/file/future_updating.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f67_68_69.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f97_98_99.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f124_125_126.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f55_56_57.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f58-61.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f62-64.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f65_66.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/54.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/51.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/48.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/45.csv");
-        fileService.insertFuturesUpdating("/Users/shea/Downloads/42.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/Downloads/42.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/30.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/24.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/Downloads/36.csv");
@@ -54,6 +63,7 @@ public class FileController {
     public void initParams() {
         logger.info("initParams");
 //        fileService.initParams("/Users/shea/Downloads/params.csv");
+//        fileService.initParams("/Users/shea/file/contract_back_test_params.csv");
 //        fileService.initParams("/Users/shea/Downloads/params2.csv");
     }
 
@@ -77,6 +87,11 @@ public class FileController {
         logger.info("initFuturesUpdating");
 //        fileService.initFuturesUpdating("/Users/shea/Downloads/futures_updating.csv");
 //        fileService.initFuturesUpdating("/Users/shea/Downloads/updating.csv");
-        fileService.initSpotUpdating("/Users/shea/Downloads/spot_upadting.csv");
+//        fileService.initSpotUpdating("/Users/shea/Downloads/spot_upadting.csv");
+    }
+
+    @GetMapping("/insertContractBackTest")
+    public void insertContractBackTest(){
+//        fileService.initContractBackTest("/Users/shea/file/contract_back_test.csv");
     }
 }

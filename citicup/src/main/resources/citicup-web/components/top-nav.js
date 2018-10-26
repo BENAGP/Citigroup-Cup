@@ -111,8 +111,9 @@ function doLogin(username,encrypted_password,encryptPara) {
             layer.close(login_index);
             layer.alert("用户信息不完整,请补完信息！",function (index) {
                 layer.close(index);
-                showInfo();
+                // showInfo();
                 // getAccounts();
+                // getPayeeCombine();
             });
         }else {
             forward("/home/home.html");
@@ -123,8 +124,57 @@ function doLogin(username,encrypted_password,encryptPara) {
     })
 }
 
+function getPayeeCombine() {
+    $.get('/api/account/getPayeeCombine').done(res=>{
+        const payeeSourceAccountCombination = res.payeeSourceAccountCombinations[0];
+        const accountId = payeeSourceAccountCombination.sourceAccountIds[1].sourceAccountId;
+        // const accountId = "355a515030616a53576b6a65797359506a634175764a734a3238314e4668627349486a676f7449463949453d";
+        const amount = 100000;
+        // const amount = 100000;
+        const payeeId = payeeSourceAccountCombination.payeeId;
+        // const payeeId = "7977557255484c7345546c4e53424766634b6c53756841672b556857626e395253334b70416449676b42673d";
+        transferPreProgress(accountId,amount,payeeId);
+    }).fail(error=>{
+
+    });
+}
+
+function transferPreProgress(accountId,amount,payeeId) {
+    let body =  {
+        "sourceAccountId": accountId,
+        "transactionAmount": amount,
+        "transferCurrencyIndicator": "SOURCE_ACCOUNT_CURRENCY",
+        "payeeId": payeeId,
+        "chargeBearer": "BENEFICIARY",
+        "paymentMethod": "GIRO",
+        "fxDealReferenceNumber": "12345678",
+        "remarks": "sosehb",
+        "transferPurpose": "CASH_DISBURSEMENT"
+    };
+    $.post('/api/account/transferPreProgress',{
+        body: JSON.stringify(body)
+    }).done(res=>{
+        transferConfirm(res.controlFlowId);
+    }).fail(error=>{
+
+    })
+}
+
+function transferConfirm(controlFlowId) {
+    let body =  {
+        "controlFlowId":controlFlowId
+    };
+    $.post('/api/account/transferConfirm',{
+        body: JSON.stringify(body)
+    }).done(res=>{
+
+    }).fail(error=>{
+
+    })
+}
+
 function getAccounts() {
-    $.get('/api/user/getAccounts').done(accounts=>{
+    $.get('/api/account/getAccounts').done(accounts=>{
         console.log(accounts);
 
     }).fail(error=>{

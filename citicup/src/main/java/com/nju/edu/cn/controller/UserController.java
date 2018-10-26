@@ -7,10 +7,12 @@ import com.nju.edu.cn.model.APIContext;
 import com.nju.edu.cn.model.UserModel;
 import com.nju.edu.cn.service.UserService;
 import com.nju.edu.cn.util.GetAccounts;
+import com.nju.edu.cn.util.GetAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections4.Get;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +61,10 @@ public class UserController {
     public @ResponseBody
     APIContext preLogin(HttpServletRequest request){
         System.out.println("=======================");
-        APIContext apiContext = new APIContext();
+        APIContext apiContext = null;
         try {
-            GetAccounts.getBizToken(apiContext);
+            String accessToken = GetAuthorize.GetAccessToken();
+            apiContext = GetAuthorize.getBizToken(accessToken);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,72 +88,18 @@ public class UserController {
     public @ResponseBody
     UserModel login(String username, String password,String bizToken, HttpServletRequest request){
         logger.info("username:{},psw:{}",username,password);
-        APIContext apiContext = new APIContext();
-        apiContext.setUsername(username);
-        apiContext.setPassword(password);
-        apiContext.setBizToken(bizToken);
+        String nickname = null;
         try {
-            GetAccounts.step3GetRealAccessToken(apiContext);
-            if(apiContext.getRealAccessToken()==null){
+            String realAccessToken = GetAuthorize.getRealAccessToken(username,password,bizToken);
+            if(realAccessToken==null){
                 throw new InvalidRequestException("用户名或密码错误");
             }
-            request.getSession().setAttribute("real_access_token",apiContext.getRealAccessToken());
-
+            request.getSession().setAttribute("real_access_token",realAccessToken);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return userService.login(username,apiContext.getNickname());
+        return userService.login(username,nickname);
     }
-
-    /**
-     * 获得用户的账户信息
-     * @return
-     */
-    @ApiOperation(value="getAccounts", notes="用户登陆。检查帐号密码是否正确。前端根据返回的UserModel.isCompleted判断信息是否完整，不完整提醒")
-    @GetMapping("/getAccounts")
-    public @ResponseBody
-    String getAccounts(HttpServletRequest request){
-        String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
-        logger.info("real_access_token:{} ",realAccessToken);
-        if(realAccessToken==null){
-            throw new InvalidRequestException("请先登录");
-        }
-        String res = "";
-        try {
-            APIContext apiContext = new APIContext();
-            apiContext.setRealAccessToken(realAccessToken);
-            res = GetAccounts.step4GetAccounts(apiContext);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-
-    /**
-     * 获得加密参数
-     * @return
-     */
-    @ApiOperation(value="getEncryptParams", notes="获得加密参数")
-    @PostMapping("/getEncryptParams")
-    public @ResponseBody
-    JSONObject getEncryptParams(HttpServletRequest request){
-//        ServletContext context = request.getServletContext();
-//        if(context.getAttribute("access_token")==null||context.getAttribute("event_id")==null){
-//            try {
-//                GetAccounts.getBizToken(context);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("biz_token",context.getAttribute("biz_token"));
-//        jsonObject.put("modulus",context.getAttribute("modulus"));
-//        jsonObject.put("exponent",context.getAttribute("exponent"));
-//        jsonObject.put("event_id",context.getAttribute("event_id"));
-        return jsonObject;
-    }
-
 
     /**
      * 用户完善上传头像
