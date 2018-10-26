@@ -125,6 +125,7 @@ function doLogin(username,encrypted_password,encryptPara) {
 }
 
 function getPayeeCombine() {
+
     $.get('/api/account/getPayeeCombine').done(res=>{
         const payeeSourceAccountCombination = res.payeeSourceAccountCombinations[0];
         const accountId = payeeSourceAccountCombination.sourceAccountIds[1].sourceAccountId;
@@ -132,8 +133,9 @@ function getPayeeCombine() {
         const amount = 100000;
         // const amount = 100000;
         const payeeId = payeeSourceAccountCombination.payeeId;
+
         // const payeeId = "7977557255484c7345546c4e53424766634b6c53756841672b556857626e395253334b70416449676b42673d";
-        transferPreProgress(accountId,amount,payeeId);
+      //  transferPreProgress(accountId,amount,payeeId);
     }).fail(error=>{
 
     });
@@ -154,9 +156,11 @@ function transferPreProgress(accountId,amount,payeeId) {
     $.post('/api/account/transferPreProgress',{
         body: JSON.stringify(body)
     }).done(res=>{
-        transferConfirm(res.controlFlowId);
+        var res = transferConfirm(res.controlFlowId);
+        return res;
     }).fail(error=>{
 
+        return false;
     })
 }
 
@@ -168,8 +172,10 @@ function transferConfirm(controlFlowId) {
         body: JSON.stringify(body)
     }).done(res=>{
 
+        return true;
     }).fail(error=>{
 
+        return false;
     })
 }
 
