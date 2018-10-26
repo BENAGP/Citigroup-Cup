@@ -161,7 +161,8 @@ function transferPreProgress(accountId,amount,payeeId) {
     }).fail(error=>{
 
         return false;
-    })
+    });
+    return true;
 }
 
 function transferConfirm(controlFlowId) {
@@ -176,7 +177,9 @@ function transferConfirm(controlFlowId) {
     }).fail(error=>{
 
         return false;
-    })
+    });
+    
+    return true;
 }
 
 function getAccounts() {
@@ -201,7 +204,7 @@ function perfectInfo() {
         layer.close(info_index);
     }).fail(err => {
         layer.msg(err.responseText)
-    })
+    });
 }
 
 function showInfo() {
