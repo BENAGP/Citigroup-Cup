@@ -37,6 +37,7 @@ public class ContractServiceImpl implements ContractService {
     private ContractBackTestParamsRepository contractBackTestParamsRepository;
     @Autowired
     private FuturesUpdatingRepository futuresUpdatingRepository;
+    private ContractBackTestDao contractBackTestDao = new ContractBackTestDaoImpl();
 
     private static Logger logger = LoggerFactory.getLogger(ContractServiceImpl.class);
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -177,87 +178,94 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum) {
-        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
-        //首先找到用户偏好风险等级
         User user = userRepository.findByUserId(userId);
-        logger.info(JSON.toJSONString(user));
         int riskLevel = user.getPreferRiskLevel();
-        //整理筛选条件
-        if (contractTradeSearch == null) contractTradeSearch = new ContractTradeSearch();
-        contractTradeSearch.checkNullValue();
-        final int type = contractTradeSearch.type;
-        if(type==FuturesType.CHEMICAL){
-            riskLevel=6;
-            page=1;
-        }
-        else if(type==FuturesType.FARM_PRODUCE){
-            riskLevel=3;
-            page=1;
-        }
-        Sort sort = new Sort(Sort.Direction.ASC, "profitLossRatio");
-//        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
-        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
-        List<Trade> trades = null;
-        System.out.println("=====================phrase0==========================");
-        if (contractTradeSearch.type != FuturesType.FIANACE) {
-            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-                    null, riskLevel, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
-                    contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
-            ).getContent();
-//            trades = tradeRepository.findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-//                    null,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
-//                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
-//            ).getContent();
-
-        } else {
-            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
-                    null, riskLevel, contractTradeSearch.type, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
-                    contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
-            ).getContent();
-        }
-        System.out.println("=====================phrase1==========================");
-//        trades.set(0,trades.get(5));
-//        trades.set(1,trades.get(4));
-        trades.forEach(trade -> {
-            ContractTradeModel contractTradeModel = new ContractTradeModel();
-            //找出与该此购买对应的一条回测数据线
-            System.out.println("=====================phrase1-0==========================");
-            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-            System.out.println("=====================phrase1-1==========================");
-//            Collections.sort(contractBackTests,comparator);//按更新时间排序
-//            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel,type);
-            List<Double> yields = new ArrayList<>();//收益率纵轴
-            List<Date> updateTimes = new ArrayList<>();// 时间横轴
-            List<String> formatDates = new ArrayList<>();// 时间横轴
-            contractBackTests.forEach(contractBackTest -> {
-                yields.add(contractBackTest.getYield());
-                updateTimes.add(contractBackTest.getCreateTime());
-                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
-            });
-            contractTradeModel.updateTimes = updateTimes;
-            contractTradeModel.formatDates = formatDates;
-            contractTradeModel.yields = yields;
-            contractTradeModel.computeYield();
-            contractTradeModels.add(contractTradeModel);
-        });
-        System.out.println("=====================phrase2==========================");
-        //
-        String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803","A1805-1803","CS1805-1803"};
-        String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806","RU1807-1806","L1807-1806"};
-        for(int i=0;i<6;i++){
-            if(type==FuturesType.FARM_PRODUCE){
-                contractTradeModels.get(i).contractName = farmProduce[i];
-            }else if(type==FuturesType.CHEMICAL){
-                contractTradeModels.get(i).contractName = chemical[i];
-            }
-
-        }
-        contractTradeModels.set(0,contractTradeModels.get(5));
-        contractTradeModels.set(1,contractTradeModels.get(4));
-
-        return contractTradeModels;
+        return contractBackTestDao.getList(riskLevel,contractTradeSearch,page,pageNum);
     }
+
+//    @Override
+//    public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum) {
+//        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
+//        //首先找到用户偏好风险等级
+//        User user = userRepository.findByUserId(userId);
+//        logger.info(JSON.toJSONString(user));
+//        int riskLevel = user.getPreferRiskLevel();
+//        //整理筛选条件
+//        if (contractTradeSearch == null) contractTradeSearch = new ContractTradeSearch();
+//        contractTradeSearch.checkNullValue();
+//        final int type = contractTradeSearch.type;
+//        if(type==FuturesType.CHEMICAL){
+//            riskLevel=6;
+//            page=1;
+//        }
+//        else if(type==FuturesType.FARM_PRODUCE){
+//            riskLevel=3;
+//            page=1;
+//        }
+//        Sort sort = new Sort(Sort.Direction.ASC, "profitLossRatio");
+////        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+//        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
+//        List<Trade> trades = null;
+//        System.out.println("=====================phrase0==========================");
+//        if (contractTradeSearch.type != FuturesType.FIANACE) {
+//            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+//                    null, riskLevel, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
+//                    contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
+//            ).getContent();
+////            trades = tradeRepository.findByUser_UserIdAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+////                    null,new Date(System.currentTimeMillis()),contractTradeSearch.yieldR,contractTradeSearch.yieldL,contractTradeSearch.maxDrawdownR,contractTradeSearch.maxDrawdownL,
+////                    contractTradeSearch.winRateR,contractTradeSearch.winRateL,contractTradeSearch.profitRossRatioR,contractTradeSearch.profitLossRatioL,contractTradeSearch.marketCapitalCapacityR,contractTradeSearch.marketCapitalCapacityL,pageRequest
+////            ).getContent();
+//
+//        } else {
+//            trades = tradeRepository.findByUser_UserIdAndRiskLevelAndContract_NearbyFutures_TypeAndContract_NearbyFutures_LastTradingDateBeforeAndYieldLessThanEqualAndYieldGreaterThanEqualAndMaxDrawdownLessThanEqualAndMaxDrawdownGreaterThanEqualAndWinRateLessThanEqualAndWinRateGreaterThanEqualAndProfitLossRatioLessThanEqualAndProfitLossRatioGreaterThanEqualAndMarketCapitalCapacityLessThanEqualAndMarketCapitalCapacityGreaterThanEqual(
+//                    null, riskLevel, contractTradeSearch.type, new Date(System.currentTimeMillis()), contractTradeSearch.yieldR, contractTradeSearch.yieldL, contractTradeSearch.maxDrawdownR, contractTradeSearch.maxDrawdownL,
+//                    contractTradeSearch.winRateR, contractTradeSearch.winRateL, contractTradeSearch.profitRossRatioR, contractTradeSearch.profitLossRatioL, contractTradeSearch.marketCapitalCapacityR, contractTradeSearch.marketCapitalCapacityL, pageRequest
+//            ).getContent();
+//        }
+//        System.out.println("=====================phrase1==========================");
+////        trades.set(0,trades.get(5));
+////        trades.set(1,trades.get(4));
+//        trades.forEach(trade -> {
+//            ContractTradeModel contractTradeModel = new ContractTradeModel();
+//            //找出与该此购买对应的一条回测数据线
+//            System.out.println("=====================phrase1-0==========================");
+//            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
+//            System.out.println("=====================phrase1-1==========================");
+////            Collections.sort(contractBackTests,comparator);//按更新时间排序
+////            BeanUtils.copyProperties(trade,contractTradeModel);
+//            copyProperties(trade, contractTradeModel,type);
+//            List<Double> yields = new ArrayList<>();//收益率纵轴
+//            List<Date> updateTimes = new ArrayList<>();// 时间横轴
+//            List<String> formatDates = new ArrayList<>();// 时间横轴
+//            contractBackTests.forEach(contractBackTest -> {
+//                yields.add(contractBackTest.getYield());
+//                updateTimes.add(contractBackTest.getCreateTime());
+//                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
+//            });
+//            contractTradeModel.updateTimes = updateTimes;
+//            contractTradeModel.formatDates = formatDates;
+//            contractTradeModel.yields = yields;
+//            contractTradeModel.computeYield();
+//            contractTradeModels.add(contractTradeModel);
+//        });
+//        System.out.println("=====================phrase2==========================");
+//        //
+//        String[] farmProduce = {"A1805-1803","CS1805-1803","RI803-801","RM805-803","A1805-1803","CS1805-1803"};
+//        String[] chemical = {"RU1807-1806","L1807-1806","V1807-1806","PP1807-1806","RU1807-1806","L1807-1806"};
+//        for(int i=0;i<6;i++){
+//            if(type==FuturesType.FARM_PRODUCE){
+//                contractTradeModels.get(i).contractName = farmProduce[i];
+//            }else if(type==FuturesType.CHEMICAL){
+//                contractTradeModels.get(i).contractName = chemical[i];
+//            }
+//
+//        }
+//        contractTradeModels.set(0,contractTradeModels.get(5));
+//        contractTradeModels.set(1,contractTradeModels.get(4));
+//
+//        return contractTradeModels;
+//    }
 
     @Override
     public Map<Long, Boolean> isCollected(Long userId, List<Long> contractIds) {

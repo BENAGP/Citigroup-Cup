@@ -1,12 +1,17 @@
 package com.nju.edu.cn.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.nju.edu.cn.dao.ContractRepository;
+import com.nju.edu.cn.dao.TradeRepository;
+import com.nju.edu.cn.entity.Contract;
+import com.nju.edu.cn.entity.Trade;
 import com.nju.edu.cn.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,6 +23,8 @@ public class FileController {
     private static Logger logger = LoggerFactory.getLogger(FileController.class);
     @Autowired
     private FileService fileService;
+    @Autowired
+    private ContractRepository contractRepository;
     
 
     @GetMapping("/initFuturesUpdating")
@@ -38,7 +45,9 @@ public class FileController {
     public void insertFuturesUpdating() {
         logger.info("insertFuturesUpdating");
 
-//        fileService.insertFuturesUpdating("/Users/shea/file/future_updating.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f297_300_303.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/f333_336_339.csv");
+//        fileService.insertFuturesUpdating("/Users/shea/file/futures_updating.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/file/f67_68_69.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/file/f97_98_99.csv");
 //        fileService.insertFuturesUpdating("/Users/shea/file/f124_125_126.csv");
@@ -63,6 +72,8 @@ public class FileController {
     public void initParams() {
         logger.info("initParams");
 //        fileService.initParams("/Users/shea/Downloads/params.csv");
+//        fileService.initParams("/Users/shea/file/(125,126)contract_back_test_params.csv");
+//        fileService.initParams("/Users/shea/file/contract_back_test_params(1).csv");
 //        fileService.initParams("/Users/shea/file/contract_back_test_params.csv");
 //        fileService.initParams("/Users/shea/Downloads/params2.csv");
     }
@@ -92,6 +103,21 @@ public class FileController {
 
     @GetMapping("/insertContractBackTest")
     public void insertContractBackTest(){
-//        fileService.initContractBackTest("/Users/shea/file/contract_back_test.csv");
+//        fileService.initContractBackTest("/Users/shea/file/(125,126)contract_back_test.csv");
+//        fileService.initContractBackTest("/Users/shea/file/contract_back_test(1).csv");
+    }
+
+    @GetMapping("/test")
+    public void test(){
+//        List<Contract> contracts = contractRepository.findAll();
+//        contracts.forEach(contract -> {
+//            contract.setType(contract.getNearbyFutures().getType());
+//        });
+//        contractRepository.saveAll(contracts);
+//        List<Trade> trades = tradeRepository.findAll();
+//        trades.forEach(trade -> {
+//            trade.setType(trade.getContract().getNearbyFutures().getType());
+//        });
+//        tradeRepository.saveAll(trades);
     }
 }

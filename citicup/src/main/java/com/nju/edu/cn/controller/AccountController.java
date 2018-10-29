@@ -31,12 +31,9 @@ public class AccountController {
     String getAccounts(HttpServletRequest request){
         String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
         logger.info("real_access_token:{} ",realAccessToken);
-        if(realAccessToken==null){
-            throw new InvalidRequestException("请先登录");
-        }
         String res = "";
         try {
-            res = GetAccounts.getAccounts(realAccessToken);
+            res = GetAccounts.getAccounts(realAccessToken,request.getSession());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,12 +51,9 @@ public class AccountController {
     String getPayeeCombine(HttpServletRequest request){
         String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
         logger.info("real_access_token:{} ",realAccessToken);
-        if(realAccessToken==null){
-            throw new InvalidRequestException("请先登录");
-        }
         String res = "";
         try {
-            res = GetAccounts.getPayeeCombine(realAccessToken);
+            res = GetAccounts.getPayeeCombine(realAccessToken,request.getSession());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,12 +70,9 @@ public class AccountController {
     String transferPreProgress(String body,HttpServletRequest request){
         String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
         logger.info("real_access_token:{} ",realAccessToken);
-        if(realAccessToken==null){
-            throw new InvalidRequestException("请先登录");
-        }
         String res = "";
         try {
-            res = GetAccounts.transferPreProgress(realAccessToken,body);
+            res = GetAccounts.transferPreProgress(realAccessToken,body,request.getSession());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,12 +90,9 @@ public class AccountController {
     String transferConfirm(String body,HttpServletRequest request){
         String realAccessToken = (String) request.getSession().getAttribute("real_access_token");
         logger.info("real_access_token:{} ",realAccessToken);
-        if(realAccessToken==null){
-            throw new InvalidRequestException("请先登录");
-        }
         String res = "";
         try {
-            res = GetAccounts.transferConfirm(realAccessToken,body);
+            res = GetAccounts.transferConfirm(realAccessToken,body,request.getSession());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -35,6 +35,9 @@ public class Contract {
     @Column(name = "`name`")
     private String name;
 
+    @Column(name = "`type`")
+    private Integer type;
+
 //    /**
 //     * 合约的交易，进一步应该筛出deleted=false的
 //     */
@@ -101,6 +104,14 @@ public class Contract {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
 //    public List<ContractBackTestParams> getContractBackTestParams() {

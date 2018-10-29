@@ -2,6 +2,7 @@ package com.nju.edu.cn.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.nju.edu.cn.entity.User;
 import com.nju.edu.cn.exception.InvalidRequestException;
 import com.nju.edu.cn.model.APIContext;
 import com.nju.edu.cn.model.UserModel;
@@ -12,15 +13,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.collections4.Get;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -63,7 +63,7 @@ public class UserController {
         System.out.println("=======================");
         APIContext apiContext = null;
         try {
-            String accessToken = GetAuthorize.GetAccessToken();
+            String accessToken = GetAuthorize.getAccessToken();
             apiContext = GetAuthorize.getBizToken(accessToken);
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,16 +89,22 @@ public class UserController {
     UserModel login(String username, String password,String bizToken, HttpServletRequest request){
         logger.info("username:{},psw:{}",username,password);
         String nickname = null;
+        HttpSession session = request.getSession();
         try {
-            String realAccessToken = GetAuthorize.getRealAccessToken(username,password,bizToken);
+            String realAccessToken = GetAuthorize.getRealAccessToken(username,password,bizToken,session);
             if(realAccessToken==null){
                 throw new InvalidRequestException("用户名或密码错误");
             }
-            request.getSession().setAttribute("real_access_token",realAccessToken);
+            if(userService.isFirstLogin(username)){
+                nickname = GetAccounts.getBasic(realAccessToken,session);
+                logger.info("nickname:{}",nickname);
+                return userService.firstLogin(username,nickname);
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return userService.login(username,nickname);
+        return userService.login(username);
     }
 
     /**

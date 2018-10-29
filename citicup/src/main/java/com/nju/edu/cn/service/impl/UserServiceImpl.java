@@ -39,18 +39,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel login(String username, String nickname) {
+    public UserModel login(String username) {
         User user = userRepository.findByUsername(username);
-        if(user==null){
-            user = new User();
-            user.setUsername(username);
-            user.setNickname(nickname);
-            user = userRepository.save(user);
-        }
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
+    }
+
+    @Override
+    public UserModel firstLogin(String username, String nickname) {
+        User user = new User();
+        user.setUsername(username);
+        user.setNickname(nickname);
+        user.setPreferRiskLevel(5);
+        user.setAvatar("http://localhost:8080/picture/1_1540723863137default-avatar.png");
+        user = userRepository.save(user);
+        UserModel userModel = new UserModel();
+        BeanUtils.copyProperties(user,userModel);
+        userModel.setIsCompleted(false);
+        return userModel;
+    }
+
+    @Override
+    public Boolean isFirstLogin(String username) {
+        User user = userRepository.findByUsername(username);
+        return user==null;
     }
 
     @Override
@@ -90,7 +103,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 
@@ -100,7 +112,6 @@ public class UserServiceImpl implements UserService {
         if(user==null)throw new InvalidRequestException("用户名不存在");
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 
@@ -113,7 +124,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 }

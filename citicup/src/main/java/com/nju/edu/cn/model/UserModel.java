@@ -28,20 +28,20 @@ public class UserModel {
     public String avatar;
 
     /**
-     * 信息是否完整
+     * 是否是第一次登录网站
      */
-    public Boolean isCompleted;
+    public Boolean isCompleted = true;
 
     public UserModel() {
     }
 
-    public void setIsCompleted(){
-        if(this.avatar==null||this.preferRiskLevel==null||this.nickname==null){
-            this.isCompleted = false;
-        }else {
-            this.isCompleted = true;
-        }
-    }
+//    public void setIsCompleted(){
+//        if(this.avatar==null||this.preferRiskLevel==null||this.nickname==null){
+//            this.isCompleted = false;
+//        }else {
+//            this.isCompleted = true;
+//        }
+//    }
 
     public void setUserId(Long userId) {
         this.userId = userId;

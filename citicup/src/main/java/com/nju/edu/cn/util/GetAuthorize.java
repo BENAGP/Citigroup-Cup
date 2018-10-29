@@ -2,14 +2,19 @@ package com.nju.edu.cn.util;
 
 import com.alibaba.fastjson.JSON;
 import com.nju.edu.cn.constant.APIConstant;
+import com.nju.edu.cn.exception.InvalidRequestException;
 import com.nju.edu.cn.model.APIContext;
+import com.nju.edu.cn.model.AuthorizeResponse;
 import com.nju.edu.cn.model.CustomerBasic;
 import com.nju.edu.cn.model.CustomerParticular;
 import okhttp3.*;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -18,8 +23,32 @@ import java.util.UUID;
  */
 public class GetAuthorize {
 
+    private static Logger logger = LoggerFactory.getLogger(GetAuthorize.class);
 
-    public static String GetAccessToken() throws IOException {
+
+    public static void authorize(HttpSession session,AuthorizeResponse authorizeResponse){
+        if(authorizeResponse.unAuthorized()&&session.getAttribute("retried")==null){
+            session.setAttribute("retried",true);
+            try {
+                String accessToken = getAccessToken();
+                APIContext apiContext = getBizToken(accessToken);
+                String bizToken = apiContext.getBizToken();
+                String username = (String)session.getAttribute("username");
+                String password = (String)session.getAttribute("password");
+
+                getRealAccessToken(username,password,bizToken,session);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            if(session.getAttribute("retried")!=null)session.removeAttribute("retried");
+            throw new InvalidRequestException("请先登录");
+        }
+
+
+    }
+
+    public static String getAccessToken() throws IOException {
         OkHttpClient client = new OkHttpClient();
         String client_id = APIConstant.CLIENT_ID;
         String client_scrent = APIConstant.CLIENT_SCRENT;
@@ -79,7 +108,7 @@ public class GetAuthorize {
         return context;
     }
 
-    public static String getRealAccessToken(String username,String password,String bizToken) throws IOException{
+    public static String getRealAccessToken(String username,String password,String bizToken,HttpSession session) throws IOException{
         String client_id = APIConstant.CLIENT_ID;
         String client_scrent = APIConstant.CLIENT_SCRENT;
         System.err.println("bizToken: "+bizToken);
@@ -105,34 +134,11 @@ public class GetAuthorize {
         String realAccessToken = (String) jsonObject.get("access_token");
         System.out.println("step3 real_access_token:");
         System.out.println("\t" + realAccessToken);
-        getBasic(realAccessToken);
+        session.setAttribute("real_access_token",realAccessToken);
+        session.setAttribute("username",username);
+        session.setAttribute("password",password);
+//        getBasic("aaaaaaaa",session);
         return realAccessToken;
-    }
-
-    public static String getBasic(String realAccessToken) throws IOException {
-        String client_id = APIConstant.CLIENT_ID;
-        String authorization = "Bearer " + realAccessToken;
-        UUID uuid = UUID.randomUUID();
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://sandbox.apihub.citi.com/gcb/api/v1/customers/profiles/basic")
-                .get()
-                .addHeader("authorization", authorization)
-                .addHeader("uuid", uuid.toString())
-                .addHeader("content-type", "application/json")
-                .addHeader("accept", "application/json")
-                .addHeader("client_id", client_id)
-                .build();
-        Response response = client.newCall(request).execute();
-        String responseBodyString = response.body().string();
-        System.out.println("step31 basic_info:");
-        System.out.println("\t"+responseBodyString);
-        CustomerBasic customerBasic = JSON.parseObject(responseBodyString,CustomerBasic.class);
-        CustomerParticular customerParticular = customerBasic.getCustomerParticulars();
-        String prefix = customerParticular.getPrefix().substring(0,1).toUpperCase()+customerParticular.getPrefix().toLowerCase().substring(1);
-        String lastName = customerParticular.getNames()[0].getLastName().substring(0,1).toUpperCase()+customerParticular.getNames()[0].getLastName().substring(1).toLowerCase();
-        String nickname = prefix+"."+lastName;
-        return nickname;
     }
 
 }

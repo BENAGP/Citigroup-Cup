@@ -182,7 +182,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void insertFuturesUpdating(String path) {
-        if(count7==4)return;
+        if(count7==2)return;
         count7++;
         logger.info("--------------"+count7);
         File csv = new File(path);  // CSV文件路径
@@ -292,7 +292,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void initParams(String path) {
-        if(count2==1)return;
+        if(count2==2)return;
         count2++;
         logger.info("--------------"+count2);
         File csv = new File(path);  // CSV文件路径

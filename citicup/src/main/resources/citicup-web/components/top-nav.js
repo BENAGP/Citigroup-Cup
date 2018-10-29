@@ -1,50 +1,54 @@
 /**
  * Created by shea on 2018/8/9.
  */
-// let top_nav_islogin = true;
+let top_nav_islogin;
 let info_disabled = false;
-if (window.localStorage.getItem("userId")) {
-    top_nav_islogin = true;
-} else {
-    top_nav_islogin = false;
-}
 let login_index = 0;
 let info_index = 0;
-let person_nav_tab =
-    top_nav_islogin ?
-        "<div class='tab' topage='/person/collection.html'>个人中心</div> " :
-        "<div class='tab' onclick='showLogin()'>登录</div>";
+setTopNav();
 
-const nav =
-    "<div>" +
-    "<div class='logo'>" +
-    "<img src='../imgs/logo4.png'> " +
-    "</div>" +
-    person_nav_tab +
-    "<div class='tab' topage='/transaction/transaction.html'>我的交易</div> " +
-    "<div class='tab' topage='/contractmall/contractmall.html'>合约商城</div> " +
-    "<div class='tab' topage='/home/home.html'>首页</div> " +
-    "</div>";
-
-
-$(".top-nav").append(nav);
-active_tab = window.location.pathname;
-console.log(active_tab)
-$(".top-nav .tab[topage='" + active_tab + "']").addClass("active");
-
-
-$(".top-nav .tab").on('click', function () {
-    // console.log($(this).attr("topage"));
-    const topage = $(this).attr("topage");
-    if(topage){
-        if (topage.split("/")[1] == "transaction" || topage.split("/")[1] == "person") {
-            if (!top_nav_islogin) showLogin();
-            else forward(topage);
-        } else {
-            forward(topage);
-        }
+function setTopNav() {
+    if (window.localStorage.getItem("userId")) {
+        top_nav_islogin = true;
+    } else {
+        top_nav_islogin = false;
     }
-});
+    let person_nav_tab =
+        top_nav_islogin ?
+            "<div class='tab' topage='/person/collection.html'>个人中心</div> " :
+            "<div class='tab' onclick='showLogin()'>登录</div>";
+
+    const nav =
+        "<div>" +
+        "<div class='logo'>" +
+        "<img src='../imgs/logo4.png'> " +
+        "</div>" +
+        person_nav_tab +
+        "<div class='tab' topage='/transaction/transaction.html'>我的交易</div> " +
+        "<div class='tab' topage='/contractmall/contractmall.html'>合约商城</div> " +
+        "<div class='tab' topage='/home/home.html'>首页</div> " +
+        "</div>";
+
+    $(".top-nav").empty();
+    $(".top-nav").append(nav);
+    const active_tab = window.location.pathname;
+    console.log(active_tab)
+    $(".top-nav .tab[topage='" + active_tab + "']").addClass("active");
+
+
+    $(".top-nav .tab").on('click', function () {
+        // console.log($(this).attr("topage"));
+        const topage = $(this).attr("topage");
+        if(topage){
+            if (topage.split("/")[1] == "transaction" || topage.split("/")[1] == "person") {
+                if (!top_nav_islogin) showLogin();
+                else forward(topage);
+            } else {
+                forward(topage);
+            }
+        }
+    });
+}
 
 function showLogin() {
     login_index = layer.open({
@@ -104,17 +108,11 @@ function doLogin(username,encrypted_password,encryptPara) {
         'password': encrypted_password,
         'bizToken':encryptPara.bizToken,
     }).done(response=>{
-        console.log(response);
         setUser(response);
+        layer.close(login_index);
         if(!response.isCompleted)
         {
-            layer.close(login_index);
-            layer.alert("用户信息不完整,请补完信息！",function (index) {
-                layer.close(index);
-                // showInfo();
-                // getAccounts();
-                // getPayeeCombine();
-            });
+            showInfo();
         }else {
             forward("/home/home.html");
         }
@@ -275,7 +273,8 @@ function showInfo() {
 }
 
 function closeInfo() {
-    layer.close(info_index)
+    layer.close(info_index);
+
 }
 
 function uploadPic() {

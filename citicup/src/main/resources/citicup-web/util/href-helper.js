@@ -32,6 +32,7 @@ function setUser(user) {
     window.localStorage.setItem("nickname",nickname);
     window.localStorage.setItem("preferRiskLevel",preferRiskLevel);
     window.localStorage.setItem("avatar",avatar);
+    setTopNav();
 }
 // //使用获取参数方法
 // var id= GetUrlParam("id");

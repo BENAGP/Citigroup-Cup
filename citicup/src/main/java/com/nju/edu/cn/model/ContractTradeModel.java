@@ -147,4 +147,220 @@ public class ContractTradeModel {
         }
 
     }
+
+    public Double getYearYield() {
+        return yearYield;
+    }
+
+    public void setYearYield(Double yearYield) {
+        this.yearYield = yearYield;
+    }
+
+    public Double getMaxDrawdown() {
+        return maxDrawdown;
+    }
+
+    public void setMaxDrawdown(Double maxDrawdown) {
+        this.maxDrawdown = maxDrawdown;
+    }
+
+    public Double getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(Double winRate) {
+        this.winRate = winRate;
+    }
+
+    public Double getProfitLossRatio() {
+        return profitLossRatio;
+    }
+
+    public void setProfitLossRatio(Double profitLossRatio) {
+        this.profitLossRatio = profitLossRatio;
+    }
+
+    public Double getMarketCapitalCapacity() {
+        return marketCapitalCapacity;
+    }
+
+    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
+        this.marketCapitalCapacity = marketCapitalCapacity;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
+    public Long getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(Long tradeId) {
+        this.tradeId = tradeId;
+    }
+
+    public Integer getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    public Double getInvestment() {
+        return investment;
+    }
+
+    public void setInvestment(Double investment) {
+        this.investment = investment;
+    }
+
+    public List<Date> getUpdateTimes() {
+        return updateTimes;
+    }
+
+    public void setUpdateTimes(List<Date> updateTimes) {
+        this.updateTimes = updateTimes;
+    }
+
+    public List<String> getFormatDates() {
+        return formatDates;
+    }
+
+    public void setFormatDates(List<String> formatDates) {
+        this.formatDates = formatDates;
+    }
+
+    public List<Double> getYields() {
+        return yields;
+    }
+
+    public void setYields(List<Double> yields) {
+        this.yields = yields;
+    }
+
+    public List<Double> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Double> positions) {
+        this.positions = positions;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getDdl() {
+        return ddl;
+    }
+
+    public void setDdl(Date ddl) {
+        this.ddl = ddl;
+    }
+
+    public Boolean getEnd() {
+        return isEnd;
+    }
+
+    public void setEnd(Boolean end) {
+        isEnd = end;
+    }
+
+    public Integer getNearbyFuturesPosition() {
+        return nearbyFuturesPosition;
+    }
+
+    public void setNearbyFuturesPosition(Integer nearbyFuturesPosition) {
+        this.nearbyFuturesPosition = nearbyFuturesPosition;
+    }
+
+    public Integer getBackFuturesPosition() {
+        return backFuturesPosition;
+    }
+
+    public void setBackFuturesPosition(Integer backFuturesPosition) {
+        this.backFuturesPosition = backFuturesPosition;
+    }
+
+    public Double getTodayProfitLoss() {
+        return todayProfitLoss;
+    }
+
+    public void setTodayProfitLoss(Double todayProfitLoss) {
+        this.todayProfitLoss = todayProfitLoss;
+    }
+
+    public Double getPosition() {
+        return position;
+    }
+
+    public void setPosition(Double position) {
+        this.position = position;
+    }
+
+    public Float getNearbyFuturesPrice() {
+        return nearbyFuturesPrice;
+    }
+
+    public void setNearbyFuturesPrice(Float nearbyFuturesPrice) {
+        this.nearbyFuturesPrice = nearbyFuturesPrice;
+    }
+
+    public Float getBackFuturesPrice() {
+        return backFuturesPrice;
+    }
+
+    public void setBackFuturesPrice(Float backFuturesPrice) {
+        this.backFuturesPrice = backFuturesPrice;
+    }
+
+    public String getNearbyFuturesName() {
+        return nearbyFuturesName;
+    }
+
+    public void setNearbyFuturesName(String nearbyFuturesName) {
+        this.nearbyFuturesName = nearbyFuturesName;
+    }
+
+    public String getBackFuturesName() {
+        return backFuturesName;
+    }
+
+    public void setBackFuturesName(String backFuturesName) {
+        this.backFuturesName = backFuturesName;
+    }
+
+    public List<Integer> getNearbyFuturesPositionOperations() {
+        return nearbyFuturesPositionOperations;
+    }
+
+    public void setNearbyFuturesPositionOperations(List<Integer> nearbyFuturesPositionOperations) {
+        this.nearbyFuturesPositionOperations = nearbyFuturesPositionOperations;
+    }
+
+    public List<Integer> getBackFuturesPositionOperations() {
+        return backFuturesPositionOperations;
+    }
+
+    public void setBackFuturesPositionOperations(List<Integer> backFuturesPositionOperations) {
+        this.backFuturesPositionOperations = backFuturesPositionOperations;
+    }
 }
