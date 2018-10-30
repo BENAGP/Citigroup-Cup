@@ -12,6 +12,7 @@
     <script src="../lib/echarts.min.js"></script>
     <script src="../util/href-helper.js"></script>
     <script src="mall.js"></script>
+    <script src="../components/collect.js"></script>
     <link rel="stylesheet" type="text/css" href="mall.css">
 
 
@@ -668,45 +669,6 @@
 
 <script>
 
-    /***
-     * document.getElementById("collectIcon"+i).src="../imgs/collected.png";
-     $("#collect"+i).html('取消收藏');
-     }else{
-                document.getElementById("collectIcon"+i).src="../imgs/star.png";
-                $("#collect"+i).html('收藏');
-            }
-     * @param id
-     */
-
-    function collect(id){
-        var buttonText = $("#collect"+id).html();
-        if(buttonText == '收藏'){
-            $.post('/api/contract/collect',{
-                userId: window.localStorage.getItem("userId"),
-                contractId:contractList[id].contractId
-            }).done(response => {
-                alert("收藏成功！");
-                document.getElementById("collectIcon"+id).src="../imgs/collected.png";
-                $("#collect"+id).html('取消收藏');
-            }).fail(err => {
-                alert("please try again！");
-            });
-        }else if(buttonText == '取消收藏'){
-            $.post('/api/contract/cancelCollect',{
-                userId: window.localStorage.getItem("userId"),
-                contractId:contractList[id].contractId
-            }).done(response => {
-                alert("已取消收藏！");
-                document.getElementById("collectIcon"+id).src="../imgs/star.png";
-                $("#collect"+id).html('收藏');
-            }).fail(err => {
-                alert("please try again！");
-            });
-        }
-
-    }
-
-
 
     var contractList =[];
 
@@ -741,6 +703,23 @@
 
 
 
+    function collect(id){
+        var buttonText = $("#collect"+id).html();
+        if(buttonText == '收藏'){
+            var res = collectContract(contractList[id].contractId);
+            if(res == "true"){
+                document.getElementById("collectIcon"+id).src="../imgs/collected.png";
+                $("#collect"+id).html('取消收藏');
+            }
+        }else if(buttonText == '取消收藏'){
+            var res = cancleContract(contractList[id].contractId);
+            if(res == "true"){
+                document.getElementById("collectIcon"+id).src="../imgs/star.png";
+                $("#collect"+id).html('收藏');
+            }
+        }
+
+    }
 
     function getContractList(){
         for(var i=0;i<6;i++){
@@ -1426,36 +1405,5 @@
         $("#profit").css("background-color","rgba(253, 104, 87, 1)");
         $("#profit").css("color","rgba(255, 255, 255, 1)");
     });
-
-
-
 </script>
-
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
