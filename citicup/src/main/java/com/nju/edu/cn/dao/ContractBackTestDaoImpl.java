@@ -121,8 +121,9 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
     public List<ContractTradeModel> getList(Long userId,Integer riskLevel, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum) {
 
         List<ContractTradeModel> contractTradeModels = new ArrayList<>();
+        connection = SqlConnectUtil.getSqlConnect();
         try {
-            connection = SqlConnectUtil.getSqlConnect();
+            List<Long> contractIds = getCollectList(userId);
             String selectSql = "select t.trade_id as trade_id,t.market_capital_capacity as market_capital_capacity," +
                     "t.max_drawdown as max_drawdown,t.win_rate as win_rate,t.profit_loss_ratio as profit_loss_ratio," +
                     "t.contract_id as contract_id, c.`name` as contract_name,t.risk_level as risk_level " +
@@ -174,6 +175,7 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
                 ContractTradeModel contractTradeModel = new ContractTradeModel();
                 setContractTradeModel(contractTradeModel,resultSet);
                 getYields(contractTradeModel);
+                contractTradeModel.isCollected = contractIds.indexOf(resultSet.getLong("contract_id"))>=0;
                 contractTradeModels.add(contractTradeModel);
             }
         } catch (SQLException e) {
@@ -246,6 +248,7 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
                 "left join futures f1 on f1.futures_id=c.nearby_futures_id " +
                 "left join futures f2 on f2.futures_id=c.back_futures_id " +
                 "where ct.user_id="+20+" limit 3";
+//                "where ct.user_id="+userId+" limit 3";
 
         connection = SqlConnectUtil.getSqlConnect();
         try {
@@ -274,8 +277,9 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
     private ContractTradeDetail getDetail(Long userId,String whereClause){
         ContractTradeDetail contractTradeDetail = new ContractTradeDetail();
         HistoryMarket historyMarket = new HistoryMarket();
+        connection = SqlConnectUtil.getSqlConnect();
         try {
-            connection = SqlConnectUtil.getSqlConnect();
+            List<Long> contractIds = getCollectList(userId);
             String selectSql = "select t.trade_id as trade_id,t.market_capital_capacity as market_capital_capacity," +
                     "t.max_drawdown as max_drawdown,t.win_rate as win_rate,t.profit_loss_ratio as profit_loss_ratio," +
                     "t.contract_id as contract_id, c.`name` as contract_name,f1.last_trading_date as last_trading_date," +
@@ -299,6 +303,7 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
                 getHistoryMarket(historyMarket,resultSet);
                 getYields(contractTradeDetail);
                 contractTradeDetail.historyMarket = historyMarket;
+                contractTradeDetail.isCollected = contractIds.indexOf(resultSet.getLong("contract_id"))>=0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -479,6 +484,22 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private List<Long> getCollectList(Long userId){
+        String selectSql = "select contract_id from collect where deleted=FALSE user_id="+userId;
+        ResultSet innerResult = null;
+        List<Long> contractIds = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(selectSql);
+            innerResult = statement.executeQuery();
+            while (innerResult.next()){
+                contractIds.add(innerResult.getLong("contract_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contractIds;
     }
 
 

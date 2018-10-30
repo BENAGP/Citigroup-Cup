@@ -181,7 +181,7 @@ public class ContractServiceImpl implements ContractService {
     public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum) {
         User user = userRepository.findByUserId(userId);
         int riskLevel = user.getPreferRiskLevel();
-        return contractBackTestDao.getList(null,riskLevel,contractTradeSearch,page,pageNum);
+        return contractBackTestDao.getList(userId,riskLevel,contractTradeSearch,page,pageNum);
     }
 
 //    @Override
@@ -324,7 +324,7 @@ public class ContractServiceImpl implements ContractService {
     public ContractTradeDetail getDetail(Long userId, Long tradeId) {
 //        Trade trade = tradeRepository.findByTradeId(tradeId);
 //        return getDetail(trade);
-        return contractBackTestDao.getDetail(null,tradeId);
+        return contractBackTestDao.getDetail(userId,tradeId);
     }
 
     @Override
@@ -401,7 +401,7 @@ public class ContractServiceImpl implements ContractService {
     public ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel) {
 //        Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId, riskLevel, null);
 //        return getDetail(trade);
-        return contractBackTestDao.getDetail(null,contractId,riskLevel);
+        return contractBackTestDao.getDetail(userId,contractId,riskLevel);
     }
 
     private ContractTradeDetail getDetail(Trade trade) {

@@ -18,6 +18,11 @@ public class ContractTradeModel {
     public Double yearYield;
 
     /**
+     * 是否已经收藏
+     */
+    public Boolean isCollected;
+
+    /**
      * 最大回撤
      */
     public Double maxDrawdown;
@@ -371,5 +376,13 @@ public class ContractTradeModel {
 
     public void setBackFuturesPositionOperations(List<Integer> backFuturesPositionOperations) {
         this.backFuturesPositionOperations = backFuturesPositionOperations;
+    }
+
+    public Boolean getCollected() {
+        return isCollected;
+    }
+
+    public void setCollected(Boolean collected) {
+        isCollected = collected;
     }
 }
