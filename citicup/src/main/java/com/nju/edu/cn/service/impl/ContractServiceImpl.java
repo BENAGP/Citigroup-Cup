@@ -56,43 +56,44 @@ public class ContractServiceImpl implements ContractService {
         //首先找到用户偏好风险等级
         User user = userRepository.findByUserId(userId);
         int riskLevel = user.getPreferRiskLevel();
-        //然后找到用户收藏表
-        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
-        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
-        List<Collect> collects = collectRepository.findByUserIdAndDeleted(userId, false, pageRequest).getContent();
-        Long now = System.currentTimeMillis();
-        //遍历收藏表，生成ContractTradeModel
-        collects.forEach(collect -> {
-            //取出收藏的合约ID
-            Long contractId = collect.getContractId();
-            Contract contract = contractRepository.findByContractId(contractId);
-            Date ddl = contract.getNearbyFutures().getLastTradingDate();
-            //合约ID+风险等级+购买用户ID=>一次购买（每有一次购买，就增加一条回测数据线）
-            //这里应该是新增合约的时候默认增加的回测数据多条数据线中的一条
-            Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId, riskLevel, null);
-            ContractTradeModel contractTradeModel = new ContractTradeModel();
-            //找出与该此购买对应的一条回测数据线
-            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-//            Collections.sort(contractBackTests,comparator);//按更新时间排序
-//            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel,FuturesType.ALL);
-            List<Double> yields = new ArrayList<>();// 收益率纵轴
-            List<Date> updateTimes = new ArrayList<>();//时间横轴
-            List<String> formatDates = new ArrayList<>();//时间横轴
-            contractBackTests.forEach(contractBackTest -> {
-                yields.add(contractBackTest.getYield());
-                updateTimes.add(contractBackTest.getCreateTime());
-                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
-            });
-            contractTradeModel.updateTimes = updateTimes;
-            contractTradeModel.formatDates = formatDates;
-            contractTradeModel.yields = yields;
-            contractTradeModel.computeYield();
-            contractTradeModel.ddl = ddl;
-            contractTradeModel.isEnd = (ddl.getTime() < now);
-            contractTradeModels.add(contractTradeModel);
-        });
-        return contractTradeModels;
+        return contractBackTestDao.getCollectList(userId,riskLevel,page,pageNum);
+//        //然后找到用户收藏表
+//        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+//        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
+//        List<Collect> collects = collectRepository.findByUserIdAndDeleted(userId, false, pageRequest).getContent();
+//        Long now = System.currentTimeMillis();
+//        //遍历收藏表，生成ContractTradeModel
+//        collects.forEach(collect -> {
+//            //取出收藏的合约ID
+//            Long contractId = collect.getContractId();
+//            Contract contract = contractRepository.findByContractId(contractId);
+//            Date ddl = contract.getNearbyFutures().getLastTradingDate();
+//            //合约ID+风险等级+购买用户ID=>一次购买（每有一次购买，就增加一条回测数据线）
+//            //这里应该是新增合约的时候默认增加的回测数据多条数据线中的一条
+//            Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId, riskLevel, null);
+//            ContractTradeModel contractTradeModel = new ContractTradeModel();
+//            //找出与该此购买对应的一条回测数据线
+//            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
+////            Collections.sort(contractBackTests,comparator);//按更新时间排序
+////            BeanUtils.copyProperties(trade,contractTradeModel);
+//            copyProperties(trade, contractTradeModel,FuturesType.ALL);
+//            List<Double> yields = new ArrayList<>();// 收益率纵轴
+//            List<Date> updateTimes = new ArrayList<>();//时间横轴
+//            List<String> formatDates = new ArrayList<>();//时间横轴
+//            contractBackTests.forEach(contractBackTest -> {
+//                yields.add(contractBackTest.getYield());
+//                updateTimes.add(contractBackTest.getCreateTime());
+//                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
+//            });
+//            contractTradeModel.updateTimes = updateTimes;
+//            contractTradeModel.formatDates = formatDates;
+//            contractTradeModel.yields = yields;
+//            contractTradeModel.computeYield();
+//            contractTradeModel.ddl = ddl;
+//            contractTradeModel.isEnd = (ddl.getTime() < now);
+//            contractTradeModels.add(contractTradeModel);
+//        });
+//        return contractTradeModels;
     }
 
     @Override
@@ -114,66 +115,66 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractTradeModel> getMyTradeList(Long userId, Integer page, Integer pageNum) {
-        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
-//        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
-//        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
-//        List<Trade> trades = tradeRepository.findByUser_UserIdAndDeletedIsFalse(userId, pageRequest).getContent();
-        List<Trade> trades = tradeRepository.findTop4ByRiskLevel(3);
-        trades.forEach(trade -> {
-            ContractTradeModel contractTradeModel = new ContractTradeModel();
-            //找出与该此购买对应的一条回测数据线
-            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
-//            Collections.sort(contractBackTests,comparator);//按更新时间排序
-//            BeanUtils.copyProperties(trade,contractTradeModel);
-            copyProperties(trade, contractTradeModel,FuturesType.ALL);
-            List<Double> yields = new ArrayList<>();// 收益率纵轴
-            List<Date> updateTimes = new ArrayList<>();//时间横轴
-            List<String> formatDates = new ArrayList<>();//时间横轴
-            List<Double> positions = new ArrayList<>();//资金占用纵轴
-            List<Integer> nearbyFuturesPositionOperations = new ArrayList<>();
-            List<Integer> backFuturesPositionOperations = new ArrayList<>();
-            for(int i=0;i<contractBackTests.size();i++){
-                ContractBackTest contractBackTest = contractBackTests.get(i);
-                yields.add(contractBackTest.getYield());
-                updateTimes.add(contractBackTest.getCreateTime());
-                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
-                positions.add(contractBackTest.getPosition());
-                if(i>0){
-                    ContractBackTest pre = contractBackTests.get(i-1);
-                    nearbyFuturesPositionOperations.add(contractBackTest.getNearbyFuturesPosition()-pre.getNearbyFuturesPosition());
-                    backFuturesPositionOperations.add(contractBackTest.getBackFuturesPosition()-pre.getBackFuturesPosition());
-                }else {
-                    nearbyFuturesPositionOperations.add(contractBackTest.getNearbyFuturesPosition());
-                    backFuturesPositionOperations.add(contractBackTest.getBackFuturesPosition());
-                }
-            }
-            contractTradeModel.updateTimes = updateTimes;
-            contractTradeModel.formatDates = formatDates;
-            contractTradeModel.yields = yields;
-            contractTradeModel.computeYield();
-            contractTradeModel.positions = positions;
-            //历史调仓
-            contractTradeModel.nearbyFuturesPositionOperations = nearbyFuturesPositionOperations;
-            contractTradeModel.backFuturesPositionOperations = backFuturesPositionOperations;
-            //当前持仓
-            Contract contract = trade.getContract();
-            Futures nearbyFutures = contract.getNearbyFutures();
-            Futures backFutures = contract.getBackFutures();
-            contractTradeModel.nearbyFuturesName = nearbyFutures.getName();
-            contractTradeModel.backFuturesName = backFutures.getName();
-            ContractBackTest contractBackTest = contractBackTests.get(contractBackTests.size()-1);
-            contractTradeModel.position = contractBackTest.getPosition();
-            contractTradeModel.nearbyFuturesPosition = contractBackTest.getNearbyFuturesPosition();
-            contractTradeModel.backFuturesPosition = contractBackTest.getBackFuturesPosition();
-            contractTradeModel.todayProfitLoss = contractBackTest.getTodayProfitLoss();
-            FuturesUpdating nearbyFuturesUpdating = futuresUpdatingRepository.findTopByFutures_FuturesIdOrderByUpdateTimeDesc(nearbyFutures.getFuturesId());
-            FuturesUpdating backFuturesUpdating = futuresUpdatingRepository.findTopByFutures_FuturesIdOrderByUpdateTimeDesc(backFutures.getFuturesId());
-            contractTradeModel.nearbyFuturesPrice = nearbyFuturesUpdating.getPrice();
-            contractTradeModel.backFuturesPrice = backFuturesUpdating.getPrice();
-            contractTradeModels.add(contractTradeModel);
-        });
+//        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
+////        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+////        PageRequest pageRequest = new PageRequest(page, pageNum, sort);
+////        List<Trade> trades = tradeRepository.findByUser_UserIdAndDeletedIsFalse(userId, pageRequest).getContent();
+//        List<Trade> trades = tradeRepository.findTop4ByRiskLevel(3);
+//        trades.forEach(trade -> {
+//            ContractTradeModel contractTradeModel = new ContractTradeModel();
+//            //找出与该此购买对应的一条回测数据线
+//            List<ContractBackTest> contractBackTests = trade.getContractBackTests();
+////            Collections.sort(contractBackTests,comparator);//按更新时间排序
+////            BeanUtils.copyProperties(trade,contractTradeModel);
+//            copyProperties(trade, contractTradeModel,FuturesType.ALL);
+//            List<Double> yields = new ArrayList<>();// 收益率纵轴
+//            List<Date> updateTimes = new ArrayList<>();//时间横轴
+//            List<String> formatDates = new ArrayList<>();//时间横轴
+//            List<Double> positions = new ArrayList<>();//资金占用纵轴
+//            List<Integer> nearbyFuturesPositionOperations = new ArrayList<>();
+//            List<Integer> backFuturesPositionOperations = new ArrayList<>();
+//            for(int i=0;i<contractBackTests.size();i++){
+//                ContractBackTest contractBackTest = contractBackTests.get(i);
+//                yields.add(contractBackTest.getYield());
+//                updateTimes.add(contractBackTest.getCreateTime());
+//                formatDates.add(simpleDateFormat.format(contractBackTest.getCreateTime()));
+//                positions.add(contractBackTest.getPosition());
+//                if(i>0){
+//                    ContractBackTest pre = contractBackTests.get(i-1);
+//                    nearbyFuturesPositionOperations.add(contractBackTest.getNearbyFuturesPosition()-pre.getNearbyFuturesPosition());
+//                    backFuturesPositionOperations.add(contractBackTest.getBackFuturesPosition()-pre.getBackFuturesPosition());
+//                }else {
+//                    nearbyFuturesPositionOperations.add(contractBackTest.getNearbyFuturesPosition());
+//                    backFuturesPositionOperations.add(contractBackTest.getBackFuturesPosition());
+//                }
+//            }
+//            contractTradeModel.updateTimes = updateTimes;
+//            contractTradeModel.formatDates = formatDates;
+//            contractTradeModel.yields = yields;
+//            contractTradeModel.computeYield();
+//            contractTradeModel.positions = positions;
+//            //历史调仓
+//            contractTradeModel.nearbyFuturesPositionOperations = nearbyFuturesPositionOperations;
+//            contractTradeModel.backFuturesPositionOperations = backFuturesPositionOperations;
+//            //当前持仓
+//            Contract contract = trade.getContract();
+//            Futures nearbyFutures = contract.getNearbyFutures();
+//            Futures backFutures = contract.getBackFutures();
+//            contractTradeModel.nearbyFuturesName = nearbyFutures.getName();
+//            contractTradeModel.backFuturesName = backFutures.getName();
+//            ContractBackTest contractBackTest = contractBackTests.get(contractBackTests.size()-1);
+//            contractTradeModel.position = contractBackTest.getPosition();
+//            contractTradeModel.nearbyFuturesPosition = contractBackTest.getNearbyFuturesPosition();
+//            contractTradeModel.backFuturesPosition = contractBackTest.getBackFuturesPosition();
+//            contractTradeModel.todayProfitLoss = contractBackTest.getTodayProfitLoss();
+//            FuturesUpdating nearbyFuturesUpdating = futuresUpdatingRepository.findTopByFutures_FuturesIdOrderByUpdateTimeDesc(nearbyFutures.getFuturesId());
+//            FuturesUpdating backFuturesUpdating = futuresUpdatingRepository.findTopByFutures_FuturesIdOrderByUpdateTimeDesc(backFutures.getFuturesId());
+//            contractTradeModel.nearbyFuturesPrice = nearbyFuturesUpdating.getPrice();
+//            contractTradeModel.backFuturesPrice = backFuturesUpdating.getPrice();
+//            contractTradeModels.add(contractTradeModel);
+//        });
 
-        return contractTradeModels;
+        return contractBackTestDao.getMyTradeList(userId,page,pageNum);
     }
 
     @Override

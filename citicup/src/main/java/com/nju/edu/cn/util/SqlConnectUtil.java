@@ -9,9 +9,12 @@ import java.sql.Connection;
  * Created by ${zrz} on 2017/8/16.
  */
 public final class SqlConnectUtil {
-    static String url = "jdbc:mysql://120.79.77.99:3306/citicup?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false";
+    static String url = "jdbc:mysql://localhost:3306/citicup?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false";
+//    static String url = "jdbc:mysql://120.79.77.99:3306/citicup?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false";
     static String user = "root";
-    static String password = "nswdw1ZJ...";
+//    static String user = "root";
+    static String password = "123456";
+//    static String password = "nswdw1ZJ...";
     static{
         try {
             Class.forName("com.mysql.jdbc.Driver");

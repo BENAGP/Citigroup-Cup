@@ -131,11 +131,11 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
             if (contractTradeSearch.type != null && contractTradeSearch.type != FuturesType.ALL) {
                 selectSql = selectSql + " and c.`type`=" + contractTradeSearch.type;
             }
-            if(userId == null){
-                selectSql = selectSql + " and user_id is null";
-            }else {
-                selectSql = selectSql + " and user_id = "+userId;
-            }
+//            if(userId == null){
+//                selectSql = selectSql + " and user_id is null";
+//            }else {
+//                selectSql = selectSql + " and user_id = "+userId;
+//            }
             if (contractTradeSearch.marketCapitalCapacityR != null && Double.isFinite(contractTradeSearch.marketCapitalCapacityR)) {
                 selectSql = selectSql + " and t.market_capital_capacity<=" + contractTradeSearch.marketCapitalCapacityR;
             }
@@ -186,42 +186,92 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
     }
 
     @Override
-    public ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel) {
-        ContractTradeDetail contractTradeDetail = new ContractTradeDetail();
-        HistoryMarket historyMarket = new HistoryMarket();
+    public List<ContractTradeModel> getMyTradeList(Long userId, Integer page, Integer pageNum) {
+        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
+        String selectSql = "select t.trade_id as trade_id,t.market_capital_capacity as market_capital_capacity," +
+                "t.max_drawdown as max_drawdown,t.win_rate as win_rate,t.profit_loss_ratio as profit_loss_ratio," +
+                "t.contract_id as contract_id, c.`name` as contract_name,f1.last_trading_date as last_trading_date," +
+                "t.risk_level as risk_level,f1.last_trading_date as last_trading_date,c.nearby_futures_id as nearby_futures_id," +
+                "c.back_futures_id as back_futures_id,f1.name as nearby_futures_name,f2.name as back_futures_name " +
+                "from trade t " +
+                "left join contract c on c.contract_id=t.contract_id "+
+                "left join futures f1 on f1.futures_id=c.nearby_futures_id " +
+                "left join futures f2 on f2.futures_id=c.back_futures_id " +
+                "where t.user_id="+20+" limit 3";
+//                "where t.user_id="+userId;
+        connection = SqlConnectUtil.getSqlConnect();
         try {
-            connection = SqlConnectUtil.getSqlConnect();
-            String selectSql = "select t.trade_id as trade_id,t.market_capital_capacity as market_capital_capacity," +
-                    "t.max_drawdown as max_drawdown,t.win_rate as win_rate,t.profit_loss_ratio as profit_loss_ratio," +
-                    "t.contract_id as contract_id, c.`name` as contract_name,f1.last_trading_date as last_trading_date," +
-                    "t.risk_level as risk_level,f1.last_trading_date as last_trading_date,c.nearby_futures_id as nearby_futures_id," +
-                    "c.back_futures_id as back_futures_id,f1.name as nearby_futures_name,f2.name as back_futures_name " +
-                    "from trade t " +
-                    "left join contract c on c.contract_id=t.contract_id "+
-                    "left join futures f1 on f1.futures_id=c.nearby_futures_id " +
-                    "left join futures f2 on f2.futures_id=c.back_futures_id " +
-                    "WHERE t.deleted=FALSE and t.risk_level=" + riskLevel+ " and t.contract_id="+contractId;
-            if(userId == null){
-                selectSql = selectSql + " and user_id is null;";
-            }else {
-                selectSql = selectSql + " and user_id = "+userId+";";
-            }
             statement = connection.prepareStatement(selectSql);
             resultSet = statement.executeQuery();
-            if(resultSet.next()){
-                setContractTradeDetail(contractTradeDetail,resultSet);
-                getHistoryMarket(historyMarket,resultSet);
-                getYields(contractTradeDetail);
-                contractTradeDetail.historyMarket = historyMarket;
+            ResultSet innerResult = null;
+            while (resultSet.next()){
+                ContractTradeModel contractTradeModel = new ContractTradeModel();
+                setContractTradeModel(contractTradeModel,resultSet);
+                getYieldsAndPositions(contractTradeModel);
+                contractTradeModel.nearbyFuturesName = resultSet.getString("nearby_futures_name");
+                contractTradeModel.backFuturesName = resultSet.getString("back_futures_name");
+                selectSql = "select price from futures_updating WHERE futures_id="+resultSet.getLong("nearby_futures_id")+" order by update_time desc limit 1;";
+                statement = connection.prepareStatement(selectSql);
+                innerResult = statement.executeQuery();
+                if(innerResult.next()){
+                    contractTradeModel.nearbyFuturesPrice = innerResult.getFloat("price");
+                }
+                selectSql = "select price from futures_updating WHERE futures_id="+resultSet.getLong("back_futures_id")+" order by update_time desc limit 1;";
+                statement = connection.prepareStatement(selectSql);
+                innerResult = statement.executeQuery();
+                if(innerResult.next()){
+                    contractTradeModel.backFuturesPrice = innerResult.getFloat("price");
+                }
+                contractTradeModels.add(contractTradeModel);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            freeConnect();
         }
-        return contractTradeDetail;
+        return contractTradeModels;
     }
 
     @Override
-    public ContractTradeDetail getDetail(Long userId, Long tradeId) {
+    public List<ContractTradeModel> getCollectList(Long userId, Integer riskLevel,Integer page, Integer pageNum) {
+        List<ContractTradeModel> contractTradeModels = new ArrayList<>();
+        String selectSql = "select t.trade_id as trade_id,t.market_capital_capacity as market_capital_capacity," +
+                "t.max_drawdown as max_drawdown,t.win_rate as win_rate,t.profit_loss_ratio as profit_loss_ratio," +
+                "t.contract_id as contract_id, c.`name` as contract_name,f1.last_trading_date as last_trading_date," +
+                "t.risk_level as risk_level,f1.last_trading_date as last_trading_date,c.nearby_futures_id as nearby_futures_id," +
+                "c.back_futures_id as back_futures_id,f1.name as nearby_futures_name,f2.name as back_futures_name " +
+                "from collect ct " +
+                "left join trade t where t.risk_level="+riskLevel+" and t.contract_id=ct.contract_id"+
+                "left join contract c on c.contract_id=t.contract_id "+
+                "left join futures f1 on f1.futures_id=c.nearby_futures_id " +
+                "left join futures f2 on f2.futures_id=c.back_futures_id " +
+                "where ct.user_id="+20+" limit 3";
+
+        connection = SqlConnectUtil.getSqlConnect();
+        try {
+            statement = connection.prepareStatement(selectSql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                ContractTradeModel contractTradeModel = new ContractTradeModel();
+                setContractTradeDetail(contractTradeModel,resultSet);
+                getYields(contractTradeModel);
+                contractTradeModels.add(contractTradeModel);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            freeConnect();
+        }
+        return contractTradeModels;
+    }
+
+    @Override
+    public ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel) {
+        String whereClause = "WHERE t.deleted=FALSE and t.risk_level=" + riskLevel+ " and t.contract_id="+contractId;
+        return getDetail(userId,whereClause);
+    }
+
+    private ContractTradeDetail getDetail(Long userId,String whereClause){
         ContractTradeDetail contractTradeDetail = new ContractTradeDetail();
         HistoryMarket historyMarket = new HistoryMarket();
         try {
@@ -235,12 +285,12 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
                     "left join contract c on c.contract_id=t.contract_id "+
                     "left join futures f1 on f1.futures_id=c.nearby_futures_id " +
                     "left join futures f2 on f2.futures_id=c.back_futures_id " +
-                    "WHERE t.deleted=FALSE and t.trade_id=" + tradeId;
-            if(userId == null){
-                selectSql = selectSql + " and user_id is null;";
-            }else {
-                selectSql = selectSql + " and user_id = "+userId+";";
-            }
+                    whereClause+";";
+//            if(userId == null){
+//                selectSql = selectSql + " and user_id is null;";
+//            }else {
+//                selectSql = selectSql + " and user_id = "+userId+";";
+//            }
             statement = connection.prepareStatement(selectSql);
             resultSet = statement.executeQuery();
             if(resultSet.next()){
@@ -252,8 +302,16 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            freeConnect();
         }
         return contractTradeDetail;
+    }
+
+    @Override
+    public ContractTradeDetail getDetail(Long userId, Long tradeId) {
+        String whereClause = "WHERE t.deleted=FALSE and t.trade_id=" + tradeId;
+        return getDetail(userId,whereClause);
     }
 
     @Override
@@ -274,6 +332,8 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            freeConnect();
         }
 
         return historyMarket;
@@ -346,6 +406,50 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
         }
     }
 
+    private void getYieldsAndPositions(ContractTradeModel contractTradeModel){
+        ResultSet innerResult = null;
+        List<Double> yields = new ArrayList<>();//收益率纵轴
+        List<Date> updateTimes = new ArrayList<>();// 时间横轴
+        List<String> formatDates = new ArrayList<>();// 时间横轴
+        List<Double> positions = new ArrayList<>();//资金占用纵轴
+        List<Integer> nearbyFuturesPositionOperations = new ArrayList<>();
+        List<Integer> backFuturesPositionOperations = new ArrayList<>();
+        String selectSql = "select yield,create_time,`position`,nearby_futures_position,back_futures_position,today_profit_loss from contract_back_test where trade_id=" + contractTradeModel.getTradeId();
+        try {
+            statement = connection.prepareStatement(selectSql);
+            innerResult = statement.executeQuery();
+            int preNearbyPosition = 0;
+            int preBackPosition = 0;
+            while (innerResult.next()){
+                yields.add(innerResult.getDouble("yield"));
+                updateTimes.add(innerResult.getDate("create_time"));
+                formatDates.add(simpleDateFormat.format(innerResult.getDate("create_time")));
+                positions.add(innerResult.getDouble("position"));
+                nearbyFuturesPositionOperations.add(innerResult.getInt("nearby_futures_position")-preNearbyPosition);
+                backFuturesPositionOperations.add(innerResult.getInt("back_futures_position")-preBackPosition);
+                preNearbyPosition = innerResult.getInt("nearby_futures_position");
+                preBackPosition = innerResult.getInt("back_futures_position");
+            }
+            contractTradeModel.updateTimes = updateTimes;
+            contractTradeModel.formatDates = formatDates;
+            contractTradeModel.yields = yields;
+            contractTradeModel.computeYield();
+            contractTradeModel.positions = positions;
+            //历史调仓
+            contractTradeModel.nearbyFuturesPositionOperations = nearbyFuturesPositionOperations;
+            contractTradeModel.backFuturesPositionOperations = backFuturesPositionOperations;
+            //当前持仓
+            contractTradeModel.position = positions.get(positions.size()-1);
+            contractTradeModel.backFuturesPosition = preBackPosition;
+            contractTradeModel.nearbyFuturesPosition = preNearbyPosition;
+            innerResult.last();
+            contractTradeModel.todayProfitLoss = innerResult.getDouble("today_profit_loss");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void setContractTradeModel(ContractTradeModel contractTradeModel,ResultSet resultSet){
         try {
@@ -363,15 +467,15 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
 
     }
 
-    private void setContractTradeDetail(ContractTradeDetail contractTradeDetail,ResultSet resultSet){
-        setContractTradeModel(contractTradeDetail,resultSet);
+    private void setContractTradeDetail(ContractTradeModel contractTradeModel,ResultSet resultSet){
+        setContractTradeModel(contractTradeModel,resultSet);
         try {
             Long now = System.currentTimeMillis();
             Date ddl = null;
             ddl = resultSet.getDate("last_trading_date");
             logger.info("ddl: {}",ddl);
-            contractTradeDetail.formatDDL = simpleDateFormat.format(ddl);
-            contractTradeDetail.isEnd = (ddl.getTime() < now);
+            contractTradeModel.formatDDL = simpleDateFormat.format(ddl);
+            contractTradeModel.isEnd = (ddl.getTime() < now);
         } catch (SQLException e) {
             e.printStackTrace();
         }
