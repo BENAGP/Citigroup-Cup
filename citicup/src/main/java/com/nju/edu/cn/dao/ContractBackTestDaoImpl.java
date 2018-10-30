@@ -487,7 +487,7 @@ public class ContractBackTestDaoImpl implements ContractBackTestDao {
     }
 
     private List<Long> getCollectList(Long userId){
-        String selectSql = "select contract_id from collect where deleted=FALSE user_id="+userId;
+        String selectSql = "select contract_id from collect where deleted=FALSE and user_id="+userId;
         ResultSet innerResult = null;
         List<Long> contractIds = new ArrayList<>();
         try {
