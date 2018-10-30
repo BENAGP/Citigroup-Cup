@@ -277,8 +277,8 @@
             <div class="futureboard" id="futureboard0">
 
                 <div class="future_name" id = 'futurename0' onclick="details(0)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect0">收藏</button>
+                <div><img class="staricon" id="collectIcon0" src="../imgs/collected.png" />
+                    <button class="collectbutton" id = "collect0" onclick="collect(0)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -320,8 +320,8 @@
 
 
                 <div class="future_name" id = 'futurename1' onclick="details(1)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect1">收藏</button>
+                <div><img class="staricon" id="collectIcon1" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect1"  onclick="collect(1)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -362,8 +362,8 @@
             <div class="futureboard" id="futureboard2">
 
                 <div class="future_name" id = 'futurename2' onclick="details(2)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect2">收藏</button>
+                <div><img class="staricon" id="collectIcon2" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect2"  onclick="collect(2)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -404,8 +404,8 @@
             <div class="futureboard" id="futureboard3">
 
                 <div class="future_name" id = 'futurename3' onclick="details(3)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect3">收藏</button>
+                <div><img class="staricon" id="collectIcon3" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect3"  onclick="collect(3)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -446,8 +446,8 @@
             <div class="futureboard" id="futureboard4">
 
                 <div class="future_name" id = 'futurename4' onclick="details(4)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect4">收藏</button>
+                <div><img class="staricon" id="collectIcon4" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect4"  onclick="collect(4)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -488,8 +488,8 @@
             <div class="futureboard" id="futureboard5">
 
                 <div class="future_name" id = 'futurename5' onclick="details(5)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect5">收藏</button>
+                <div><img class="staricon" id="collectIcon5" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect5"  onclick="collect(5)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -668,6 +668,45 @@
 
 <script>
 
+    /***
+     * document.getElementById("collectIcon"+i).src="../imgs/collected.png";
+     $("#collect"+i).html('取消收藏');
+     }else{
+                document.getElementById("collectIcon"+i).src="../imgs/star.png";
+                $("#collect"+i).html('收藏');
+            }
+     * @param id
+     */
+
+    function collect(id){
+        var buttonText = $("#collect"+id).html();
+        if(buttonText == '收藏'){
+            $.post('/api/contract/collect',{
+                userId: window.localStorage.getItem("userId"),
+                contractId:contractList[id].contractId
+            }).done(response => {
+                alert("收藏成功！");
+                document.getElementById("collectIcon"+id).src="../imgs/collected.png";
+                $("#collect"+id).html('取消收藏');
+            }).fail(err => {
+                alert("please try again！");
+            });
+        }else if(buttonText == '取消收藏'){
+            $.post('/api/contract/cancelCollect',{
+                userId: window.localStorage.getItem("userId"),
+                contractId:contractList[id].contractId
+            }).done(response => {
+                alert("已取消收藏！");
+                document.getElementById("collectIcon"+id).src="../imgs/star.png";
+                $("#collect"+id).html('收藏');
+            }).fail(err => {
+                alert("please try again！");
+            });
+        }
+
+    }
+
+
 
     var contractList =[];
 
@@ -679,7 +718,7 @@
     }
 
     var totalCount = 0;
-    var PAGENUM = 8;
+    var PAGENUM = 6;
 
     var contractFilterInfo = {
         "contractTradeSearch":{
@@ -704,7 +743,7 @@
 
 
     function getContractList(){
-        for(var i=0;i<8;i++){
+        for(var i=0;i<6;i++){
             $("#futureboard"+i).css("visibility","hidden");
         }
 
@@ -762,6 +801,14 @@
 
         for(var i = 0; i < contractList.length ; i++){
             var info = contractList[i];
+
+            if(info.isCollected == true){
+                document.getElementById("collectIcon"+i).src="../imgs/collected.png";
+                $("#collect"+i).html('取消收藏');
+            }else{
+                document.getElementById("collectIcon"+i).src="../imgs/star.png";
+                $("#collect"+i).html('收藏');
+            }
 
             $("#futurename"+i).html(info.contractName);
             $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
@@ -1386,4 +1433,29 @@
 
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
