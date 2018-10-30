@@ -1,10 +1,7 @@
 package com.nju.edu.cn.dao;
 
 import com.nju.edu.cn.entity.ContractBackTestParams;
-import com.nju.edu.cn.model.ContractBackTestBean;
-import com.nju.edu.cn.model.ContractBackTestParamsBean;
-import com.nju.edu.cn.model.ContractTradeModel;
-import com.nju.edu.cn.model.ContractTradeSearch;
+import com.nju.edu.cn.model.*;
 
 import java.util.List;
 
@@ -14,6 +11,9 @@ import java.util.List;
 public interface ContractBackTestDao {
     void insertList(List<ContractBackTestBean> contractBackTests);
     void insertParamsList(List<ContractBackTestParamsBean> contractBackTestParamsBeans);
-    List<ContractTradeModel> getList(Integer riskLevel, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum);
+    List<ContractTradeModel> getList(Long userId,Integer riskLevel, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum);
+    ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel);
+    ContractTradeDetail getDetail(Long userId, Long tradeId);
+    HistoryMarket getHistoryMarket(Long userId, Long contractId);
 
 }

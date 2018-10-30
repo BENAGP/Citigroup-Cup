@@ -8,12 +8,12 @@ import java.util.List;
 /**
  * Created by shea on 2018/9/2.
  */
-public class ContractTradeDetail {
+public class ContractTradeDetail extends ContractTradeModel {
 
     /**
      * 年化益率
      */
-    public Double yearYield;
+//    public Double yearYield;
 
     /**
      * 近1／3／6／12周收益率
@@ -26,59 +26,59 @@ public class ContractTradeDetail {
 
     public Double near6WeekYield;
 
-    /**
-     * 最大回撤
-     */
-    public Double maxDrawdown;
+//    /**
+//     * 最大回撤
+//     */
+//    public Double maxDrawdown;
+//
+//    /**
+//     * 胜率
+//     */
+//    public Double winRate;
+//
+//    /**
+//     * 盈亏比
+//     */
+//    public Double profitLossRatio;
+//
+////    /**
+////     * 流动性
+////     */
+////    public Float liquidity;
+//
+//    /**
+//     * 市场最大承载资金
+//     */
+//    public Double marketCapitalCapacity;
+//
+//    /**
+//     * 合约ID
+//     */
+//    public Long contractId;
+//    public String contractName;
 
-    /**
-     * 胜率
-     */
-    public Double winRate;
-
-    /**
-     * 盈亏比
-     */
-    public Double profitLossRatio;
+//    public Long tradeId;
 
 //    /**
-//     * 流动性
+//     * 风险等级
 //     */
-//    public Float liquidity;
-
-    /**
-     * 市场最大承载资金
-     */
-    public Double marketCapitalCapacity;
-
-    /**
-     * 合约ID
-     */
-    public Long contractId;
-    public String contractName;
-
-    public Long tradeId;
-
-    /**
-     * 风险等级
-     */
-    public Integer riskLevel;
+//    public Integer riskLevel;
 
     /**
      * 投入资金
      */
-    public Double investment;
+//    public Double investment;
 
-    /**
-     * 时间横轴
-     */
-    public List<Date> updateTimes;
-    public List<String> formatDates;
+//    /**
+//     * 时间横轴
+//     */
+//    public List<Date> updateTimes;
+//    public List<String> formatDates;
 
-    /**
-     * 收益率纵轴
-     */
-    public List<Double> yields;
+//    /**
+//     * 收益率纵轴
+//     */
+//    public List<Double> yields;
 
     /**
      * 合约的前十条评论
@@ -88,24 +88,22 @@ public class ContractTradeDetail {
     /**
      * 合约被购买的时间
      */
-    public Date createTime;
+//    public Date createTime;
 
-    /**
-     * 合约交易截止日
-     * 收藏列表提醒用户到期 取消收藏
-     */
-    public String ddl;
+//    /**
+//     * 合约交易截止日
+//     * 收藏列表提醒用户到期 取消收藏
+//     */
+//    public String ddl;
+
+    public HistoryMarket historyMarket;
 
     /**
      * 是否过期
      */
-    public Boolean isEnd;
+//    public Boolean isEnd;
 
     public ContractTradeDetail() {
-    }
-
-    public void setContractName(String contractName) {
-        this.contractName = contractName;
     }
 
     public void setNear3WeekYield(Double near3WeekYield) {
@@ -124,67 +122,51 @@ public class ContractTradeDetail {
         this.near6WeekYield = near6WeekYield;
     }
 
-    public void setMaxDrawdown(Double maxDrawdown) {
-        this.maxDrawdown = maxDrawdown;
-    }
+//    public void setMaxDrawdown(Double maxDrawdown) {
+//        this.maxDrawdown = maxDrawdown;
+//    }
 
-    public void setWinRate(Double winRate) {
-        this.winRate = winRate;
-    }
+//    public void setWinRate(Double winRate) {
+//        this.winRate = winRate;
+//    }
 
-    public void setProfitLossRatio(Double profitLossRatio) {
-        this.profitLossRatio = profitLossRatio;
-    }
+//    public void setProfitLossRatio(Double profitLossRatio) {
+//        this.profitLossRatio = profitLossRatio;
+//    }
 
 //    public void setLiquidity(Float liquidity) {
 //        this.liquidity = liquidity;
 //    }
 
-    public void setMarketCapitalCapacity(Double marketCapitalCapacity) {
-        this.marketCapitalCapacity = marketCapitalCapacity;
-    }
+//    public void setInvestment(Double investment) {
+//        this.investment = investment;
+//    }
 
-    public void setContractId(Long contractId) {
-        this.contractId = contractId;
-    }
-
-    public void setTradeId(Long tradeId) {
-        this.tradeId = tradeId;
-    }
-
-    public void setRiskLevel(Integer riskLevel) {
-        this.riskLevel = riskLevel;
-    }
-
-    public void setInvestment(Double investment) {
-        this.investment = investment;
-    }
-
-    public void setUpdateTimes(List<Date> updateTimes) {
-        this.updateTimes = updateTimes;
-    }
-
-    public void setYields(List<Double> yields) {
-        this.yields = yields;
-    }
+//    public void setUpdateTimes(List<Date> updateTimes) {
+//        this.updateTimes = updateTimes;
+//    }
+//
+//    public void setYields(List<Double> yields) {
+//        this.yields = yields;
+//    }
 
     public void setComments(List<CommentModel> comments) {
         this.comments = comments;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+//    public void setCreateTime(Date createTime) {
+//        this.createTime = createTime;
+//    }
 
 
 
-    public void setIsEnd(Boolean isEnd) {
-        isEnd = isEnd;
-    }
+//    public void setIsEnd(Boolean isEnd) {
+//        isEnd = isEnd;
+//    }
 
-    public void setYearYield(Double yearYield) {
-        this.yearYield = yearYield;
-    }
+//    public void setYearYield(Double yearYield) {
+//        this.yearYield = yearYield;
+//    }
 
     public void computeYield(){
         int minutesIn1Week = Constant.MINUTES_PER_WEEK;

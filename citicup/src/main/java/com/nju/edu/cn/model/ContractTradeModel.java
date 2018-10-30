@@ -88,6 +88,15 @@ public class ContractTradeModel {
      * 收藏列表提醒用户到期 取消收藏
      */
     public Date ddl;
+    public String formatDDL;
+
+    public String getFormatDDL() {
+        return formatDDL;
+    }
+
+    public void setFormatDDL(String formatDDL) {
+        this.formatDDL = formatDDL;
+    }
 
     /**
      * 是否过期

@@ -180,7 +180,7 @@ public class ContractServiceImpl implements ContractService {
     public List<ContractTradeModel> getList(Long userId, ContractTradeSearch contractTradeSearch, Integer page, Integer pageNum) {
         User user = userRepository.findByUserId(userId);
         int riskLevel = user.getPreferRiskLevel();
-        return contractBackTestDao.getList(riskLevel,contractTradeSearch,page,pageNum);
+        return contractBackTestDao.getList(null,riskLevel,contractTradeSearch,page,pageNum);
     }
 
 //    @Override
@@ -321,8 +321,9 @@ public class ContractServiceImpl implements ContractService {
      */
     @Override
     public ContractTradeDetail getDetail(Long userId, Long tradeId) {
-        Trade trade = tradeRepository.findByTradeId(tradeId);
-        return getDetail(trade);
+//        Trade trade = tradeRepository.findByTradeId(tradeId);
+//        return getDetail(trade);
+        return contractBackTestDao.getDetail(null,tradeId);
     }
 
     @Override
@@ -340,51 +341,51 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public HistoryMarket getHistoryMarket(Long userId, Long contractId) {
-        HistoryMarket historyMarket = new HistoryMarket();
-        historyMarket.contractId = contractId;
-        Contract contract = contractRepository.findByContractId(contractId);
-        Futures nearbyFutures = contract.getNearbyFutures();
-        Futures backFutures = contract.getBackFutures();
-        historyMarket.nearbyFuturesId = nearbyFutures.getFuturesId();
-        historyMarket.nearbyFuturesName = nearbyFutures.getName();
-        historyMarket.backFuturesName = backFutures.getName();
-        historyMarket.backFuturesId = backFutures.getFuturesId();
-        Comparator<FuturesUpdating> comparator = new Comparator<FuturesUpdating>() {
-            @Override
-            public int compare(FuturesUpdating o1, FuturesUpdating o2) {
-                return (int) (o1.getUpdateTime().getTime() - o2.getUpdateTime().getTime());
-            }
-        };
-        List<FuturesUpdating> nearbyFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(nearbyFutures.getFuturesId());
-        List<FuturesUpdating> backFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(backFutures.getFuturesId());
-//        Collections.sort(nearbyFuturesUpdating, comparator);
-//        Collections.sort(backFuturesUpdating, comparator);
-        List<Date> updateTimes = new ArrayList<>();
-        List<String> formatDates = new ArrayList<>();
-        List<Float> nearbyPrices = new ArrayList<>();
-        List<Float> backPrices = new ArrayList<>();
+//        HistoryMarket historyMarket = new HistoryMarket();
+//        historyMarket.contractId = contractId;
+//        Contract contract = contractRepository.findByContractId(contractId);
+//        Futures nearbyFutures = contract.getNearbyFutures();
+//        Futures backFutures = contract.getBackFutures();
+//        historyMarket.nearbyFuturesId = nearbyFutures.getFuturesId();
+//        historyMarket.nearbyFuturesName = nearbyFutures.getName();
+//        historyMarket.backFuturesName = backFutures.getName();
+//        historyMarket.backFuturesId = backFutures.getFuturesId();
+//        Comparator<FuturesUpdating> comparator = new Comparator<FuturesUpdating>() {
+//            @Override
+//            public int compare(FuturesUpdating o1, FuturesUpdating o2) {
+//                return (int) (o1.getUpdateTime().getTime() - o2.getUpdateTime().getTime());
+//            }
+//        };
+//        List<FuturesUpdating> nearbyFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(nearbyFutures.getFuturesId());
+//        List<FuturesUpdating> backFuturesUpdating = futuresUpdatingRepository.findByFutures_FuturesId(backFutures.getFuturesId());
+////        Collections.sort(nearbyFuturesUpdating, comparator);
+////        Collections.sort(backFuturesUpdating, comparator);
+//        List<Date> updateTimes = new ArrayList<>();
+//        List<String> formatDates = new ArrayList<>();
+//        List<Float> nearbyPrices = new ArrayList<>();
+//        List<Float> backPrices = new ArrayList<>();
+//
+//        List<Integer> nearbyTradings = new ArrayList<>();
+//        List<Integer> backTradings = new ArrayList<>();
+//
+//        nearbyFuturesUpdating.forEach(futuresUpdating -> {
+//            updateTimes.add(futuresUpdating.getUpdateTime());
+//            formatDates.add(simpleDateFormat.format(futuresUpdating.getUpdateTime()));
+//            nearbyPrices.add(futuresUpdating.getPrice());
+//            nearbyTradings.add(futuresUpdating.getTrading());
+//        });
+//        backFuturesUpdating.forEach(futuresUpdating -> {
+//            backPrices.add(futuresUpdating.getPrice());
+//            backTradings.add(futuresUpdating.getTrading());
+//        });
+//        historyMarket.updateTimes = updateTimes;
+//        historyMarket.formatDates = formatDates;
+//        historyMarket.nearbyPrices = nearbyPrices;
+//        historyMarket.nearbyTradings = nearbyTradings;
+//        historyMarket.backPrices = backPrices;
+//        historyMarket.backTradings = backTradings;
 
-        List<Integer> nearbyTradings = new ArrayList<>();
-        List<Integer> backTradings = new ArrayList<>();
-
-        nearbyFuturesUpdating.forEach(futuresUpdating -> {
-            updateTimes.add(futuresUpdating.getUpdateTime());
-            formatDates.add(simpleDateFormat.format(futuresUpdating.getUpdateTime()));
-            nearbyPrices.add(futuresUpdating.getPrice());
-            nearbyTradings.add(futuresUpdating.getTrading());
-        });
-        backFuturesUpdating.forEach(futuresUpdating -> {
-            backPrices.add(futuresUpdating.getPrice());
-            backTradings.add(futuresUpdating.getTrading());
-        });
-        historyMarket.updateTimes = updateTimes;
-        historyMarket.formatDates = formatDates;
-        historyMarket.nearbyPrices = nearbyPrices;
-        historyMarket.nearbyTradings = nearbyTradings;
-        historyMarket.backPrices = backPrices;
-        historyMarket.backTradings = backTradings;
-
-        return historyMarket;
+        return contractBackTestDao.getHistoryMarket(null,contractId);
     }
 
     /**
@@ -397,8 +398,9 @@ public class ContractServiceImpl implements ContractService {
      */
     @Override
     public ContractTradeDetail getDetail(Long userId, Long contractId, Integer riskLevel) {
-        Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId, riskLevel, null);
-        return getDetail(trade);
+//        Trade trade = tradeRepository.findByContract_ContractIdAndRiskLevelAndUser_UserId(contractId, riskLevel, null);
+//        return getDetail(trade);
+        return contractBackTestDao.getDetail(null,contractId,riskLevel);
     }
 
     private ContractTradeDetail getDetail(Trade trade) {
@@ -423,7 +425,7 @@ public class ContractServiceImpl implements ContractService {
         contractTradeDetail.formatDates = formatDates;
         contractTradeDetail.yields = yields;
         contractTradeDetail.computeYield();
-        contractTradeDetail.ddl = simpleDateFormat.format(ddl);
+        contractTradeDetail.formatDDL = simpleDateFormat.format(ddl);
         contractTradeDetail.isEnd = (ddl.getTime() < now);
 //        //重新查
 //        List<Comment> comments = contract.getComments();
