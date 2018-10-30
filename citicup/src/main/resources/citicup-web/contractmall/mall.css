@@ -301,14 +301,14 @@ button{
     width: 33px;
     height: 33px;
     top: -35px;
-    left: 197px;
+    left: 150px;
 }
 
 
 .collectbutton{
     position: relative;
     top: -30px;
-    left: 195px;
+    left: 150px;
     line-height: 29px;
     color: rgba(255, 152, 0, 1);
     font-size: 20px;
@@ -839,34 +839,3 @@ button{
     top:23px;
     left: 30px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
