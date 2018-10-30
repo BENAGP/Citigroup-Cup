@@ -12,6 +12,7 @@
     <script src="../lib/jquery-3.3.1.js"></script>
     <script src="../lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
     <script src="../lib/layui/layui.js"></script>
+    <script src="../components/collect.js"></script>
 
     <script src="../lib/echarts.min.js"></script>
 
@@ -29,11 +30,10 @@
 
                 <div class="futures">
 
-                    <div class="futureboard" >
-
-                        <div class="future_name">IF1706-IF1703</div>
-                        <div><img class="staricon" src="../imgs/star.png" />
-                            <button class="collectbutton">收藏</button></div>
+                    <div class="futureboard" id="board0" >
+                        <div class="future_name" id="futurename0"></div>
+                        <div><img class="staricon" onclick="cancleCollect(0)" src="../imgs/collected.png" />
+                            <button class="collectbutton" onclick="cancleCollect(0)">取消收藏</button></div>
 
                         <div class="legend">
                             <div class="lengend_red"></div>
@@ -42,117 +42,116 @@
                             <div class="lengend_blue_text">回测利率</div>
                         </div>
 
-                        <div class="mobilityvalue" id="mobilityvalue2">流动性：300元/分钟</div>
+                        <div class="mobilityvalue" ></div>
+
+                        <div class="graphdiv" id="graphdiv0">
+                        </div>
+
+                        <div class="info">
+                            <div class="profit">总收益率</div>
+                            <div class="profittext" id="profittext0">50.22%</div>
+
+                            <div class="divisioner1"></div>
+
+                            <div class="retracement">最大回撤</div>
+                            <div class="retracementtext" id="retracementtext0">50.22%</div>
+
+                            <div class="divisioner2"></div>
+
+                            <div class="carry">市场最大承载资金</div>
+                            <div class="carrytext" id="carrytext0">￥10000</div>
+
+                            <div class="win">胜率：</div>
+                            <div class="wintext" id="wintext0">30.99%</div>
+
+                            <div class="loss">盈亏比：</div>
+                            <div class="losstext" id="losstext0">47.52%</div>
+
+                        </div>
+                        <button class="buybutton" onclick="buy(0)">购买</button>
+                    </div>
+
+
+                    <div class="futureboard" id="board1" >
+                        <div class="future_name" id="futurename1"></div>
+                        <div><img class="staricon" onclick="cancleCollect(1)" src="../imgs/collected.png" />
+                            <button class="collectbutton" onclick="cancleCollect(1)">取消收藏</button></div>
+
+                        <div class="legend">
+                            <div class="lengend_red"></div>
+                            <div class="lengend_red_text">基准利率</div>
+                            <div class="lengend_blue"></div>
+                            <div class="lengend_blue_text">回测利率</div>
+                        </div>
+
+                        <div class="mobilityvalue" ></div>
+
+                        <div class="graphdiv" id="graphdiv1">
+                        </div>
+                        <div class="info">
+                            <div class="profit">总收益率</div>
+                            <div class="profittext" id="profittext1">50.22%</div>
+
+                            <div class="divisioner1"></div>
+
+                            <div class="retracement">最大回撤</div>
+                            <div class="retracementtext" id="retracementtext1">50.22%</div>
+
+                            <div class="divisioner2"></div>
+
+                            <div class="carry">市场最大承载资金</div>
+                            <div class="carrytext" id="carrytext1">￥10000</div>
+
+                            <div class="win">胜率：</div>
+                            <div class="wintext" id="wintext1">30.99%</div>
+
+                            <div class="loss">盈亏比：</div>
+                            <div class="losstext" id="losstext1">47.52%</div>
+
+                        </div>
+                        <button class="buybutton" onclick="buy(1)">购买</button>
+                    </div>
+
+
+                    <div class="futureboard" id="board2" >
+                        <div class="future_name" id="futurename2"></div>
+                        <div><img class="staricon" onclick="cancleCollect(2)" src="../imgs/collected.png" />
+                            <button class="collectbutton" onclick="cancleCollect(2)">取消收藏</button></div>
+
+                        <div class="legend">
+                            <div class="lengend_red"></div>
+                            <div class="lengend_red_text">基准利率</div>
+                            <div class="lengend_blue"></div>
+                            <div class="lengend_blue_text">回测利率</div>
+                        </div>
+
+                        <div class="mobilityvalue" ></div>
 
                         <div class="graphdiv" id="graphdiv2">
                         </div>
 
                         <div class="info">
                             <div class="profit">总收益率</div>
-                            <div class="profittext">50.22%</div>
+                            <div class="profittext" id="profittext2">50.22%</div>
 
                             <div class="divisioner1"></div>
 
                             <div class="retracement">最大回撤</div>
-                            <div class="retracementtext">50.22%</div>
+                            <div class="retracementtext" id="retracementtext2">50.22%</div>
 
                             <div class="divisioner2"></div>
 
                             <div class="carry">市场最大承载资金</div>
-                            <div class="carrytext">￥10000</div>
+                            <div class="carrytext" id="carrytext2">￥10000</div>
 
                             <div class="win">胜率：</div>
-                            <div class="wintext">30.99%</div>
+                            <div class="wintext" id="wintext2">30.99%</div>
 
                             <div class="loss">盈亏比：</div>
-                            <div class="losstext">47.52%</div>
+                            <div class="losstext" id="losstext2">47.52%</div>
 
                         </div>
-                        <button class="buybutton">购买</button>
-                    </div>
-
-
-                    <div class="futureboard" >
-
-                        <div class="future_name">IF1706-IF1703</div>
-                        <div><img class="staricon" src="../imgs/star.png" />
-                            <button class="collectbutton">收藏</button></div>
-
-                        <div class="legend">
-                            <div class="lengend_red"></div>
-                            <div class="lengend_red_text">基准利率</div>
-                            <div class="lengend_blue"></div>
-                            <div class="lengend_blue_text">回测利率</div>
-                        </div>
-
-                        <div class="mobilityvalue" id="mobilityvalue21">流动性：300元/分钟</div>
-
-                        <div class="graphdiv" id="graphdiv21">
-                        </div>
-
-
-                        <div class="info">
-                            <div class="profit">总收益率</div>
-                            <div class="profittext">50.22%</div>
-
-                            <div class="divisioner1"></div>
-
-                            <div class="retracement">最大回撤</div>
-                            <div class="retracementtext">50.22%</div>
-
-                            <div class="divisioner2"></div>
-
-                            <div class="carry">市场最大承载资金</div>
-                            <div class="carrytext">￥10000</div>
-
-                            <div class="win">胜率：</div>
-                            <div class="wintext">30.99%</div>
-
-                            <div class="loss">盈亏比：</div>
-                            <div class="losstext">47.52%</div>
-
-                        </div>
-
-
-                        <button class="buybutton">购买</button>
-
-
-                    </div>
-
-                    <div class="futureboard" >
-
-                        <div class="future_name">IF1706-IF1703</div>
-
-                        <div><img class="staricon" src="../imgs/star.png" /><button class="collectbutton">收藏</button></div>
-
-                        <div class="legend">
-                            <div class="lengend_red"></div>
-                            <div class="lengend_red_text">基准利率</div>
-                            <div class="lengend_blue"></div>
-                            <div class="lengend_blue_text">回测利率</div>
-                        </div>
-
-                        <div class="mobilityvalue" id="mobilityvalue212">流动性：300元/分钟</div>
-
-                        <div class="graphdiv" id="graphdiv212"></div>
-                        <div class="info">
-
-                            <div class="profit">总收益率</div>
-                            <div class="profittext">50.22%</div>
-                            <div class="divisioner1"></div>
-                            <div class="retracement">最大回撤</div>
-                            <div class="retracementtext">50.22%</div>
-                            <div class="divisioner2"></div>
-                            <div class="carry">市场最大承载资金</div>
-                            <div class="carrytext">￥10000</div>
-                            <div class="win last" style="margin-top: -185px;">胜率：</div>
-                            <div class="wintext last" style="margin-top: -23px;">30.99%</div>
-                            <div class="loss" style="top: 0px;margin-top: 0px;">盈亏比：</div>
-                            <div class="losstext" style="top: 0px;margin-top: -23px;">47.52%</div>
-                        </div>
-
-                        <button class="buybutton" style="top: -50px;">购买</button>
-
+                        <button class="buybutton" onclick="buy(2)">购买</button>
                     </div>
 
                 </div>
@@ -172,94 +171,126 @@
 <script>
     $("button").css("outline","none");
 
+    var userId = window.localStorage.getItem("userId");
 
+    var collectList = [];
 
-
-    var myChart = echarts.init(document.getElementById('graphdiv2'));
-    var myChart2 = echarts.init(document.getElementById('graphdiv21'));
-
-
-    option = {
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top: '4%',
-            containLabel: true
+    $.ajax({
+        url:"http://localhost:8080/api/contract/getCollectList",
+        type:"POST",
+        //data:contractFilterInfo,
+        data:{
+            "userId":userId,
+            "page":0,
+            "pageNum":4
         },
+        dataType: "JSON",
+        success: function (data){
+            collectList = data;
+            drawCollect();
+        },
+        error: function (data){
+            alert("no collect data");
+        }
+    });
 
+    function drawCollect(){
+        for(var i in collectList){
 
-        dataZoom: [
+            var info = collectList[i];
 
-            {
-                show: true,
-                realtime: true,
-                start: 0,
-                end: 100,
-                height: 30,
-                y: 215
-            },
-            {
-                type: 'inside',
-                realtime: true,
-                start: 0,
-                end: 100
+            $("#board"+i).css("visibility","visible");
 
+            $("#futurename"+i).html(info.contractName);
+            $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
+            $("#retracementtext"+i).html(parseFloat((info.maxDrawdown*100).toFixed(2))+"%");
+            $("#carrytext"+i).html("￥"+parseInt(info.marketCapitalCapacity));
+            $("#wintext"+i).html(parseFloat((info.winRate*100).toFixed(2))+"%");
+            $("#losstext"+i).html(parseFloat((info.profitLossRatio*100).toFixed(2))+"%");
+
+            var option = {
+                grid: {
+                    left: "3%",
+                    right: "4%",
+                    bottom: "3%",
+                    top: "4%",
+                    containLabel: true
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        start: 0,
+                        end: 100,
+                        height: 30,
+                        y: 215
+                    },
+                    {
+                        type: "inside",
+                        realtime: true,
+                        start: 0,
+                        end: 100
+                    }
+                ],
+                xAxis: {
+                    type: "category",
+                    boundaryGap: false,
+                    data: format(info.formatDates)
+                },
+                yAxis: {
+                    type: "value",
+                    axisLabel:{
+                        formatter: function (value, index){
+                            return (value*100).toFixed(0)+'%';
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: "回测利率",
+                        data: info.yields,
+                        type: "line",
+                        sampling: "average",
+                        areaStyle: {
+                            normal: {
+                                color: "#DAE4F4"
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 1,
+                                color: "#4577C8"
+                            }
+                        },
+                    },
+                ]
+            };
+
+            var myChart = echarts.init(document.getElementById("graphdiv"+i));
+            myChart.setOption(option);
+
+        }
+    }
+
+    function format(list){
+        var res = [];
+        for(var i=0;i<list.length;i++){
+            // res.push(list[i].format('YYYY-MM-DD HH:mm:ss'));
+            res.push(list[i].substring(0,19));
+        }
+        return res;
+    }
+
+    function cancleCollect(id){
+        var res = cancleContract(collectList[id].contractId);
+        if(res == "true"){
+            collectList.splice(id,1);
+            for(var i = 0;i<4;i++){
+                $("#board"+i).css("visibility","hidden");
             }
+            drawCollect();
+        }
+    }
 
-
-
-        ],
-
-
-
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-            position: 'right',
-            type: 'value'
-        },
-        series: [
-            {
-                name: "回测利率",
-                data: [820, -932, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                sampling: 'average',
-                areaStyle: {
-                    normal: {
-                        color: "#DAE4F4"
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: '#4577C8'
-                    }
-                },
-            },
-            {
-                name: "基准利率",
-                data: [80, 1922, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                lineStyle: {
-                    normal: {
-                        width: 3,
-                        color: "#A34240"
-                    }
-                },
-
-            }
-        ]
-    };
-
-
-    myChart.setOption(option);
-    myChart2.setOption(option);
-
-    var myChart1 = echarts.init(document.getElementById('graphdiv212'));
-    myChart1.setOption(option);
 </script>
 </html>
