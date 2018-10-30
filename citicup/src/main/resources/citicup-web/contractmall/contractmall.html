@@ -278,7 +278,7 @@
 
                 <div class="future_name" id = 'futurename0' onclick="details(0)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect0">收藏</button>
+                    <button class="collectbutton" id = "collect0" onclick="collect(0)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -321,7 +321,7 @@
 
                 <div class="future_name" id = 'futurename1' onclick="details(1)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect1">收藏</button>
+                    <button class="collectbutton" id = "collect1"  onclick="collect(1)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -363,7 +363,7 @@
 
                 <div class="future_name" id = 'futurename2' onclick="details(2)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect2">收藏</button>
+                    <button class="collectbutton" id = "collect2"  onclick="collect(2)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -405,7 +405,7 @@
 
                 <div class="future_name" id = 'futurename3' onclick="details(3)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect3">收藏</button>
+                    <button class="collectbutton" id = "collect3"  onclick="collect(3)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -447,7 +447,7 @@
 
                 <div class="future_name" id = 'futurename4' onclick="details(4)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect4">收藏</button>
+                    <button class="collectbutton" id = "collect4"  onclick="collect(4)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -489,7 +489,7 @@
 
                 <div class="future_name" id = 'futurename5' onclick="details(5)"></div>
                 <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect5">收藏</button>
+                    <button class="collectbutton" id = "collect5"  onclick="collect(5)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -668,6 +668,38 @@
 
 <script>
 
+    function collect(id){
+
+        $.post('/api/contract/collect',{
+            userId: window.localStorage.getItem("userId"),
+            contractId:contractList[id].contractId
+        }).done(response => {
+            alert("收藏成功！");
+            layer.message("收藏成功！");
+        }).fail(err => {
+            alert("please try again！")
+            layer.message("please try again！");
+        });
+
+        // $.ajax({
+        //     url:"http://localhost:8080/api/contract/collect",
+        //     type:"POST",
+        //     data:{
+        //         "userId": window.localStorage.getItem("userId"),
+        //         "contractId":contractList[id].contractId
+        //     },
+        //     dataType: "string",
+        //     success: function (data){
+        //         alert("收藏成功");
+        //     },
+        //     error: function (data){
+        //         alert(data);
+        //         alert("Please try again later！");
+        //     }
+        // });
+    }
+
+
 
     var contractList =[];
 
@@ -679,7 +711,7 @@
     }
 
     var totalCount = 0;
-    var PAGENUM = 8;
+    var PAGENUM = 6;
 
     var contractFilterInfo = {
         "contractTradeSearch":{
@@ -1386,4 +1418,29 @@
 
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
