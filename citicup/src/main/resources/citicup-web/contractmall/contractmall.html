@@ -656,7 +656,7 @@
 
                 if(data.length == 0){
                     totalCount = PAGENUM * contractFilterInfo.page;
-                    alert("没有更多数据！");
+                    layer.msg("没有更多数据！");
                     return ;
                 }
                 for(var i=0;i<data.length;i++){
@@ -674,7 +674,7 @@
 
             },
             error: function (data){
-                alert("Please try again latar,");
+                layer.msg("Please try again latar,");
             }
         });
     }
@@ -1203,5 +1203,6 @@
 
 
 </html>
+
 
 
