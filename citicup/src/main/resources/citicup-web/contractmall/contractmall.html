@@ -12,13 +12,12 @@
     <script src="../lib/echarts.min.js"></script>
     <script src="../util/href-helper.js"></script>
     <script src="mall.js"></script>
+    <script src="../components/buy.js"></script>
+    <link rel="stylesheet" type="text/css" href="../components/buy.css">
     <script src="../components/collect.js"></script>
+    <script src="../components/top-nav.js"></script>
     <link rel="stylesheet" type="text/css" href="mall.css">
 
-
-    <style>
-
-    </style>
 </head>
 
 </head>
@@ -528,90 +527,6 @@
 
             </div>
 
-            <!--<div class="futureboard" id="futureboard6">-->
-
-                <!--<div class="future_name" id = 'futurename6' onclick="details(6)"></div>-->
-                <!--<div><img class="staricon" src="../imgs/star.png" />-->
-                    <!--<button class="collectbutton" id = "collect6">收藏</button>-->
-                <!--</div>-->
-
-                <!--&lt;!&ndash; lengend &ndash;&gt;-->
-                <!--<div class="legend">-->
-                    <!--<div class="lengend_blue"></div>-->
-                    <!--<div class="lengend_blue_text">回测利率</div>-->
-                <!--</div>-->
-
-                <!--<div class="graphdiv" id="graphdiv6">-->
-                <!--</div>-->
-
-                <!--<div class="info">-->
-                    <!--<div class="profit">年化收益率</div>-->
-                    <!--<div class="profittext" id="profittext6"></div>-->
-
-                    <!--<div class="divisioner1"></div>-->
-
-                    <!--<div class="retracement">最大回撤</div>-->
-                    <!--<div class="retracementtext" id="retracementtext6"></div>-->
-
-                    <!--<div class="divisioner2"></div>-->
-
-                    <!--<div class="carry">市场最大承载资金</div>-->
-                    <!--<div class="carrytext" id="carrytext6"></div>-->
-
-                    <!--<div class="win">胜率：</div>-->
-                    <!--<div class="wintext" id="wintext6"></div>-->
-
-                    <!--<div class="loss">盈亏比：</div>-->
-                    <!--<div class="losstext" id="losstext6"></div>-->
-
-                <!--</div>-->
-
-                <!--<button class="buybutton" id="buy6" onclick="buy(6)">购买</button>-->
-
-            <!--</div>-->
-
-            <!--<div class="futureboard" id="futureboard7">-->
-
-                <!--<div class="future_name" id = 'futurename7' onclick="details(7)"></div>-->
-                <!--<div><img class="staricon" src="../imgs/star.png" />-->
-                    <!--<button class="collectbutton" id = "collect7">收藏</button>-->
-                <!--</div>-->
-
-                <!--&lt;!&ndash; lengend &ndash;&gt;-->
-                <!--<div class="legend">-->
-                    <!--<div class="lengend_blue"></div>-->
-                    <!--<div class="lengend_blue_text">回测利率</div>-->
-                <!--</div>-->
-
-                <!--<div class="graphdiv" id="graphdiv7">-->
-                <!--</div>-->
-
-                <!--<div class="info">-->
-                    <!--<div class="profit">年化收益率</div>-->
-                    <!--<div class="profittext" id="profittext7"></div>-->
-
-                    <!--<div class="divisioner1"></div>-->
-
-                    <!--<div class="retracement">最大回撤</div>-->
-                    <!--<div class="retracementtext" id="retracementtext7"></div>-->
-
-                    <!--<div class="divisioner2"></div>-->
-
-                    <!--<div class="carry">市场最大承载资金</div>-->
-                    <!--<div class="carrytext" id="carrytext7"></div>-->
-
-                    <!--<div class="win">胜率：</div>-->
-                    <!--<div class="wintext" id="wintext7"></div>-->
-
-                    <!--<div class="loss">盈亏比：</div>-->
-                    <!--<div class="losstext" id="losstext7"></div>-->
-
-                <!--</div>-->
-
-                <!--<button class="buybutton" id="buy7" onclick="buy(7)">购买</button>-->
-
-            <!--</div>-->
-
         </div>
 
 
@@ -764,8 +679,6 @@
         });
     }
 
-
-
     function format(list){
         var res = [];
         for(var i=0;i<list.length;i++){
@@ -774,7 +687,6 @@
         }
         return res;
     }
-
 
     function draw(){
 
@@ -894,123 +806,6 @@
 <script>
 
     var currentContract;
-
-
-    function buy(id){
-        currentContract = contractList[id];
-        $("#buytitle").html("购买");
-        $("#contentdiv").css("opacity","0.4");
-        $("#buyBoard").css("visibility","visible");
-
-        //$("#orderboard").css("visibility","visible");
-
-    }
-
-    // function buy(id){
-    //    currentContract = contractList[id];
-    //     $("#buytitle").html("购买"+currentContract.contractName);
-    //     $("#contentdiv").css("opacity","0.4");
-    //     $("#buyBoard").css("visibility","visible");
-    //
-    // }
-
-    function buyboardClosed(){
-        $("#contentdiv").css("opacity","1");
-        $("#buyBoard").css("visibility","hidden");
-    }
-
-    function payboardClosed(){
-        $("#contentdiv").css("opacity","1");
-        $("#orderboard").css("visibility","hidden");
-    }
-
-
-    var accounts = ['355a515030616a53576b6a65797359506a634175764a734a3238314e4668627349486a676f7449463949453d',
-        '3739334c4d3463614356474f6d7650667a737656664652677747796855646c5552745a43346d37423653553d',
-        '41375159436b366b32335a6b566d53315753684d2b69464f43427347654b496e2f6a4f6d4971546e622f773d'];
-    var account='';
-    var accountNum = 0;
-
-    var money = 0;
-    var payee  = '7977557255484c7345546c4e53424766634b6c53756841672b556857626e395253334b70416449676b42673d';
-
-
-    function goToPay(){
-        alert("pay");
-    }
-
-    function cancelToPay(){
-        alert("not to pay");
-    }
-
-    function payInfo(){
-        $("#orderboard").css("visibility","visible");
-        money = $("#moneyinput").val();
-        $("#orderaccount").html("账户："+account);
-        $("#ordermoney").html("金额："+money);
-        var currisk = $("#riskinput").val();
-        $("#orderrisk").html( "风险："+currisk  );
-    }
-
-    function payClicked(){
-        var res = transferPreProgress(accounts[accountNum],money,payee);
-
-        if(res == true){
-            alert("购买成功！");
-        }else{
-            alert("购买失败！")
-        }
-
-        payboardClosed();
-    }
-
-    function finallyClicked(){
-
-        layui.use('layer', function(){ //独立版的layer无需执行这一句
-            var layer = layui.layer; //独立版的layer无需执行这一句
-            layer.open({
-                type: 1
-                ,title: ' '
-                ,content: '<div class="tipbeforebuy">购买的金额超过了当前市场最大承载资金，<br/>请问是否继续?</div>'+
-                    "<div style='text-align: center;padding-bottom: 30px'>"
-                //+ "<button id='bu1' onclick='goToPay()' style='width: 60px;height: 32px;border-radius: 2px;border:1px solid #ff5a5f;color: white;background-color: #ff5a5f'>继续</button>" +
-                // "<button onclick='cancelToPay()' style='width: 60px;height: 32px;border-radius: 2px;margin-left: 6px;color:#5e5e5e;border: 1px solid #cdcdcd'>取消</button></div>"
-                ,btn: ['继续', '取消']
-                ,btnAlign: 'c' //按钮居中
-                ,shade: 0 //不显示遮罩
-                ,yes: function(){
-
-                    //调用top-nav.js
-                    if(document.getElementById("account1").checked==true){
-                        account = 'XXXXXX1847';
-                        accountNum = 0;
-                    }else if(document.getElementById("account2").checked==true){
-                        account = 'XXXXXX7918';
-                        accountNum = 1;
-                    }else if(document.getElementById("account3").checked==true){
-                        account = 'XXXXXX5840';
-                        accountNum = 2;
-                    }else{
-                        alert("请选择账户！");
-                        layer.closeAll();
-                        return;
-                    }
-
-                    layer.closeAll();
-                    buyboardClosed();
-                    payInfo();
-
-                }
-
-                ,btn2: function(){
-                }
-            });
-        });
-    }
-
-
-    $("#profittext0").innerHTML = "hihi";
-
 
     function ftclicked(id){
         closeftbottom();
@@ -1198,10 +993,6 @@
         $("#gross").css("background-color","rgba(253, 104, 87, 1)");
         $("#gross").css("color","rgba(255, 255, 255, 1)");
     });
-
-
-
-
 
     // retracement的弹框
     $("#retracement").click(function() {
@@ -1412,4 +1203,5 @@
 
 
 </html>
+
 
