@@ -82,14 +82,13 @@ function payInfo(){
 }
 
 function payClicked(){
-    var res = transferPreProgress(accounts[accountNum],money,payee);
-    if(res == 'true'){
-        alert("购买成功");
-        $("#buy"+currentId).html('已购买');
-        document.getElementById("buy"+currentId).setAttribute("disabled", true);
-    }else{
-        alert("购买失败,请重试！")
-    }
+    transferPreProgress(accounts[accountNum],money,payee);
+    alert("购买成功");
+    $("#buy"+currentId).html('已购买');
+    document.getElementById("buy"+currentId).setAttribute("disabled", true);
+    // }else{
+    //     alert("购买失败,请重试！")
+    // }
     payboardClosed();
 }
 
