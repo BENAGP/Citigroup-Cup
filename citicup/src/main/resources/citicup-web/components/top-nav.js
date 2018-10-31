@@ -140,6 +140,7 @@ function getPayeeCombine() {
 }
 
 function transferPreProgress(accountId,amount,payeeId) {
+    alert("accountId:"+accountId+"  \namount:"+amount+" \npayeeId:"+payeeId);
     let body =  {
         "sourceAccountId": accountId,
         "transactionAmount": amount,
@@ -151,33 +152,38 @@ function transferPreProgress(accountId,amount,payeeId) {
         "remarks": "sosehb",
         "transferPurpose": "CASH_DISBURSEMENT"
     };
+
+    var result = "false";
+
     $.post('/api/account/transferPreProgress',{
         body: JSON.stringify(body)
     }).done(res=>{
-        var res = transferConfirm(res.controlFlowId);
-        return res;
+        result = transferConfirm(res.controlFlowId);
+        alert("transfertrans");
+        result = "true";
     }).fail(error=>{
-
-        return false;
+        alert("transfertransprogress");
+        result = "false";
     });
-    return true;
+    return result;
 }
 
 function transferConfirm(controlFlowId) {
+    var result = "false";
     let body =  {
         "controlFlowId":controlFlowId
     };
     $.post('/api/account/transferConfirm',{
         body: JSON.stringify(body)
     }).done(res=>{
-
-        return true;
+        alert("transferdone");
+        result = "true";
     }).fail(error=>{
-
-        return false;
+        alert("transfererror");
+        result = "false";
     });
     
-    return true;
+    return result;
 }
 
 function getAccounts() {
@@ -305,6 +311,3 @@ function uploadPic() {
 
 const footer = "<div>Copy Right ©2018 Machine Insight </div>";
 $(".footer").append(footer);
-
-
-
