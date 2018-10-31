@@ -16,10 +16,13 @@
 
     <script src="../lib/echarts.min.js"></script>
 
+    <link rel="stylesheet" href="../components/buy.css">
+    <script src="../components/buy.js"></script>
+
 </head>
 <body>
 <div class="top-nav"></div>
-<div class="content-wrapper">
+<div class="content-wrapper" id="contentdiv">
     <div class="content">
         <!--write your code here-->
         <div class="row">
@@ -161,6 +164,50 @@
     </div>
 </div>
 <div class="footer"></div>
+
+
+<div class="buyboard" id="buyBoard">
+    <div class="buytitle" id="buytitle">购买</div>
+    <br/>
+    <div class="moneytext">买入金额</div>
+    <div class="risktext">风险等级</div>
+    <input type="number" id="moneyinput" autocomplete="off" class="layui-input moneyinput" placeholder="最低金额1000元">
+    <input type="number" id="riskinput" autocomplete="off" class="layui-input riskinput" >
+
+
+    <div class="account">
+        <br/>
+        <input type="radio" name="accountradio" id="account1" style="margin-left: -18px;">
+        <label class="save-text">储蓄账户（XXXXXX1847）</label>
+        <br/>
+        <input type="radio" name="accountradio" id="account2">
+        <label class="credit-text">银行卡账户（XXXXXX7918）</label>
+        <br/>
+        <input type="radio" name="accountradio" id="account3">
+        <label class="credit-text">银行卡账户（XXXXXX5840）</label>
+
+    </div>
+
+    <button class="confirmbuybutton" id="confirmbuybutton" onclick="finallyClicked()">确认购买</button>
+
+    <div class="closebutton" onclick="buyboardClosed()">x</div>
+    <div id="finally"></div>
+</div>
+
+
+
+<div class="orderboard" id="orderboard">
+    <div class="buytitle" id="ordertitle">订单</div>
+    <br/>
+    <div class="ordermoneytext" id = "ordermoney" style="text-align: left;margin-left: 50px;margin-top: 30px;">买入金额</div>
+    <div class="orderrisktext" id="orderrisk" style="text-align: left;margin-left: 50px;margin-top: 10px;">风险等级</div>
+    <div class="orderaccounttext" id="orderaccount" style="text-align: left;margin-left: 50px;margin-top: 10px;">账户</div>
+    <button class="paybutton"  id="paybutton" onclick="payClicked()">确认支付</button>
+
+    <div class="payclosebutton" onclick="payboardClosed()">x</div>
+</div>
+
+
 </body>
 
 <script src="../util/href-helper.js"></script>
@@ -171,9 +218,15 @@
 <script>
     $("button").css("outline","none");
 
+    var currentContract;
     var userId = window.localStorage.getItem("userId");
-
     var collectList = [];
+
+    function buy(id){
+        showBuyBoard();
+        currentContract = collectList[id];
+    }
+
 
     $.ajax({
         url:"http://localhost:8080/api/contract/getCollectList",
