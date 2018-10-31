@@ -153,37 +153,30 @@ function transferPreProgress(accountId,amount,payeeId) {
         "transferPurpose": "CASH_DISBURSEMENT"
     };
 
-    var result = "false";
+
 
     $.post('/api/account/transferPreProgress',{
         body: JSON.stringify(body)
     }).done(res=>{
-        result = transferConfirm(res.controlFlowId);
-        alert("transfertrans");
-        result = "true";
+        transferConfirm(res.controlFlowId);
     }).fail(error=>{
-        alert("transfertransprogress");
-        result = "false";
+
     });
-    return result;
 }
 
 function transferConfirm(controlFlowId) {
-    var result = "false";
+
     let body =  {
         "controlFlowId":controlFlowId
     };
     $.post('/api/account/transferConfirm',{
         body: JSON.stringify(body)
     }).done(res=>{
-        alert("transferdone");
-        result = "true";
+
     }).fail(error=>{
-        alert("transfererror");
-        result = "false";
+
     });
-    
-    return result;
+
 }
 
 function getAccounts() {
