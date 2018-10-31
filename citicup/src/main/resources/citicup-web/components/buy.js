@@ -56,7 +56,7 @@ function finallyClicked(){
                     account = 'XXXXXX5840';
                     accountNum = 2;
                 }else{
-                    alert("请选择账户！");
+                    layer.msg("请选择账户！");
                     layer.closeAll();
                     return;
                 }
@@ -83,7 +83,7 @@ function payInfo(){
 
 function payClicked(){
     transferPreProgress(accounts[accountNum],money,payee);
-    alert("购买成功");
+    layer.msg("购买成功");
     $("#buy"+currentId).html('已购买');
     document.getElementById("buy"+currentId).setAttribute("disabled", true);
     // }else{
