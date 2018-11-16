@@ -9,9 +9,13 @@ import java.util.List;
  */
 public interface MessageService {
 
-    public List<MessageModel> getHasReadList(Long userId,Integer page,Integer pageNum);
+    List<MessageModel> getHasReadList(Long userId, Integer page, Integer pageNum);
 
-    public List<MessageModel> getHasNotReadList(Long userId,Integer page,Integer pageNum);
+    List<MessageModel> getHasNotReadList(Long userId, Integer page, Integer pageNum);
 
-    public void readMessage(Long userId,String messages);
+    void readMessage(Long userId, List<Long> messageIdList);
+
+    List<MessageModel> getList(Long userId, Integer page, Integer pageNum, Boolean isSystemMessage);
+
+    Integer getTotalNum(Long userId, Boolean isSystemMessage);
 }

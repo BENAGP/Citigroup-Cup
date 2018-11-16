@@ -12,7 +12,12 @@
     <script src="../lib/echarts.min.js"></script>
     <script src="../util/href-helper.js"></script>
     <script src="mall.js"></script>
+    <script src="../components/buy.js"></script>
+    <link rel="stylesheet" type="text/css" href="../components/buy.css">
+    <script src="../components/collect.js"></script>
+    <script src="../components/top-nav.js"></script>
     <link rel="stylesheet" type="text/css" href="mall.css">
+
 </head>
 
 </head>
@@ -272,8 +277,8 @@
             <div class="futureboard" id="futureboard0">
 
                 <div class="future_name" id = 'futurename0' onclick="details(0)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect0">收藏</button>
+                <div><img class="staricon" id="collectIcon0" src="../imgs/collected.png" />
+                    <button class="collectbutton" id = "collect0" onclick="collect(0)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -315,8 +320,8 @@
 
 
                 <div class="future_name" id = 'futurename1' onclick="details(1)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect1">收藏</button>
+                <div><img class="staricon" id="collectIcon1" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect1"  onclick="collect(1)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -357,8 +362,8 @@
             <div class="futureboard" id="futureboard2">
 
                 <div class="future_name" id = 'futurename2' onclick="details(2)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect2">收藏</button>
+                <div><img class="staricon" id="collectIcon2" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect2"  onclick="collect(2)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -399,8 +404,8 @@
             <div class="futureboard" id="futureboard3">
 
                 <div class="future_name" id = 'futurename3' onclick="details(3)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect3">收藏</button>
+                <div><img class="staricon" id="collectIcon3" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect3"  onclick="collect(3)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -441,8 +446,8 @@
             <div class="futureboard" id="futureboard4">
 
                 <div class="future_name" id = 'futurename4' onclick="details(4)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect4">收藏</button>
+                <div><img class="staricon" id="collectIcon4" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect4"  onclick="collect(4)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -483,8 +488,8 @@
             <div class="futureboard" id="futureboard5">
 
                 <div class="future_name" id = 'futurename5' onclick="details(5)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect5">收藏</button>
+                <div><img class="staricon" id="collectIcon5" src="../imgs/star.png" />
+                    <button class="collectbutton" id = "collect5"  onclick="collect(5)">收藏</button>
                 </div>
 
                 <!-- lengend -->
@@ -522,90 +527,6 @@
 
             </div>
 
-            <div class="futureboard" id="futureboard6">
-
-                <div class="future_name" id = 'futurename6' onclick="details(6)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect6">收藏</button>
-                </div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="graphdiv" id="graphdiv6">
-                </div>
-
-                <div class="info">
-                    <div class="profit">年化收益率</div>
-                    <div class="profittext" id="profittext6"></div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext" id="retracementtext6"></div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext" id="carrytext6"></div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext" id="wintext6"></div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext" id="losstext6"></div>
-
-                </div>
-
-                <button class="buybutton" id="buy6" onclick="buy(6)">购买</button>
-
-            </div>
-
-            <div class="futureboard" id="futureboard7">
-
-                <div class="future_name" id = 'futurename7' onclick="details(7)"></div>
-                <div><img class="staricon" src="../imgs/star.png" />
-                    <button class="collectbutton" id = "collect7">收藏</button>
-                </div>
-
-                <!-- lengend -->
-                <div class="legend">
-                    <div class="lengend_blue"></div>
-                    <div class="lengend_blue_text">回测利率</div>
-                </div>
-
-                <div class="graphdiv" id="graphdiv7">
-                </div>
-
-                <div class="info">
-                    <div class="profit">年化收益率</div>
-                    <div class="profittext" id="profittext7"></div>
-
-                    <div class="divisioner1"></div>
-
-                    <div class="retracement">最大回撤</div>
-                    <div class="retracementtext" id="retracementtext7"></div>
-
-                    <div class="divisioner2"></div>
-
-                    <div class="carry">市场最大承载资金</div>
-                    <div class="carrytext" id="carrytext7"></div>
-
-                    <div class="win">胜率：</div>
-                    <div class="wintext" id="wintext7"></div>
-
-                    <div class="loss">盈亏比：</div>
-                    <div class="losstext" id="losstext7"></div>
-
-                </div>
-
-                <button class="buybutton" id="buy7" onclick="buy(7)">购买</button>
-
-            </div>
-
         </div>
 
 
@@ -623,24 +544,37 @@
     <div class="moneytext">买入金额</div>
     <div class="risktext">风险等级</div>
     <input type="number" id="moneyinput" autocomplete="off" class="layui-input moneyinput" placeholder="最低金额1000元">
-    <input type="number" id="riskinput" autocomplete="off" class="layui-input riskinput" placeholder="1">
+    <input type="number" id="riskinput" autocomplete="off" class="layui-input riskinput" >
 
 
     <div class="account">
-        &nbsp;
-        <input type="radio" name="accountradio" id="save">
-        <label class="save-text">储蓄账户（余额：200000￥）</label>
         <br/>
-        <input type="radio" name="accountradio" id="credit">
-        <label class="credit-text">银行卡账户（余额：3000￥）</label>
+        <input type="radio" name="accountradio" id="account1" style="margin-left: -18px;">
+        <label class="save-text">储蓄账户（XXXXXX1847）</label>
+        <br/>
+        <input type="radio" name="accountradio" id="account2">
+        <label class="credit-text">银行卡账户（XXXXXX7918）</label>
+        <br/>
+        <input type="radio" name="accountradio" id="account3">
+        <label class="credit-text">银行卡账户（XXXXXX5840）</label>
 
     </div>
-
 
     <button class="confirmbuybutton" id="confirmbuybutton" onclick="finallyClicked()">确认购买</button>
 
     <div class="closebutton" onclick="buyboardClosed()">x</div>
     <div id="finally"></div>
+</div>
+
+<div class="orderboard" id="orderboard">
+    <div class="buytitle" id="ordertitle">订单</div>
+    <br/>
+    <div class="ordermoneytext" id = "ordermoney" style="text-align: left;margin-left: 50px;margin-top: 30px;">买入金额</div>
+    <div class="orderrisktext" id="orderrisk" style="text-align: left;margin-left: 50px;margin-top: 10px;">风险等级</div>
+    <div class="orderaccounttext" id="orderaccount" style="text-align: left;margin-left: 50px;margin-top: 10px;">账户</div>
+    <button class="paybutton"  id="paybutton" onclick="payClicked()">确认支付</button>
+
+    <div class="payclosebutton" onclick="payboardClosed()">x</div>
 </div>
 
 </body>
@@ -651,6 +585,8 @@
 <script>
 
 
+    var contractList =[];
+
     $(".layui-layer-btn0").css("background-color",'rgba(245, 93, 84, 1)');
     function details(id){
         var tradeId = contractList[id].tradeId;
@@ -658,10 +594,8 @@
         location.href='../details/details.html?tradeId='+tradeId+'&contractName='+contractName;
     }
 
-    var contractList;
-
     var totalCount = 0;
-    var PAGENUM = 8;
+    var PAGENUM = 6;
 
     var contractFilterInfo = {
         "contractTradeSearch":{
@@ -683,14 +617,32 @@
     };
 
 
+
+    function collect(id){
+        var buttonText = $("#collect"+id).html();
+        if(buttonText == '收藏'){
+            var res = collectContract(contractList[id].contractId);
+            if(res == "true"){
+                document.getElementById("collectIcon"+id).src="../imgs/collected.png";
+                $("#collect"+id).html('取消收藏');
+            }
+        }else if(buttonText == '取消收藏'){
+            var res = cancleContract(contractList[id].contractId);
+            if(res == "true"){
+                document.getElementById("collectIcon"+id).src="../imgs/star.png";
+                $("#collect"+id).html('收藏');
+            }
+        }
+
+    }
+
     function getContractList(){
-        for(var i=0;i<8;i++){
+        for(var i=0;i<6;i++){
             $("#futureboard"+i).css("visibility","hidden");
         }
 
         $.ajax({
             url:"http://localhost:8080/api/contract/getList",
-            async:false,
             type:"POST",
             //data:contractFilterInfo,
             data:{
@@ -704,7 +656,7 @@
 
                 if(data.length == 0){
                     totalCount = PAGENUM * contractFilterInfo.page;
-                    alert("没有更多数据！");
+                    layer.msg("没有更多数据！");
                     return ;
                 }
                 for(var i=0;i<data.length;i++){
@@ -717,14 +669,15 @@
                     totalCount = PAGENUM * (contractFilterInfo.page+1);
                 }
 
+                draw();
+
+
             },
             error: function (data){
-                alert("Please try again latar,");
+                layer.msg("Please try again latar,");
             }
         });
     }
-
-
 
     function format(list){
         var res = [];
@@ -735,11 +688,18 @@
         return res;
     }
 
-
     function draw(){
 
         for(var i = 0; i < contractList.length ; i++){
             var info = contractList[i];
+
+            if(info.isCollected == true){
+                document.getElementById("collectIcon"+i).src="../imgs/collected.png";
+                $("#collect"+i).html('取消收藏');
+            }else{
+                document.getElementById("collectIcon"+i).src="../imgs/star.png";
+                $("#collect"+i).html('收藏');
+            }
 
             $("#futurename"+i).html(info.contractName);
             $("#profittext"+i).html(parseFloat((info.yearYield*100).toFixed(2))+"%");
@@ -846,49 +806,6 @@
 <script>
 
     var currentContract;
-
-    function buy(id){
-       currentContract = contractList[id];
-        $("#buytitle").html("购买"+currentContract.contractName);
-        $("#contentdiv").css("opacity","0.4");
-        $("#buyBoard").css("visibility","visible");
-
-    }
-
-    function buyboardClosed(){
-        $("#contentdiv").css("opacity","1");
-        $("#buyBoard").css("visibility","hidden");
-    }
-
-    function finallyClicked(){
-
-        layui.use('layer', function(){ //独立版的layer无需执行这一句
-            var layer = layui.layer; //独立版的layer无需执行这一句
-
-            layer.open({
-                type: 1
-                ,title: ' '
-                ,content: '<div class="tipbeforebuy">购买的金额超过了当前市场最大承载资金，<br/>请问是否继续?</div>'+
-                    "<div style='text-align: center;padding-bottom: 30px'>" +
-                "<button style='width: 60px;height: 32px;border-radius: 2px;border:1px solid #ff5a5f;color: white;background-color: #ff5a5f'>继续</button>" +
-                "<button style='width: 60px;height: 32px;border-radius: 2px;margin-left: 6px;color:#5e5e5e;border: 1px solid #cdcdcd'>取消</button></div>"
-//                ,btn: ['继续', '取消']
-                ,btnAlign: 'c' //按钮居中
-                ,shade: 0 //不显示遮罩
-                ,yes: function(){
-                    layer.closeAll();
-                    buyboardClosed();
-                }
-
-                ,btn2: function(){
-                }
-            });
-        });
-    }
-
-
-    $("#profittext0").innerHTML = "hihi";
-
 
     function ftclicked(id){
         closeftbottom();
@@ -1076,10 +993,6 @@
         $("#gross").css("background-color","rgba(253, 104, 87, 1)");
         $("#gross").css("color","rgba(255, 255, 255, 1)");
     });
-
-
-
-
 
     // retracement的弹框
     $("#retracement").click(function() {
@@ -1290,29 +1203,6 @@
 
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

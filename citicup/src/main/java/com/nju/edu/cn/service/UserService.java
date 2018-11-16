@@ -10,7 +10,11 @@ public interface UserService {
 
     public UserModel register(String email,String psw);
 
-    public UserModel login(String email,String psw);
+    public UserModel login(String username);
+
+    public UserModel firstLogin(String username,String nickname);
+
+    public Boolean isFirstLogin(String username);
 
     public String postAvatar(Long userId, MultipartFile multipartFile);
 

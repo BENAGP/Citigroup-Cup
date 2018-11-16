@@ -4,12 +4,23 @@ public class APIContext {
 	private String accessToken;
 	private String eventId;
 	private String bizToken;
+	private String modulus;
+	private String exponent;
 	private String realAccessToken;
 	private String accounts;
 	private String username;
 	private String password;
 	private String accountId;
-	
+	private String nickname;
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getAccessToken() {
 		return accessToken;
 	}
@@ -72,5 +83,21 @@ public class APIContext {
 
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getModulus() {
+		return modulus;
+	}
+
+	public void setModulus(String modulus) {
+		this.modulus = modulus;
+	}
+
+	public String getExponent() {
+		return exponent;
+	}
+
+	public void setExponent(String exponent) {
+		this.exponent = exponent;
 	}
 }

@@ -90,7 +90,7 @@ public class ContractBackTest {
     /**
      * 交易
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "`trade_id`")
     private Trade trade;
 

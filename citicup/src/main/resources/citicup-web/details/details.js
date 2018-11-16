@@ -11,10 +11,18 @@ const tradeId = getUrlParam("tradeId");
 let contractId;
 let trade;
 
+let layer;
+let laypage;
+
+layui.use(['layer', 'laypage'], function(){
+    layer = layui.layer;
+    laypage = layui.laypage;
+});
 
 function setData(info) {
     trade = info;
     contractId = info.contractId;
+    initComment();
     // $("#contract_name").text(info.contractName);
     console.log(getUrlParam("contractName"));
     $("#contract_name").text(getUrlParam("contractName"));
@@ -30,7 +38,7 @@ function setData(info) {
     $("#near_3_week_yield").text(near3WeekYield);
     $("#near_6_week_yield").text(near6WeekYield);
     $("#near_12_week_yield").text(near12WeekYield);
-    $('#ddl').text(info.ddl);
+    $('#ddl').text(info.formatDDL);
     const winRate = formatDoubleToPercent(info.winRate);
     const maxDrawdown = formatDoubleToPercent(info.maxDrawdown);
     const profitLossRatio = formatDoubleToPercent(info.profitLossRatio);
@@ -46,22 +54,6 @@ function setData(info) {
             top: "4%",
             containLabel: true
         },
-        // dataZoom: [
-        //     {
-        //         show: true,
-        //         realtime: true,
-        //         start: 0,
-        //         end: 100,
-        //         height: 30,
-        //         y: 215
-        //     },
-        //     {
-        //         type: "inside",
-        //         realtime: true,
-        //         start: 0,
-        //         end: 100
-        //     }
-        // ],
         xAxis: {
             type: "category",
             boundaryGap: false,
@@ -96,7 +88,7 @@ function setData(info) {
         ]
     };
     yield_chart.setOption(option);
-
+    setHistortyMarket(info.historyMarket);
 
 }
 
@@ -279,11 +271,11 @@ $.post("/api/contract/getDetail",{
 }).done(response=>{
     console.log(response);
     setData(response);
-    getHistoryMarket(response);
+    // getHistoryMarket(response);
     getLiquidty()
 }).fail(err=>{
     console.log(err);
-})
+});
 
 function getLiquidty() {
     $.post("/api/contract/getLiquidity",{

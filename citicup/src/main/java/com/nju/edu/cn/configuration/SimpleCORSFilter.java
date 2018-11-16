@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by shea on 2018/7/29.
  */
-@Configuration
+//@Configuration
 public class SimpleCORSFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

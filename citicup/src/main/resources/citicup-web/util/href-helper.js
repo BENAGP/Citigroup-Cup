@@ -2,6 +2,7 @@
  * Created by shea on 2018/2/13.
  */
 const prefix = "http://localhost:8080";
+const NOT_LOGIN = "请先登录";
 
 function forward(page) {
     window.location.href = prefix+page;
@@ -31,6 +32,7 @@ function setUser(user) {
     window.localStorage.setItem("nickname",nickname);
     window.localStorage.setItem("preferRiskLevel",preferRiskLevel);
     window.localStorage.setItem("avatar",avatar);
+    setTopNav();
 }
 // //使用获取参数方法
 // var id= GetUrlParam("id");

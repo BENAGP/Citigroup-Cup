@@ -1,47 +1,54 @@
 /**
  * Created by shea on 2018/8/9.
  */
-let top_nav_islogin = true;
-// if (window.localStorage.getItem("userId")) {
-//     top_nav_islogin = true;
-// } else {
-//     top_nav_islogin = false;
-// }
+let top_nav_islogin;
+let info_disabled = false;
 let login_index = 0;
 let info_index = 0;
-let person_nav_tab =
-    top_nav_islogin ?
-        "<div class='tab' topage='/person/collection.html'>个人中心</div> " :
-        "<div class='tab' onclick='showLogin()'>登录</div>";
+setTopNav();
 
-const nav =
-    "<div>" +
-    "<div class='logo'>" +
-    "<img src='../imgs/logo4.png'> " +
-    "</div>" +
-    person_nav_tab +
-    "<div class='tab' topage='/transaction/transaction.html'>我的交易</div> " +
-    "<div class='tab' topage='/contractmall/contractmall.html'>合约商城</div> " +
-    "<div class='tab' topage='/home/home.html'>首页</div> " +
-    "</div>";
-
-
-$(".top-nav").append(nav);
-active_tab = window.location.pathname;
-console.log(active_tab)
-$(".top-nav .tab[topage='" + active_tab + "']").addClass("active");
-
-
-$(".top-nav .tab").on('click', function () {
-    // console.log($(this).attr("topage"));
-    const topage = $(this).attr("topage");
-    if (topage.split("/")[1] == "transaction" || topage.split("/")[1] == "person") {
-        if (!top_nav_islogin) showLogin();
-        else forward(topage);
+function setTopNav() {
+    if (window.localStorage.getItem("userId")) {
+        top_nav_islogin = true;
     } else {
-        forward(topage);
+        top_nav_islogin = false;
     }
-});
+    let person_nav_tab =
+        top_nav_islogin ?
+            "<div class='tab' topage='/person/collection.html'>个人中心</div> " :
+            "<div class='tab' onclick='showLogin()'>登录</div>";
+
+    const nav =
+        "<div>" +
+        "<div class='logo'>" +
+        "<img src='../imgs/logo4.png'> " +
+        "</div>" +
+        person_nav_tab +
+        "<div class='tab' topage='/transaction/transaction.html'>我的交易</div> " +
+        "<div class='tab' topage='/contractmall/contractmall.html'>合约商城</div> " +
+        "<div class='tab' topage='/home/home.html'>首页</div> " +
+        "</div>";
+
+    $(".top-nav").empty();
+    $(".top-nav").append(nav);
+    const active_tab = window.location.pathname;
+    console.log(active_tab)
+    $(".top-nav .tab[topage='" + active_tab + "']").addClass("active");
+
+
+    $(".top-nav .tab").on('click', function () {
+        // console.log($(this).attr("topage"));
+        const topage = $(this).attr("topage");
+        if(topage){
+            if (topage.split("/")[1] == "transaction" || topage.split("/")[1] == "person") {
+                if (!top_nav_islogin) showLogin();
+                else forward(topage);
+            } else {
+                forward(topage);
+            }
+        }
+    });
+}
 
 function showLogin() {
     login_index = layer.open({
@@ -51,13 +58,13 @@ function showLogin() {
         closeBtn: 0,
         shadeClose: true,
         skin: 'yourclass',
-        content: "<div class = 'registerpad' >" +
+        content: "<div id='login_pad' class = 'registerpad' >" +
         "<h1 class='login'>登陆</h1>" +
         "<label>" +
-        "<input id = 'usrname' class='usrname' type='text' placeholder='账号'>" +
+        "<input class='usrname' type='text' placeholder='账号'>" +
         "</label>" +
         "<label>" +
-        "<input id = 'password' class='password' type='password' placeholder='密码'>" +
+        "<input class='password' type='password' placeholder='密码'>" +
         "</label>" +
         "<label>" +
         "<input class='submit' type='submit' value='提交' onclick='login()'>" +
@@ -66,31 +73,46 @@ function showLogin() {
     });
 }
 
-function login() {
-if($("#usrname").val() === '')
+function login ()
+{
+    const password = $("#login_pad").find(".password").val();
+    const username = $("#login_pad").find(".usrname").val();
+    if(username === '')
     {
         layer.msg("请输入用户名！");
         return;
     }
-    if($("#password").val() === '')
+    if(password === '')
     {
         layer.msg("请输入密码！");
         return;
     }
-    $.post('/api/user/login',{
-        email:$("#usrname").val(),
-        psw:$("#password").val()
-    }).done(response=>{
-        console.log(response);
-        setUser(response);
 
+    $.get('/api/user/preLogin').done(encryptPara=>{
+        console.log(encryptPara);
+        let pub = new RSAKey();
+        pub.setPublic(encryptPara.modulus,encryptPara.exponent);
+        let unencrypted_data = encryptPara.eventId+",b"+password;
+        let encrypted_password = pub.encryptB(getByteArray(unencrypted_data)).toString(16);
+        doLogin(username,encrypted_password,encryptPara);
+
+    }).fail(error=>{
+        layer.msg(error.responseText);
+    })
+
+}
+
+function doLogin(username,encrypted_password,encryptPara) {
+    $.post('/api/user/login',{
+        'username': username,
+        'password': encrypted_password,
+        'bizToken':encryptPara.bizToken,
+    }).done(response=>{
+        setUser(response);
+        layer.close(login_index);
         if(!response.isCompleted)
         {
-            layer.close(login_index);
-            layer.alert("用户信息不完整,请补完信息！",function (index) {
-                layer.close(index);
-                showInfo();
-            });
+            showInfo();
         }else {
             forward("/home/home.html");
         }
@@ -98,9 +120,89 @@ if($("#usrname").val() === '')
     }).fail(err=>{
         layer.msg(err.responseText);
     })
+}
+
+function getPayeeCombine() {
+
+    $.get('/api/account/getPayeeCombine').done(res=>{
+        const payeeSourceAccountCombination = res.payeeSourceAccountCombinations[0];
+        const accountId = payeeSourceAccountCombination.sourceAccountIds[1].sourceAccountId;
+        // const accountId = "355a515030616a53576b6a65797359506a634175764a734a3238314e4668627349486a676f7449463949453d";
+        const amount = 100000;
+        // const amount = 100000;
+        const payeeId = payeeSourceAccountCombination.payeeId;
+
+        // const payeeId = "7977557255484c7345546c4e53424766634b6c53756841672b556857626e395253334b70416449676b42673d";
+      //  transferPreProgress(accountId,amount,payeeId);
+    }).fail(error=>{
+
+    });
+}
+
+function transferPreProgress(accountId,amount,payeeId) {
+    alert("accountId:"+accountId+"  \namount:"+amount+" \npayeeId:"+payeeId);
+    let body =  {
+        "sourceAccountId": accountId,
+        "transactionAmount": amount,
+        "transferCurrencyIndicator": "SOURCE_ACCOUNT_CURRENCY",
+        "payeeId": payeeId,
+        "chargeBearer": "BENEFICIARY",
+        "paymentMethod": "GIRO",
+        "fxDealReferenceNumber": "12345678",
+        "remarks": "sosehb",
+        "transferPurpose": "CASH_DISBURSEMENT"
+    };
 
 
-};
+
+    $.post('/api/account/transferPreProgress',{
+        body: JSON.stringify(body)
+    }).done(res=>{
+        transferConfirm(res.controlFlowId);
+    }).fail(error=>{
+
+    });
+}
+
+function transferConfirm(controlFlowId) {
+
+    let body =  {
+        "controlFlowId":controlFlowId
+    };
+    $.post('/api/account/transferConfirm',{
+        body: JSON.stringify(body)
+    }).done(res=>{
+
+    }).fail(error=>{
+
+    });
+
+}
+
+function getAccounts() {
+    $.get('/api/account/getAccounts').done(accounts=>{
+        console.log(accounts);
+
+    }).fail(error=>{
+        layer.msg(error.responseText);
+    })
+}
+
+function perfectInfo() {
+    $.post('/api/user/perfectInfo', {
+        userId: window.localStorage.getItem("userId"),
+        email: $("#info_pad").find(".email").val(),
+        nickname: $("#info_pad").find(".nickname").val(),
+        preferRiskLevel: null,
+        avatar: $("#avatar-pic").attr("src"),
+    }).done(response => {
+        console.log(response);
+        layer.msg("修改成功！");
+        layer.close(info_index);
+    }).fail(err => {
+        layer.msg(err.responseText)
+    });
+}
 
 function showInfo() {
     info_index = layer.open({
@@ -110,11 +212,11 @@ function showInfo() {
         closeBtn: 0,
         shadeClose: true,
         skin: 'yourclass',
-        content: "<div class = 'registerpad' >" +
+        content: "<div id='info_pad' class='registerpad'>" +
         "<h5 class='login'>完善信息</h5>" +
         "<div style='text-align: center;font-size: 12px;color: #a8a8a8;'>系统检测到您是第一次登录网站，请完善您的信息</div>" +
-        "<input id = 'usrname' class='usrname' type='text' placeholder='昵称'>" +
-        "<input id = 'password' class='password' type='password' placeholder='网站登录密码'>" +
+        "<input class='nickname' type='text' placeholder='昵称'>" +
+        "<input class='email' type='text' placeholder='邮箱'>" +
         "<div class='layui-upload' style='text-align: center;margin-top: 30px'>" +
         "<div style='text-align: center'>" +
         "<div id='uploadAvatar' style='text-align: center;color: #959595;border: 1px solid #e6e6e6;width: 200px;height: 200px;margin-left: 125px;cursor: pointer'>" +
@@ -126,7 +228,7 @@ function showInfo() {
         // "<button type='button' class='layui-btn' id='uploadAvatar' style='width: 200px;margin-top: 20px'>上传头像</button>"+
         "</div>" +
         "<label>" +
-        "<input class='submit' type='submit' value='提交' onclick='login()'>" +
+        "<input disabled='"+info_disabled+"' class='submit' type='submit' value='提交' onclick='perfectInfo()'>" +
 
         "<input class='submit' type='submit' style='background-color: #e6e6e6;color: #5E5E5E;margin-top: 10px' value='跳过' onclick='closeInfo()'>" +
         "</label>" +
@@ -134,6 +236,7 @@ function showInfo() {
         "</div>",
     });
     layui.use('upload', function () {
+        info_disabled = true;
         var upload = layui.upload;
 
         //执行实例
@@ -146,14 +249,18 @@ function showInfo() {
             before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#avatar-pic').attr('src', result);//图片链接（base64）
-                    $('#avatar-pic').css('display', 'inline');
-                    $('#uploadAvatar').css('display', 'none');
                 });
             }
 
             , done: function (res) {
+                $('#avatar-pic').attr('src', res.url);//图片链接（base64）
+                $('#avatar-pic').css('display', 'inline');
+                $('#uploadAvatar').css('display', 'none');
                 //上传完毕回调
+                info_disabled = false;
+                $("#info_pad").find(".submit").attr("disabled",info_disabled);
+                // avatar = res.url;
+                console.log(res);
             }
             , error: function (err) {
                 //请求异常回调
@@ -165,7 +272,8 @@ function showInfo() {
 }
 
 function closeInfo() {
-    layer.close(info_index)
+    layer.close(info_index);
+
 }
 
 function uploadPic() {
@@ -196,6 +304,3 @@ function uploadPic() {
 
 const footer = "<div>Copy Right ©2018 Machine Insight </div>";
 $(".footer").append(footer);
-
-
-

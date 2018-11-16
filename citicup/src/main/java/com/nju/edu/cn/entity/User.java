@@ -16,6 +16,12 @@ public class User {
     private Long userId;
 
     /**
+     * 账户
+     */
+    @Column(name = "username")
+    private String username;
+
+    /**
      * 帐号（邮箱）
      */
     @Column(name = "`email`")
@@ -103,6 +109,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 //    public List<Trade> getTrades() {

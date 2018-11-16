@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.alibaba.fastjson.JSON;
 import com.nju.edu.cn.constant.APIConstant;
+import com.nju.edu.cn.exception.InvalidRequestException;
 import com.nju.edu.cn.model.APIContext;
+import com.nju.edu.cn.model.AuthorizeResponse;
+import com.nju.edu.cn.model.CustomerBasic;
+import com.nju.edu.cn.model.CustomerParticular;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -22,142 +27,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 public class GetAccounts {
 
 	private static Logger logger = LoggerFactory.getLogger(GetAccounts.class);
-	
-	public static void getBizToken(ServletContext context) throws IOException{
-		step1GetAccessToken(context);
-		if(context.getAttribute("access_token")!=null){
-			step2GetBizToken(context);
-		}
-	}
 
-	public static String getAccounts(String username, String password, APIContext context) throws IOException {
-		context.setUsername(username);
-		context.setPassword(password);
-		step3GetRealAccessToken(context);
-		if(context.getRealAccessToken()==null){
-			return null;
-		}
-		String accounts = step4GetAccounts(context);
-		if(context.getAccounts()==null){
-			return null;
-		}
-		return accounts;
-	}
-	
-	public static String getAccountDetail(String accountId, APIContext context) throws IOException {
-		context.setAccountId(accountId);
-		String accountDetail = step5GetAccountDetails(context);
-		if(accountDetail == null) {
-			return null;
-		}
-		return accountDetail;
-	}
-	
-	public static String getTransactions(String accountId, APIContext context) throws IOException {
-		context.setAccountId(accountId);
-		String transaction = step6GetTransaction(context);
-		if(transaction == null) {
-			return null;
-		}
-		return transaction;
-	}
-	
-	public static void step1GetAccessToken(ServletContext context) throws IOException {
-		OkHttpClient client = new OkHttpClient();
+	public static String getAccounts(String realAccessToken, HttpSession session) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
-		String client_scrent = APIConstant.CLIENT_SCRENT;
-		String encode_key = client_id + ":" + client_scrent;
-		String authorization = "Basic " + Base64.encodeBase64String(encode_key.getBytes());
-		MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-		RequestBody body = RequestBody.create(mediaType, "grant_type=client_credentials&scope=/api");
-		Request request = new Request.Builder()
-				.url("https://sandbox.apihub.citi.com/gcb/api/clientCredentials/oauth2/token/hk/gcb")
-				.post(body)
-				.addHeader("accept", "application/json")
-				.addHeader("authorization", authorization)
-				.addHeader("content-type", "application/x-www-form-urlencoded")
-				.build();
-		Response response = client.newCall(request).execute();
-		JSONObject jsonObject = (JSONObject) JSONValue.parse(response.body().string());
-		String accessToken = (String) jsonObject.get("access_token");
-		context.setAttribute("access_token",accessToken);
-		logger.info("step1 access_token:{}",accessToken);
-	}
-
-	public static void step2GetBizToken(ServletContext context) throws IOException {
-		OkHttpClient client = new OkHttpClient();
-		String client_id = APIConstant.CLIENT_ID;
-		String accessToken = context.getAttribute("access_token").toString();
-		String authorization = "Bearer " + accessToken;
-		UUID uuid = UUID.randomUUID();
-		Request request = new Request.Builder()
-				.url("https://sandbox.apihub.citi.com/gcb/api/security/e2eKey")
-				.get()
-				.addHeader("authorization", authorization)
-				.addHeader("client_id", client_id)
-				.addHeader("uuid", uuid.toString())
-				.addHeader("content-type", "application/json")
-				.build();
-		Response response = client.newCall(request).execute();
-		JSONObject jsonObject = (JSONObject) JSONValue.parse(response.body().string());
-		String modulus = null;
-		String exponent = null;
-		String bizToken = null;
-		String eventId = null;
-		if (jsonObject != null) {
-			modulus = (String) jsonObject.get("modulus");
-			exponent = (String) jsonObject.get("exponent");
-			Headers headers = response.headers();
-			bizToken = headers.get("bizToken");
-			eventId = headers.get("eventId");
-			context.setAttribute("event_id",eventId);
-			context.setAttribute("biz_token",bizToken);
-			context.setAttribute("modulus",modulus);
-			context.setAttribute("exponent",exponent);
-
-		}
-		logger.info("step2 modulus:{}, exponent:{}, bizToken:{}, eventId:{}",modulus,exponent,bizToken,eventId);
-	}
-	
-	public static String step3GetRealAccessToken(APIContext context) throws IOException{
-		String client_id = APIConstant.CLIENT_ID;
-		String client_scrent = APIConstant.CLIENT_SCRENT;
-		String bizToken = context.getBizToken();
-		System.err.println("bizToken: "+bizToken);
-		String encode_key = client_id + ":" + client_scrent;
-		String authorization = "Basic " + Base64.encodeBase64String(encode_key.getBytes());
-		String username = context.getUsername();
-		String password = context.getPassword();
-		System.out.println(password);
-		UUID uuid = UUID.randomUUID();
-		OkHttpClient client = new OkHttpClient();
-		MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-		RequestBody body = RequestBody.create(mediaType, "grant_type=password&scope=/api&username="+username+"&password="+password);
-		System.out.println(username);
-		Request request = new Request.Builder()
-				.url("https://sandbox.apihub.citi.com/gcb/api/password/oauth2/token/hk/gcb")
-				.post(body)
-				.addHeader("authorization", authorization)
-				.addHeader("bizToken", bizToken)
-				.addHeader("uuid", uuid.toString())
-				.addHeader("content-type", "application/x-www-form-urlencoded")
-				.addHeader("accept", "application/json")
-				.build();
-		Response response = client.newCall(request).execute();
-		JSONObject jsonObject = (JSONObject) JSONValue.parse(response.body().string());
-		String realAccessToken = (String) jsonObject.get("access_token");
-		context.setRealAccessToken(realAccessToken);
-		logger.info("step3 real_access_token:{}",realAccessToken);
-		return realAccessToken;
-	}
-	
-	public static String step4GetAccounts(APIContext context) throws IOException{
-		String client_id = APIConstant.CLIENT_ID;
-		String authorization = "Bearer " + context.getRealAccessToken();
+		String authorization = "Bearer " + realAccessToken;
 		UUID uuid = UUID.randomUUID();
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
@@ -171,12 +49,18 @@ public class GetAccounts {
 				.build();
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
-		context.setAccounts(responseBodyString);
-		logger.info("step4 accounts:{}",responseBodyString);
-		return responseBodyString;
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			System.out.println("step4 accounts:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
 	}
-	
-	public static String step5GetAccountDetails(APIContext context) throws IOException{
+
+	public static String getAccountDetails(APIContext context,HttpSession session) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String authorization = "Bearer " + context.getRealAccessToken();
 		UUID uuid = UUID.randomUUID();
@@ -193,12 +77,20 @@ public class GetAccounts {
 				.build();
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
-		context.setAccounts(responseBodyString);
-		logger.info("step5 account details:{}",responseBodyString);
-		return responseBodyString;
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			context.setAccounts(responseBodyString);
+			System.out.println("step5 account details:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
 	}
-	
-	public static String step6GetTransaction(APIContext context) throws IOException{
+
+	public static String getTransaction(APIContext context,HttpSession session) throws IOException{
 		String client_id = APIConstant.CLIENT_ID;
 		String authorization = "Bearer " + context.getRealAccessToken();
 		UUID uuid = UUID.randomUUID();
@@ -215,8 +107,176 @@ public class GetAccounts {
 				.build();
 		Response response = client.newCall(request).execute();
 		String responseBodyString = response.body().string();
-		context.setAccounts(responseBodyString);
-		logger.info("step6 transaction details:{}",responseBodyString);
-		return responseBodyString;
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			context.setAccounts(responseBodyString);
+			System.out.println("step6 transaction details:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
 	}
+
+
+	public static String getTransferCombine(String realAccessToken,HttpSession session) throws IOException{
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + realAccessToken;
+		System.out.println("real_access_token:===="+realAccessToken);
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/moneyMovement/personalDomesticTransfers/destinationAccounts/sourceAccounts")
+				.get()
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+//				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+		Response response = client.newCall(request).execute();
+		String responseBodyString = response.body().string();
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			System.out.println("step7 transfer combine:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
+	}
+
+	public static String getPayeeCombine(String realAccessToken,HttpSession session) throws IOException{
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + realAccessToken;
+		System.out.println("real_access_token:===="+realAccessToken);
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/moneyMovement/payees/sourceAccounts?paymentType=INTERNAL_DOMESTIC")
+				.get()
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+		Response response = client.newCall(request).execute();
+		String responseBodyString = response.body().string();
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			System.out.println("getPayeeCombine:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
+	}
+
+	public static String transferPreProgress(String realAccessToken,String body,HttpSession session) throws IOException{
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + realAccessToken;
+		System.out.println("real_access_token:===="+realAccessToken);
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+		MediaType mediaType = MediaType.parse("application/json");
+		RequestBody requestBody = RequestBody.create(mediaType,body);
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/moneyMovement/internalDomesticTransfers/preprocess")
+				.post(requestBody)
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+		Response response = client.newCall(request).execute();
+		String responseBodyString = response.body().string();
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			System.out.println("transferPreProgress:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+	}
+
+	public static String transferConfirm(String realAccessToken,String body,HttpSession session) throws IOException{
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + realAccessToken;
+		System.out.println("real_access_token:===="+realAccessToken);
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+
+		MediaType mediaType = MediaType.parse("application/json");
+		RequestBody requestBody = RequestBody.create(mediaType, body);
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/moneyMovement/internalDomesticTransfers")
+				.post(requestBody)
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+
+		Response response = client.newCall(request).execute();
+		String responseBodyString = response.body().string();
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		if(authorizeResponse.getType()==null){
+			System.out.println("transferConfirm:");
+			System.out.println("\t"+responseBodyString);
+			return responseBodyString;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
+	}
+
+	public static String getBasic(String realAccessToken,HttpSession session) throws IOException {
+		String client_id = APIConstant.CLIENT_ID;
+		String authorization = "Bearer " + realAccessToken;
+		UUID uuid = UUID.randomUUID();
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+				.url("https://sandbox.apihub.citi.com/gcb/api/v1/customers/profiles/basic")
+				.get()
+				.addHeader("authorization", authorization)
+				.addHeader("uuid", uuid.toString())
+				.addHeader("content-type", "application/json")
+				.addHeader("accept", "application/json")
+				.addHeader("client_id", client_id)
+				.build();
+		Response response = client.newCall(request).execute();
+		logger.info("get-basic-response: {}",JSON.toJSONString(response));
+		String responseBodyString = response.body().string();
+		AuthorizeResponse authorizeResponse = JSON.parseObject(responseBodyString,AuthorizeResponse.class);
+		logger.info("basic:{}",JSON.toJSONString(authorizeResponse));
+		if(authorizeResponse.getType()==null){
+			System.out.println("basic_info:");
+			System.out.println("\t"+responseBodyString);
+			CustomerBasic customerBasic = JSON.parseObject(responseBodyString,CustomerBasic.class);
+			CustomerParticular customerParticular = customerBasic.getCustomerParticulars();
+			String prefix = customerParticular.getPrefix().substring(0,1).toUpperCase()+customerParticular.getPrefix().toLowerCase().substring(1);
+			String lastName = customerParticular.getNames()[0].getLastName().substring(0,1).toUpperCase()+customerParticular.getNames()[0].getLastName().substring(1).toLowerCase();
+			String nickname = prefix+"."+lastName;
+			return nickname;
+		}else {
+			GetAuthorize.authorize(session,authorizeResponse);
+		}
+		return "";
+
+	}
+
+
+
 }

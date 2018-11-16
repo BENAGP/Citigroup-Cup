@@ -19,14 +19,14 @@ public class Trade {
     /**
      * 购买合约的用户
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`user_id`")
     private User user;
 
     /**
      * 被购买的合约
      */
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "`contract_id`")
     private Contract contract;
 

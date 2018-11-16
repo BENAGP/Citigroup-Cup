@@ -26,14 +26,6 @@ public class MainController {
     @GetMapping("/home")
     public String member(HttpServletRequest request){
         logger.info("home");
-        ServletContext context = request.getServletContext();
-        if(context.getAttribute("access_token")==null||context.getAttribute("event_id")==null){
-            try {
-                GetAccounts.getBizToken(context);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return "/home/home";
     }
 

@@ -39,13 +39,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel login(String email, String psw) {
-        User user = userRepository.findByEmail(email);
-        if(user==null||!user.getPassword().equals(psw))throw new InvalidRequestException("用户名或密码错误");
+    public UserModel login(String username) {
+        User user = userRepository.findByUsername(username);
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
+    }
+
+    @Override
+    public UserModel firstLogin(String username, String nickname) {
+        User user = new User();
+        user.setUsername(username);
+        user.setNickname(nickname);
+        user.setPreferRiskLevel(5);
+        user.setAvatar("http://localhost:8080/picture/1_1540723863137default-avatar.png");
+        user = userRepository.save(user);
+        UserModel userModel = new UserModel();
+        BeanUtils.copyProperties(user,userModel);
+        userModel.setIsCompleted(false);
+        return userModel;
+    }
+
+    @Override
+    public Boolean isFirstLogin(String username) {
+        User user = userRepository.findByUsername(username);
+        return user==null;
     }
 
     @Override
@@ -80,11 +98,11 @@ public class UserServiceImpl implements UserService {
         if(user==null)throw new InvalidRequestException("用户名错误");
         if(nickname!=null)user.setNickname(nickname);
         if(avatar!=null)user.setAvatar(avatar);
+        if(email!=null)user.setEmail(email);
         if(preferRiskLevel!=null)user.setPreferRiskLevel(preferRiskLevel);
         userRepository.save(user);
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 
@@ -94,7 +112,6 @@ public class UserServiceImpl implements UserService {
         if(user==null)throw new InvalidRequestException("用户名不存在");
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 
@@ -107,7 +124,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user,userModel);
-        userModel.setIsCompleted();
         return userModel;
     }
 }
